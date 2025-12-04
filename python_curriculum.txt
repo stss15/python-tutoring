@@ -1,0 +1,227 @@
+Python 3 Tutor Track (Functions First)
+=====================================
+
+How to unlock answers
+- Default password: `py123` (change it in the snippet below if you like).
+- Unlock in a shell when you want to reveal a solution:
+```python
+# save as unlock.py or run with python3 - <<'PY'
+PASSWORD = "py123"
+
+def unlock(hex_text: str, password: str = PASSWORD) -> str:
+    data = bytes.fromhex(hex_text)
+    key = password.encode()
+    plain = bytes(b ^ key[i % len(key)] for i, b in enumerate(data))
+    return plain.decode()
+
+# Example:
+# print(unlock("your_hex_here"))
+```
+- To relock with your own password:
+```python
+def relock(plain: str, password: str) -> str:
+    key = password.encode()
+    data = plain.encode()
+    out = bytes(b ^ key[i % len(key)] for i, b in enumerate(data))
+    return out.hex()
+```
+
+Track overview (aligns to your hours plan)
+- Logic + problem solving first, always inside functions; everything uses Python 3 + f-strings.
+- Early wins: return values, default params, composition, and short scripts you can run live.
+- Algorithms sprinkled early (search/sort) to build CS thinking, not just syntax.
+- Mini-projects reinforce I/O, errors, and testing habits.
+- NumPy + scikit-learn units sketched as “coming soon” so you can slot them in later.
+
+------------------------------------------------------------------
+Module 1 — Functions First: Hello World with returns
+Goals: print via functions, defaults, return vs. print, f-strings, type hints.
+Example:
+```python
+def banner(title: str) -> str:
+    line = "=" * len(title)
+    return f"{title}\n{line}"
+
+def greet(name: str, mood: str = "curious") -> str:
+    return f"Hi {name}, stay {mood}!"
+
+if __name__ == "__main__":
+    print(banner("Welcome to Python"))
+    print(greet("Mina", "unstoppable"))
+```
+Challenges
+1) `describe_pet(name, animal="cat")` returns a sentence; print it in `__main__`.
+   Answer (locked): LOCKED[py123]: 141c571257150a52405a121c6e425604515f535e1543114147025511535d1914505e09500a4540134d59135152045b18121e4e594246414a73111213500b54464602171154110b17505f560d5958411311594a535d1914505e4e500e595d131c1647574050175042405e
+2) `repeat_line(text, times=3, spacer=" | ")` returns one string; handle times <= 0 by treating as 1.
+   Answer (locked): LOCKED[py123]: 141c57124115095453472f15585c56580d544a474a594246415c59455b5e150a0b125a1e0d110f134355114143111a544009500a4540134d5913124f505b18121e4e594246414a73111213500d585f5603590c125e110119031f50105f461b04105c574059503b12135059435747050b5f124000185257415e135e5b5d580d544a47501f5e40132f59585c1302185f5556580d585f56035018
+
+------------------------------------------------------------------
+Module 2 — Variables, Types, and f-Strings
+Goals: ints/floats/bools/str, conversions, simple math, formatting.
+Example:
+```python
+def daily_water_ml(weight_kg: float, activity_mins: int = 30) -> int:
+    base = weight_kg * 35  # ml per kg
+    bonus = activity_mins * 7
+    return int(base + bonus)
+
+print(f"Drink about {daily_water_ml(60)} ml today.")
+```
+Challenges
+3) `format_height(cm)` returns `"170.0 cm = 1.70 m = 5 ft 6.9 in"`.
+   Answer (locked): LOCKED[py123]: 141c5712551f0b5c53472f11545b54180d19515e4a59575e5c110d18121e4e594246414a731112135014544656020a110f131314111d1341490138135059115b5d131154416c041645535f504411515e505611001d454d3b1213505957575604590c125a1e0d195b5d131154416c041645535f50561e120242503b12135059585c50181c42120e50105f515b150a6e465c04185d121e501f54574750531103017a59111213021c4547411e5957104813140b1c02160411515e504411495e150d5440404a5703544e5014110f130b1f5457470d595746130b105f515b150a0b1c021604115b5d
+4) `tip_split(bill, tip_pct, people)` returns `(per_person, total_with_tip)` rounded to cents.
+   Answer (locked): LOCKED[py123]: 141c57124719096e41431c10451a5119155d081316155e53475c59455b432f09524609501f5d5d5204551142561f095d570950105f461a50540f124705095d576816155e53475c59575e5c110d6c083950591112471909110f1312105d5e135a59455b432f0952463950591112471f0d505e134d59535b5f1c591a124719093b1213505954535018590c12411f0c5f561b041645535f50561142561f095d571f504b1838135059114056040c435c131518525a1f500b5e475d1451455d4711151d120159
+
+------------------------------------------------------------------
+Module 3 — Conditionals and Logic
+Goals: truthy/falsey, comparisons, chaining conditions, guard clauses.
+Example:
+```python
+def classify_score(score: int) -> str:
+    if score >= 90:
+        return "A"
+    if score >= 80:
+        return "B"
+    if score >= 70:
+        return "C"
+    return "Keep working"
+```
+Challenges
+5) `student_status(credits, gpa)` -> `"graduation eligible"`, `"probation"`, or `"on track"`.
+   Answer (locked): LOCKED[py123]: 141c571240040c55575d0426424652040c421a50021c555b470343115b5d0455115543114311545f1f18451b135d4711414702433b12135059585413130b54565a040a110c0e504803021311175512540018110c0e504b1f02097a591112135059111241150d44405d505b564052140c50465a1f1711575f191e58505f155b3b12135059585413170950120f504b1f02097a591112135059111241150d44405d505b41405c1218455b5c1e5b3b12135059435747050b5f12111f17114641111a5a
+6) `triangle_type(a, b, c)` -> `"equilateral"`, `"isosceles"`, `"scalene"`, or `"not a triangle"`.
+   Answer (locked): LOCKED[py123]: 141c5712470210505c541c1c6e464a001c195309501f5d5d520455115009501f5d5d520455115109501f5d5d520450111f0d500a4540097a591112130310555740504411415c020d54561b2b181d12515c59526f1a7a59111213191f11415a141c4269032d591a1240191d5441684124110e0e500a5856560322036f097a591112135059111241150d44405d505b5f5d47501811464119185f555f155b3b1213505958541311590c0f1312590c0f1313433b12135059111213500b5446460217111056010c585e52041c43535f5273111213501057125250440c1251501643125150440c1250501643125250440c12504a731112135059111213021c4547411e59135b401f0a52575f150a1338135059114056040c435c13520a52535f151754
+
+------------------------------------------------------------------
+Module 4 — Loops and Iteration Patterns
+Goals: for/while, accumulation, building lists, early returns.
+Example:
+```python
+def running_totals(nums: list[int]) -> list[int]:
+    totals = []
+    current = 0
+    for n in nums:
+        current += n
+        totals.append(current)
+    return totals
+```
+Challenges
+7) `count_vowels(text)` returns a dict of vowel counts (lowercase everything first).
+   Answer (locked): LOCKED[py123]: 141c5712501f0c5f466c061646575f035145574b04431141470250111f0d501d5851472b0a45401f50105f466e4a73111213501a5e475d040a110f130b0f0b1203501f5e40130659585c135218545b5c055b4c3813505911545c0259525a131917114656080d1f5e5c071c431a1a4a731112135059111213191f11515b50105f12501f0c5f46404a73111213505911121350591112501f0c5f46402b1a596f135b441103395059111241150d44405d501a5e475d040a
+8) `fizzbuzz_variant(n, loud=False)` builds the list `["1", "2", "Fizz", ...]`; if `loud`, uppercase all outputs.
+   Answer (locked): LOCKED[py123]: 141c57125519034b50460a036e44520210505c4758170b125a1e0d1d125f1f0c55081312165e5e134d5977535f031c18121e4e595d5b4004224246412d433b121350595e4747504411696e7a59111213161643125d0514115b5d500b505c541551001e131e591a120259433b1213505911121350155050561c590c121152731112135059111213191f115c461d5914120050440c12034a731112135059111213505911125f111b545e135b4411107519034b103950591112135059115b555017445f13555904120e4d590108395059111213505911121350595d5351151511190e505b7347490a5b3b12135059111213501644461d110941575d14515d53511515115d41500a45401b1e0c5c1b1a7a59111213021c4547411e596a5b4715141f4743001c431a1a501f5e4013190d545f131917115d460424115b5550155e4757501c5d415650164446
+
+------------------------------------------------------------------
+Module 5 — Collections (lists, dicts, sets) and Data Shaping
+Goals: indexing vs. iteration, dict aggregation, set membership, sorted outputs.
+Example:
+```python
+def word_lengths(line: str) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for word in line.split():
+        counts[word] = len(word)
+    return counts
+```
+Challenges
+9) `merge_inventories(inv_a, inv_b)` -> sorted list of `(item, total_qty)` merged from two dicts.
+   Answer (locked): LOCKED[py123]: 141c57125e150b56576c191747575d0416435b560351585c452f180b1257191a456940040b1d125a1e0d6c1e131917476d514a59555b5004224246415c59585c472d50111f0d50155841472b0d44425f15224246415c59585c472d240b38135059115f56021e545609501d5851472b0a45401f50105f466e504411494e7a59111213161643125d1114541e13010d48125a1e59585c452f181f5b471514421a1a4a7311121350591112131d1c43555614225f535e1524110f131d1c43555614575657475817505f565c59011b135b5940464a7a59111213161643125d1114541e13010d48125a1e59585c452f1b1f5b471514421a1a4a7311121350591112131d1c43555614225f535e1524110f131d1c43555614575657475817505f565c59011b135b5940464a7a59111213021c4547411e59425d41041c551a5e150b5657575e1045575e0351181e131b1c480f5f11145356525009505b414a5941535a0222016f1a
+
+------------------------------------------------------------------
+Module 6 — Algorithms: Linear/Binary Search, Bubble/Selection Sort
+Goals: traceable code, loop invariants, off-by-one awareness, returning indexes vs. bools.
+Example (talk through every line):
+```python
+def linear_search(values: list[int], target: int) -> int:
+    for i, value in enumerate(values):
+        if value == target:
+            return i
+    return -1
+
+def binary_search(sorted_values: list[int], target: int) -> int:
+    lo, hi = 0, len(sorted_values) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        guess = sorted_values[mid]
+        if guess == target:
+            return mid
+        if guess < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return -1
+```
+Challenges
+10) `index_of_first_even(nums)` using linear search; return -1 if missing.
+    Answer (locked): LOCKED[py123]: 141c57125a1e1d544a6c1f1f6e545a020a456d56061c5f1a5d05144208131c104246681917456f1a50540f125a1e0d0b3813505911545c025958564b5c5947535f051c115b5d501c5f475e150b5046565817445f4059433b1213505911121350105712451115445713555903120e4d59010839505911121350591112135059435747050b5f125a14013b12135059435747050b5f121e41
+11) `binary_contains(sorted_values, target)` returns True/False using binary search pattern.
+    Answer (locked): LOCKED[py123]: 141c571251191750404a2f1a5e5c4711105f411b0316434656142647535f051c4208131c104246681917456f1f500d504054150d0b125a1e0d18121e4e59535d5c1c433b121350595d5d1f501158120e50491d125f151719415c020d54566c06185d47560350111f134173111213500e595b5f15595d5d134c44115a5a4a7311121350591112131d1055120e50515d5d135b59595b1a50561e12017a591112135059111254051c4241134d59425d41041c556d4511154457402b1458566e7a59111213505911125a1659564756030a110f0e500d504054150d0b381350591112135059111213500b5446460217116641051c3b121350591112135010571254051c4241134c59455341171c4508395059111213505911121350595d5d134d595c5b5750521103395059111213505911575f031c0b381350591112135059111213501158120e50145856135d590038135059114056040c435c1336185d4156
+12) Implement both `bubble_sort` and `selection_sort`; return new sorted lists (do not mutate input).
+    Answer (locked): LOCKED[py123]: 141c571251051b535e562f0a5e4047580f505e46150a0b125f190a45695a1e0d6c1b135d47115e5a030d6a5b5d04240b38135059115b47151442120e500f505e46150a6a086e7a591112131e590c125f1517195b471514421b3950591112551f0b116d1319171140521e1e541a5d59433b12135059111213500a465343001c55120e503f505e4015731112135059111213161643125a50105f1241111756571b1e591c120259433b121350591112135059111213191f115b47151442695a2d590f125a041c5c416819591a12022d433b121350591112135059111213505911125a041c5c416819241d125a041c5c416819591a12022d590c125a041c5c416819591a12022d55115b47151442695a2d7311121350591112135059111213505911414411094157575044116641051c3b12135059111213501057125d1f0d11414411094157574a7311121350591112135059111251021c5059395059111241150d44405d501045575e03733b5656165942575f151a455b5c1e26425d41045147535f051c4208131c104246681917456f1a50540f125f190a45695a1e0d6c0839505911125a041c5c41134d5947535f051c4269092d73111213501f5e40131959585c1302185f55565815545c1b190d545f4059500b3813505911121350595c5b5d2f10110f1319731112135059111213161643125950105f1241111756571b19591a12025c595d575d581045575e0350180839505911121350591112135059585413190d545f402b136c120f501045575e03225c5b5d2f106c08395059111213505911121350591112135014585c6c19590c12597a59111213505911125a041c5c416819241d125a041c5c41681d105f6d5a2d590c125a041c5c41681d105f6d5a2d55115b47151442695a2d73111213500b5446460217115b47151442
+
+------------------------------------------------------------------
+Module 7 — Error Handling and Debugging Habits
+Goals: predictable exceptions, defaults, small checks, logging-friendly returns.
+Example:
+```python
+def safe_int(value: str, default: int = 0) -> int:
+    try:
+        return int(value)
+    except ValueError:
+        return default
+```
+Challenges
+13) `safe_divide(a, b)` raises `ValueError` on divide-by-zero; otherwise returns the quotient.
+    Answer (locked): LOCKED[py123]: 141c571240111f546d57190f58565658180b12551c1650461f501b0b12551c1650461a50540f12551c165046097a59111213191f1150134d441102097a591112135059111241111042571326185d4756350b435d41585b52535d1e16451257190f585656501b481249150b5e101a7a59111213021c4547411e5950121c501b
+14) `load_ints(path)` returns list of ints, skips bad lines, empty list if file missing (use `pathlib`).
+    Answer (locked): LOCKED[py123]: 160b5e5f130018455a5f191b115b5e00164346132018455a397a1d5454131c1650566c191745411b0018455a09500a45401a50540f125f190a45695a1e0d6c083950591112551915546d43110d59120e502950465b580950465b5973111213501057125d1f0d11545a1c1c6e425204111f574b190a45411b59433b12135059111213500b544646021711696e7a591112131e0c5c5056020a110f132b243b12135059465b471859575b5f152641534718575e42561e5118125203595708395059111213505911545c02595d5b5d1559585c1316433b1213505911121350591112131c105f57134d595d5b5d15574246411909191b395059111213505911121350595854131e1645125f1917540839505911121350591112135059111213501a5e5c47191744573950591112135059111213505945404a4a73111213505911121350591112135059115c461d1b5440405e184142561e1d195b5d04515d5b5d155018381350591112135059111213501c495156000d1164521c0c5477410216430839505911121350591112135059111213501a5e5c4719174457395059111241150d44405d5017445f51150b42
+
+------------------------------------------------------------------
+Module 8 — File Handling + Mini-Project
+Goals: open/read/write safely, CSV basics, append vs. overwrite, small workflow automation.
+Example:
+```python
+from pathlib import Path
+
+def save_notes(lines: list[str], path: str = "session.log") -> None:
+    Path(path).write_text("\n".join(lines))
+```
+Challenges
+15) `append_progress(topic, minutes, path="progress.csv")` appends a CSV row and writes a header if the file is new.
+    Answer (locked): LOCKED[py123]: 1914415d4104595241457a1f435d5e500950465b1c1053125a1d095e4047502950465b7a7355575550184142561e1d6e42411f1e4357400351455d43191a0b1240040b1d125e19174446560343115b5d045511425204110b1240040b110f135209435d54021c42411d130a47101a50540f127d1f1754083950591112551915546d43110d59120e502950465b580950465b5973111213500e435b471526595752141c43120e50175e461316105d576c0018455a1d15015841470351183813505911455a041111545a1c1c6e425204111f5d4315171910525255115c560715585c564d5b131b13110a1154097a59111213505911124402104557415044115140065746405a041c431a5559731112135059111213191f114541190d546d5b15185557414a731112135059111213505911124402104557415e0e435b47150b5e451b2b5b455d43191a131e135214585c46041c42106e59731112135059111213070b584656025746405a041c435d445822455d43191a1d125e1917444656032418
+
+Mini-project idea (no answer key)
+- Build a “study session tracker”: prompt for topic, minutes, key takeaways; save to CSV + append summary to a text log. Reuse your functions from modules 4–8 (input validation, loops, file writing).
+
+------------------------------------------------------------------
+Coming soon — NumPy quick start
+- Installing + import conventions, `ndarray` vs. lists, shapes, slicing, vectorized math, broadcasting, boolean masks, tiny stats (mean/std).
+- Starter demo:
+```python
+import numpy as np
+scores = np.array([72, 88, 90, 65, 95])
+scaled = (scores - scores.mean()) / scores.std()
+print(scaled.round(2))
+```
+- Challenge to prep: write a function that takes a CSV of numbers and returns z-scored columns as a NumPy array.
+
+Coming soon — scikit-learn (AI foundations)
+- Train/test split, scaling, linear vs. logistic regression, k-NN, decision trees, simple metrics (accuracy, precision/recall, confusion matrix), basic overfitting intuition.
+- Starter demo (talk through, do not code-golf):
+```python
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import accuracy_score
+import numpy as np
+
+X = np.array([[1.2, 0.7], [0.3, 0.5], [1.8, 1.1], [0.5, 0.2]])
+y = np.array([1, 0, 1, 0])
+model = make_pipeline(StandardScaler(), LogisticRegression())
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+model.fit(X_train, y_train)
+print("Accuracy:", accuracy_score(y_test, model.predict(X_test)))
+```
+- Challenge to prep: write a function that accepts `X, y`, does a train/test split, fits LogisticRegression, and returns accuracy + the predicted labels.
+
