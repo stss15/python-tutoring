@@ -1,10 +1,17 @@
+export interface TestCase {
+  input: string;
+  expected: string;
+}
+
 export interface Challenge {
   id: string;
   number: number;
+  title?: string;
   description: string;
   hint?: string;
-  starterCode: string; // New field for LeetCode style function stubs
+  starterCode: string;
   solutionCode?: string;
+  testCases?: TestCase[];
 }
 
 export interface Homework {

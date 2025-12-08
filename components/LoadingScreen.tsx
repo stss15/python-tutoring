@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { usePython } from '../contexts/PythonContext';
 
 interface LoadingScreenProps {
   studentName?: string;
@@ -6,93 +7,97 @@ interface LoadingScreenProps {
 }
 
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({ studentName = 'Student', onFinish }) => {
-  const title = 'Python Mastery';
-  const subtitle = 'Learn to Code';
-  const [typed, setTyped] = useState('');
-  const [showSubtitle, setShowSubtitle] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [lines, setLines] = useState<string[]>([]);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { isReady, loadingMessage } = usePython();
+  const [bootStep, setBootStep] = useState(0);
+
+  // Initial Fake Boot Sequence (BIOS checks)
+  useEffect(() => {
+    const fakeBootLines = [
+      { text: 'BIOS DATE 01/01/24 15:23:42 VER 1.0.2', delay: 100 },
+      { text: 'CPU: QUANTUM-XYZ 64-BIT PROCESSOR', delay: 200 },
+      { text: 'CHECKING MEMORY: 64512K OK', delay: 400 },
+      { text: '', delay: 500 },
+      { text: 'DETECTING PRIMARY MASTER ... QUANTUM DRIVE C:', delay: 800 },
+      { text: 'DETECTING PRIMARY SLAVE  ... NONE', delay: 900 },
+      { text: '', delay: 1000 },
+      { text: 'LOADING SYSTEM COMPONENTS:', delay: 1200 },
+    ];
+
+    let timeouts: NodeJS.Timeout[] = [];
+
+    fakeBootLines.forEach((item, idx) => {
+      const timeout = setTimeout(() => {
+        setLines(lines => [...lines, item.text]);
+        if (idx === fakeBootLines.length - 1) {
+          setBootStep(1); // Move to Python Loading phase
+        }
+      }, item.delay);
+      timeouts.push(timeout);
+    });
+
+    return () => timeouts.forEach(clearTimeout);
+  }, []);
+
+  // Phase 2: Live Python Loading Status
+  useEffect(() => {
+    if (bootStep === 1) {
+      setLines(lines => {
+        // Avoid duplicate lines if message hasn't changed
+        const lastLine = lines[lines.length - 1];
+        if (lastLine !== `> ${loadingMessage}`) {
+          return [...lines, `> ${loadingMessage}`];
+        }
+        return lines;
+      });
+    }
+  }, [loadingMessage, bootStep]);
+
+  // Phase 3: Completion
+  useEffect(() => {
+    if (isReady && bootStep >= 1) {
+      const finishSequence = async () => {
+        setLines(prev => [...prev, '', `WELCOME ${studentName.toUpperCase()}`, 'SYSTEM READY.']);
+        await new Promise(r => setTimeout(r, 1500));
+        onFinish();
+      };
+      finishSequence();
+    }
+  }, [isReady, bootStep, onFinish, studentName]);
 
   useEffect(() => {
-    let idx = 0;
-    let cancelled = false;
-    
-    const interval = setInterval(() => {
-      if (cancelled) return;
-      idx += 1;
-      setTyped(title.slice(0, idx));
-      setProgress((idx / title.length) * 100);
-      
-      if (idx >= title.length) {
-        clearInterval(interval);
-        setTimeout(() => {
-          if (!cancelled) setShowSubtitle(true);
-        }, 300);
-        setTimeout(() => {
-          if (!cancelled) onFinish();
-        }, 1500);
-      }
-    }, 100);
-    
-    return () => {
-      cancelled = true;
-      clearInterval(interval);
-    };
-  }, [onFinish]);
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [lines]);
 
   return (
-    <div className="fixed inset-0 bg-[#0a0a0f] flex flex-col items-center justify-center overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+    <div className="fixed inset-0 bg-black text-green-500 font-mono p-10 flex flex-col items-start justify-start overflow-hidden z-[100]">
+      <div className="w-full max-w-4xl mx-auto space-y-2" ref={scrollRef}>
+        {lines.map((line, index) => (
+          <div key={index} className="typewriter-line min-h-[1.5rem] break-words">
+            {line && !line.startsWith('BIOS') && !line.startsWith('CPU') && !line.startsWith('CHECK') && !line.startsWith('DETECT') && !line.startsWith('LOAD') && !line.startsWith('WELC') && !line.startsWith('SYS') && !line.startsWith('>')
+              ? <><span className="mr-2">{'>'}</span>{line}</>
+              : line}
+          </div>
+        ))}
+        <div className="animate-pulse">_</div>
       </div>
-      
-      {/* Python logo */}
-      <div className="relative z-10 mb-8">
-        <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-blue-500/30 animate-bounce" style={{ animationDuration: '2s' }}>
-          <span className="text-5xl">🐍</span>
-        </div>
+
+      <div className="absolute bottom-10 right-10 text-xs text-green-700">
+        STEVEN STEWART TUTORING // SYSTEM BOOT // PYTHON 3.11.0
       </div>
-      
-      {/* Title with typing effect */}
-      <div className="relative z-10 text-center mb-8">
-        <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-2">
-          {typed}
-          <span className="inline-block w-0.5 h-10 bg-blue-400 ml-1 animate-pulse" />
-        </h1>
-        <p className={`text-lg text-slate-400 transition-all duration-500 ${showSubtitle ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          {subtitle}
-        </p>
-      </div>
-      
-      {/* Progress bar */}
-      <div className="relative z-10 w-64 mb-8">
-        <div className="h-1 bg-slate-800 rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-100"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-      </div>
-      
-      {/* Loading message */}
-      <div className="relative z-10 flex items-center gap-3 text-slate-500">
-        <div className="h-5 w-5 border-2 border-slate-700 border-t-blue-500 rounded-full animate-spin" />
-        <span className="text-sm">Preparing your lessons...</span>
-      </div>
-      
-      {/* Skip button */}
-      <button
-        onClick={onFinish}
-        className="relative z-10 mt-8 text-xs uppercase tracking-widest text-slate-600 hover:text-slate-400 transition-colors"
-      >
-        Skip →
-      </button>
-      
-      {/* Credit */}
-      <div className="absolute bottom-6 text-xs text-slate-700">
-        Mr Stewart Python Tutoring
-      </div>
+
+      <style>{`
+        .typewriter-line {
+          animation: fadeIn 0.1s ease-out;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 };
