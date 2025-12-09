@@ -191,8 +191,48 @@ __run_tests()
 
             await pyodide.runPythonAsync(finalCode);
         } catch (error: any) {
-            // Pyodide errors formatted as strings
-            setOutput(prev => [...prev, error.toString()]);
+            // Parse Pyodide error for friendly display
+            const errorStr = error.toString();
+            const formattedErrors: string[] = [];
+
+            // Try to extract the most relevant error info
+            const lines = errorStr.split('\n');
+
+            // Look for the actual error message (usually at the end)
+            let errorType = '';
+            let errorMessage = '';
+            let lineNumber = '';
+
+            for (const line of lines) {
+                // Match error type and message (e.g., "TypeError: can only concatenate str")
+                const errorMatch = line.match(/^(\w+Error):\s*(.+)$/);
+                if (errorMatch) {
+                    errorType = errorMatch[1];
+                    errorMessage = errorMatch[2];
+                }
+
+                // Match line number from traceback (e.g., "line 3, in <module>")
+                const lineMatch = line.match(/line\s+(\d+)/);
+                if (lineMatch) {
+                    lineNumber = lineMatch[1];
+                }
+            }
+
+            if (errorType && errorMessage) {
+                // Format like PyCharm/VSCode
+                if (lineNumber) {
+                    formattedErrors.push(`❌ ${errorType} on line ${lineNumber}:`);
+                } else {
+                    formattedErrors.push(`❌ ${errorType}:`);
+                }
+                formattedErrors.push(`   ${errorMessage}`);
+            } else {
+                // Fallback: show the full error
+                formattedErrors.push('❌ Error:');
+                formattedErrors.push(errorStr);
+            }
+
+            setOutput(prev => [...prev, ...formattedErrors]);
         } finally {
             setIsRunning(false);
         }

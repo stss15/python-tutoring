@@ -30,13 +30,14 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
     const currentChallenge = isExamplePage ? null : chapter.challenges[currentChallengeIndex];
     const exampleContent = chapter.exampleContent;
 
-    const { runCode, isRunning, clearOutput, output } = usePython();
+    const { runCode, isRunning, clearOutput, output, testResults } = usePython();
     const {
         isInSession,
         isTeacher,
         sessionCode,
         participantId,
         syncOutput,
+        syncTestResults,
         playgroundMode,
         playgroundCode,
         setPlaygroundMode,
@@ -124,6 +125,13 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
             syncOutput(output);
         }
     }, [isInSession, isTeacher, output, syncOutput]);
+
+    // Sync test results when they change
+    useEffect(() => {
+        if (isInSession && !isTeacher) {
+            syncTestResults(testResults);
+        }
+    }, [isInSession, isTeacher, testResults, syncTestResults]);
 
     const handleRun = useCallback(() => {
         const code = editorRef.current?.getValue() || editorCode;
@@ -336,8 +344,8 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                 <div className="p-5 border-b border-[#3c3c3c] bg-gradient-to-r from-[#1e1e1e] to-[#252526]">
                     <div className="flex items-center gap-3 mb-3">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-lg ${isExamplePage
-                                ? 'bg-gradient-to-br from-purple-500 to-pink-600'
-                                : 'bg-gradient-to-br from-blue-500 to-indigo-600'
+                            ? 'bg-gradient-to-br from-purple-500 to-pink-600'
+                            : 'bg-gradient-to-br from-blue-500 to-indigo-600'
                             }`}>
                             <span className="text-white font-bold text-sm">
                                 {isExamplePage ? '📚' : currentChallengeIndex + 1}
@@ -360,8 +368,8 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                         <div className="h-1.5 bg-[#3c3c3c] rounded-full overflow-hidden">
                             <div
                                 className={`h-full rounded-full transition-all duration-500 ease-out ${isExamplePage
-                                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 w-full'
-                                        : 'bg-gradient-to-r from-blue-500 to-emerald-500'
+                                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 w-full'
+                                    : 'bg-gradient-to-r from-blue-500 to-emerald-500'
                                     }`}
                                 style={isExamplePage ? {} : { width: `${((currentChallengeIndex + 1) / chapter.challenges.length) * 100}%` }}
                             />
@@ -448,8 +456,8 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                             <button
                                 onClick={() => onSelectChallenge(-1)}
                                 className={`w-3 h-3 rounded-sm transition-all flex-shrink-0 ${isExamplePage
-                                        ? 'bg-purple-500 scale-125'
-                                        : 'bg-purple-500/40 hover:bg-purple-400'
+                                    ? 'bg-purple-500 scale-125'
+                                    : 'bg-purple-500/40 hover:bg-purple-400'
                                     }`}
                                 title="Example Code"
                             />
@@ -474,8 +482,8 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                             onClick={onNextChallenge}
                             disabled={isLastChallenge && !isExamplePage}
                             className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${isLastChallenge && !isExamplePage
-                                    ? 'bg-emerald-600 text-white cursor-default'
-                                    : 'text-slate-400 hover:text-white hover:bg-[#3c3c3c]'
+                                ? 'bg-emerald-600 text-white cursor-default'
+                                : 'text-slate-400 hover:text-white hover:bg-[#3c3c3c]'
                                 }`}
                         >
                             {isLastChallenge && !isExamplePage ? '✓ Complete' : 'Next →'}

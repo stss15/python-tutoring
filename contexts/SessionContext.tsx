@@ -32,6 +32,14 @@ interface StudentCode {
     lastUpdated: number;
 }
 
+interface TestResult {
+    input: string;
+    expected: string;
+    actual: string;
+    passed: boolean;
+    error?: string;
+}
+
 interface SessionData {
     createdAt: number;
     teacherId: string;
@@ -39,6 +47,7 @@ interface SessionData {
     unlockedChapters: Record<string, boolean>;
     studentCode?: StudentCode;
     studentOutput?: string[];
+    studentTestResults?: TestResult[];
     activeChallenge?: {
         chapterId: string;
         challengeIndex: number;
@@ -63,6 +72,7 @@ interface SessionContextType {
     // Code sync (for student)
     syncCode: (code: string, chapterId: string, challengeIndex: number) => void;
     syncOutput: (output: string[]) => void;
+    syncTestResults: (results: TestResult[] | null) => void;
 
     // Navigation sync (teacher -> student)
     activeChallenge: { chapterId: string; challengeIndex: number } | null;
@@ -71,6 +81,7 @@ interface SessionContextType {
     // Code watching (for teacher)
     studentCode: StudentCode | null;
     studentOutput: string[];
+    studentTestResults: TestResult[] | null;
 
     // Chapter unlocks (session-scoped)
     sessionUnlockedChapters: Record<string, boolean>;
@@ -145,6 +156,7 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [participants, setParticipants] = useState<Record<string, Participant>>({});
     const [studentCode, setStudentCode] = useState<StudentCode | null>(null);
     const [studentOutput, setStudentOutput] = useState<string[]>([]);
+    const [studentTestResults, setStudentTestResults] = useState<TestResult[] | null>(null);
     const [activeChallenge, setActiveChallengeState] = useState<{ chapterId: string; challengeIndex: number } | null>(null);
     const [sessionUnlockedChapters, setSessionUnlockedChapters] = useState<Record<string, boolean>>({});
     const [playgroundMode, setPlaygroundModeState] = useState(false);
@@ -170,6 +182,9 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
                     }
                     if (isTeacher && data.studentOutput) {
                         setStudentOutput(data.studentOutput);
+                    }
+                    if (isTeacher && data.studentTestResults !== undefined) {
+                        setStudentTestResults(data.studentTestResults || null);
                     }
                     if (data.activeChallenge) {
                         setActiveChallengeState(data.activeChallenge);
@@ -202,6 +217,9 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 }
                 if (isTeacher && data.studentOutput) {
                     setStudentOutput(data.studentOutput);
+                }
+                if (isTeacher && data.studentTestResults !== undefined) {
+                    setStudentTestResults(data.studentTestResults || null);
                 }
                 if (data.activeChallenge) {
                     setActiveChallengeState(data.activeChallenge);
@@ -406,6 +424,21 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     }, [sessionCode, isTeacher]);
 
+    // Sync student test results
+    const syncTestResults = useCallback((results: TestResult[] | null) => {
+        if (!sessionCode || isTeacher) return;
+
+        if (db) {
+            set(ref(db, `sessions/${sessionCode}/studentTestResults`), results).catch(console.error);
+        } else {
+            const session = getLocalSession(sessionCode);
+            if (session) {
+                session.studentTestResults = results || undefined;
+                saveLocalSession(sessionCode, session);
+            }
+        }
+    }, [sessionCode, isTeacher]);
+
     // Set active challenge (teacher only)
     const setActiveChallenge = useCallback((chapterId: string, challengeIndex: number) => {
         if (!sessionCode || !isTeacher) return;
@@ -503,10 +536,12 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
         leaveSession,
         syncCode,
         syncOutput,
+        syncTestResults,
         activeChallenge,
         setActiveChallenge,
         studentCode,
         studentOutput,
+        studentTestResults,
         sessionUnlockedChapters,
         unlockChapter,
         lockChapter,
