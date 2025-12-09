@@ -201,7 +201,7 @@ const AppContent: React.FC = () => {
         </div>
       )}
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 min-h-0 overflow-hidden">
         <ActivityBar
           chapters={chapters}
           currentChapterId={currentChapterId}
@@ -209,7 +209,7 @@ const AppContent: React.FC = () => {
           unlockedMap={unlockedMap}
           enforceLocksForStudent={!isAdmin}
         />
-        <main className="flex-1 h-full overflow-hidden relative">
+        <main className="flex-1 min-h-0 overflow-hidden relative">
           <IDELayout
             chapter={currentChapter}
             currentChallengeIndex={currentChallengeIndex}
