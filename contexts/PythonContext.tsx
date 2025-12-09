@@ -142,17 +142,27 @@ export const PythonProvider: React.FC<{ children: React.ReactNode }> = ({ childr
                 const testRunnerScript = `
 import json
 import traceback
+import sys
+import io
 
 def __run_tests():
     test_cases = ${JSON.stringify(testCases)}
     results = []
-
+    
+    # Capture original stdout
+    original_stdout = sys.stdout
+    
     for case in test_cases:
         try:
-            expected = eval(case['expected']) # Evaluate string "4" to int 4
-
-            # Capture return value
-            actual = eval(case['input'])
+            expected = eval(case['expected'])
+            
+            # Suppress stdout during test case evaluation
+            sys.stdout = io.StringIO()
+            try:
+                actual = eval(case['input'])
+            finally:
+                # Restore stdout
+                sys.stdout = original_stdout
 
             passed = actual == expected
             results.append({
@@ -162,6 +172,8 @@ def __run_tests():
                 "passed": passed
             })
         except Exception as e:
+            # Make sure stdout is restored on error
+            sys.stdout = original_stdout
             results.append({
                 "input": case['input'],
                 "expected": case['expected'],
