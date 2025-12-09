@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { ref, onValue, set } from 'firebase/database';
+import { db } from './lib/firebase';
 import { ActivityBar } from './components/ActivityBar';
 import { IDELayout } from './components/IDELayout';
 import { TeacherPanel } from './components/TeacherPanel';
@@ -51,16 +53,44 @@ const AppContent: React.FC = () => {
   const [showIntro, setShowIntro] = useState(true);
   const [showSessionModal, setShowSessionModal] = useState(false);
   const [localUnlockedMap, setLocalUnlockedMap] = useState<Record<string, boolean>>(loadUnlockedChapters);
+  const [globalUnlockedMap, setGlobalUnlockedMap] = useState<Record<string, boolean>>({});
   const [isAdmin, setIsAdmin] = useState(false);
   const [showTeacherPanel, setShowTeacherPanel] = useState(false);
 
-  // Use session unlocks in session mode, else local unlocks
+  // Sync Global Unlocks from Firebase
+  useEffect(() => {
+    if (!db) return;
+    const globalRef = ref(db, 'config/globalUnlockedChapters');
+    const unsubscribe = onValue(globalRef, (snapshot) => {
+      const val = snapshot.val();
+      if (val) {
+        setGlobalUnlockedMap(val);
+      } else {
+        setGlobalUnlockedMap({});
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // Use session unlocks in session mode, else local unlocks. Merge with Global.
   const unlockedMap = useMemo(() => {
+    // Start with local default
+    let combined = { ...localUnlockedMap };
+
+    // If in session, session settings override local (but could be additive? User said "solo mode levels as well". Usually 'unlocked' is good.)
+    // Let's say: Unlocked if (Local OR Session OR Global)
+    // Actually, localUnlockedMap is the base.
+
+    // If in session, we rely on session state primarily for the view, but we should merge.
+    // Spec says: "not in session, but permanently... update across network".
+
     if (isInSession) {
-      return sessionUnlockedChapters;
+      combined = { ...combined, ...sessionUnlockedChapters };
     }
-    return localUnlockedMap;
-  }, [isInSession, sessionUnlockedChapters, localUnlockedMap]);
+
+    // Global overrides everything (additive)
+    return { ...combined, ...globalUnlockedMap };
+  }, [isInSession, sessionUnlockedChapters, localUnlockedMap, globalUnlockedMap]);
 
   const currentChapter = chapters.find(c => c.id === currentChapterId) || chapters[0];
   const isCurrentLocked = useMemo(() => !unlockedMap[currentChapter.id], [unlockedMap, currentChapter.id]);
@@ -109,6 +139,18 @@ const AppContent: React.FC = () => {
       setLocalUnlockedMap(newMap);
       saveUnlockedChapters(newMap);
     }
+  };
+
+  // Handle Global Unlock (Teacher Only)
+  const handleGlobalUnlock = (chapterId: string) => {
+    if (!db || !isAdmin) return;
+    set(ref(db, `config/globalUnlockedChapters/${chapterId}`), true);
+  };
+
+  // Handle Global Lock (Teacher Only)
+  const handleGlobalLock = (chapterId: string) => {
+    if (!db || !isAdmin) return;
+    set(ref(db, `config/globalUnlockedChapters/${chapterId}`), false); // or remove()
   };
 
   // Handle chapter selection with lock enforcement
@@ -203,8 +245,8 @@ const AppContent: React.FC = () => {
         />
       )}
 
-      {/* Teacher Mode Banner (when not in session) */}
-      {isAdmin && !isInSession && (
+      {/* Teacher Mode Banner (Always visible if Admin) */}
+      {isAdmin && (
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold text-center py-1.5 shadow-lg flex items-center justify-center gap-4">
           <span>🎓 TEACHER MODE</span>
           <button
@@ -250,6 +292,9 @@ const AppContent: React.FC = () => {
           unlockedMap={unlockedMap}
           onUnlock={handleUnlock}
           onLock={handleLock}
+          globalUnlockedMap={globalUnlockedMap}
+          onGlobalUnlock={handleGlobalUnlock}
+          onGlobalLock={handleGlobalLock}
           onClose={() => setShowTeacherPanel(false)}
         />
       )}
