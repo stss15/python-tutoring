@@ -5,6 +5,7 @@ import { usePython } from '../contexts/PythonContext';
 import { useSession } from '../contexts/SessionContext';
 import { useCollaborativeEditor } from '../hooks/useCollaborativeEditor';
 import { Chapter } from '../types';
+import { homeworkByChapter } from '../data/homework';
 import type { editor } from 'monaco-editor';
 
 interface IDELayoutProps {
@@ -62,6 +63,12 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
         editorInstance: editorReady ? editorRef.current : null,
         monacoInstance: editorReady ? monacoRef.current : null
     });
+
+    // Get homework items
+    const homeworkItems = React.useMemo(
+        () => chapter.homework ?? homeworkByChapter[chapter.id] ?? [],
+        [chapter],
+    );
 
     // Handle editor mount
     const handleEditorMount: OnMount = (editor, monaco) => {
@@ -301,6 +308,40 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                             </ul>
                         </div>
                     </div>
+
+                    {/* Homework Section */}
+                    {homeworkItems.length > 0 && (
+                        <div className="px-5 pb-5">
+                            <div className="p-4 bg-[#1e1e1e] rounded-lg border border-[#3c3c3c]">
+                                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span>🏠</span> Homework
+                                </h4>
+                                <div className="space-y-4">
+                                    {homeworkItems.map((hw, idx) => (
+                                        <div key={idx} className="bg-[#252526] border border-[#3c3c3c] rounded-md p-3">
+                                            <div className="mb-2">
+                                                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
+                                                    Capstone Project
+                                                </span>
+                                            </div>
+                                            <h5 className="text-sm font-bold text-slate-200 mb-1">{hw.title}</h5>
+                                            <p className="text-xs text-slate-400 mb-3 leading-relaxed">{hw.brief}</p>
+                                            {hw.bullets && (
+                                                <ul className="space-y-1.5">
+                                                    {hw.bullets.map((item, i) => (
+                                                        <li key={i} className="flex items-start gap-2 text-xs text-slate-400">
+                                                            <span className="text-indigo-400 mt-0.5">▸</span>
+                                                            <span className="leading-relaxed">{item}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Navigation Footer */}
