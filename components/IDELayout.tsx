@@ -61,8 +61,8 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
         const newCode = value || '';
         setEditorCode(newCode);
 
-        // Only sync if student (not teacher) and in session
-        if (isInSession && !isTeacher) {
+        // Only sync if in session (teacher or student)
+        if (isInSession) {
             if (syncTimerRef.current) {
                 clearTimeout(syncTimerRef.current);
             }
@@ -70,7 +70,7 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                 syncCode(newCode, chapter.id, currentChallengeIndex);
             }, 500) as unknown as number;
         }
-    }, [isInSession, isTeacher, syncCode, chapter.id, currentChallengeIndex]);
+    }, [isInSession, syncCode, chapter.id, currentChallengeIndex]);
 
     // Sync output when it changes (student only)
     useEffect(() => {
@@ -291,11 +291,11 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                     <div className="flex items-center gap-3">
                         {isSpectating && (
                             <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-600/20 border border-purple-500/30 rounded-md">
-                                <span className="text-purple-400 text-xs font-medium">👁️ Watching Student</span>
+                                <span className="text-purple-400 text-xs font-medium">🤝 Collaborating</span>
                             </div>
                         )}
                         <span className="text-xs text-slate-500">
-                            {isRunning ? 'Executing...' : isSpectating ? 'Read-Only' : 'Ready'}
+                            {isRunning ? 'Executing...' : isInSession ? 'Live Session' : 'Ready'}
                         </span>
                         <button
                             onClick={handleRun}
@@ -346,7 +346,7 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                                 bracketPairs: true,
                                 indentation: true,
                             },
-                            readOnly: isSpectating,
+                            readOnly: false,
                         }}
                     />
                 </div>

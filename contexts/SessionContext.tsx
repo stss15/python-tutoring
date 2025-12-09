@@ -333,7 +333,7 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     // Sync student code
     const syncCode = useCallback((code: string, chapterId: string, challengeIndex: number) => {
-        if (!sessionCode || isTeacher) return;
+        if (!sessionCode) return;
 
         const codeData: StudentCode = {
             content: code,
@@ -351,7 +351,7 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 saveLocalSession(sessionCode, session);
             }
         }
-    }, [sessionCode, isTeacher]);
+    }, [sessionCode]);
 
     // Sync student output
     const syncOutput = useCallback((output: string[]) => {
