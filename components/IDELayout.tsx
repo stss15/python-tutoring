@@ -10,7 +10,7 @@ import type { editor } from 'monaco-editor';
 
 interface IDELayoutProps {
     chapter: Chapter;
-    currentChallengeIndex: number;
+    currentChallengeIndex: number; // -1 = Example Code page, 0+ = challenges
     onNextChallenge: () => void;
     onPrevChallenge: () => void;
     onSelectChallenge: (index: number) => void;
@@ -25,7 +25,11 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
     onSelectChallenge,
     isLocked
 }) => {
-    const currentChallenge = chapter.challenges[currentChallengeIndex];
+    // Check if we're on the example page
+    const isExamplePage = currentChallengeIndex === -1;
+    const currentChallenge = isExamplePage ? null : chapter.challenges[currentChallengeIndex];
+    const exampleContent = chapter.exampleContent;
+
     const { runCode, isRunning, clearOutput, output } = usePython();
     const {
         isInSession,
@@ -39,8 +43,16 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
         syncPlaygroundCode
     } = useSession();
 
-    const [editorCode, setEditorCode] = useState(currentChallenge?.starterCode || '');
-    const [savedChallengeCode, setSavedChallengeCode] = useState(''); // Store code when switching to playground
+    // Get initial code based on whether we're on example page or challenge
+    const getInitialCode = useCallback(() => {
+        if (isExamplePage && exampleContent) {
+            return exampleContent.runnable;
+        }
+        return currentChallenge?.starterCode || '';
+    }, [isExamplePage, exampleContent, currentChallenge]);
+
+    const [editorCode, setEditorCode] = useState(getInitialCode());
+    const [savedChallengeCode, setSavedChallengeCode] = useState('');
     const [showHint, setShowHint] = useState(false);
     const [showSolution, setShowSolution] = useState(false);
 
@@ -77,35 +89,34 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
         setEditorReady(true);
 
         // Set initial content
-        if (currentChallenge?.starterCode) {
-            editor.setValue(currentChallenge.starterCode);
-        }
+        const initialCode = getInitialCode();
+        editor.setValue(initialCode);
     };
 
     // Update editor when challenge changes
     useEffect(() => {
-        if (currentChallenge && prevChallengeIdRef.current !== currentChallenge.id) {
-            prevChallengeIdRef.current = currentChallenge.id;
-            const starterCode = currentChallenge.starterCode || '';
-            setEditorCode(starterCode);
+        const currentId = isExamplePage ? '__example__' : currentChallenge?.id;
+
+        if (currentId && prevChallengeIdRef.current !== currentId) {
+            prevChallengeIdRef.current = currentId;
+            const newCode = getInitialCode();
+            setEditorCode(newCode);
             setShowHint(false);
             setShowSolution(false);
             clearOutput();
 
             // Update the shared document if in collaborative mode
             if (isInSession && editorRef.current) {
-                // For collaborative mode, set the text in Yjs document
                 if (isConnected) {
-                    setText(starterCode);
+                    setText(newCode);
                 } else {
-                    // Fallback for non-collaborative
-                    editorRef.current.setValue(starterCode);
+                    editorRef.current.setValue(newCode);
                 }
             } else if (editorRef.current) {
-                editorRef.current.setValue(starterCode);
+                editorRef.current.setValue(newCode);
             }
         }
-    }, [currentChallenge?.id, currentChallenge?.starterCode, clearOutput, isInSession, isConnected, setText]);
+    }, [currentChallengeIndex, isExamplePage, currentChallenge?.id, getInitialCode, clearOutput, isInSession, isConnected, setText]);
 
     // Sync output when it changes
     useEffect(() => {
@@ -115,16 +126,16 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
     }, [isInSession, isTeacher, output, syncOutput]);
 
     const handleRun = useCallback(() => {
-        // Get code from editor directly for most accurate state
         const code = editorRef.current?.getValue() || editorCode;
         if (!code.trim()) return;
-        // In playground mode, run without test cases
-        if (playgroundMode) {
+
+        // On example page or playground mode, run without test cases
+        if (isExamplePage || playgroundMode) {
             runCode(code);
         } else {
             runCode(code, currentChallenge?.testCases);
         }
-    }, [editorCode, runCode, currentChallenge, playgroundMode]);
+    }, [editorCode, runCode, currentChallenge, playgroundMode, isExamplePage]);
 
     // Keyboard shortcut for running code
     useEffect(() => {
@@ -139,23 +150,20 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
     }, [handleRun]);
 
     const resetCode = () => {
-        if (currentChallenge) {
-            const starterCode = currentChallenge.starterCode || '';
-            setEditorCode(starterCode);
-            clearOutput();
+        const resetToCode = getInitialCode();
+        setEditorCode(resetToCode);
+        clearOutput();
 
-            if (isConnected) {
-                setText(starterCode);
-            } else if (editorRef.current) {
-                editorRef.current.setValue(starterCode);
-            }
+        if (isConnected) {
+            setText(resetToCode);
+        } else if (editorRef.current) {
+            editorRef.current.setValue(resetToCode);
         }
     };
 
-    // Track local editor changes (for non-collaborative mode sync)
+    // Track local editor changes
     const handleEditorChange = useCallback((value: string | undefined) => {
         setEditorCode(value || '');
-        // Sync playground code if in playground mode
         if (playgroundMode && isInSession) {
             syncPlaygroundCode(value || '');
         }
@@ -164,17 +172,14 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
     // Toggle playground mode
     const handleTogglePlayground = useCallback(() => {
         if (playgroundMode) {
-            // Switching back to challenge mode - restore saved code
             if (savedChallengeCode && editorRef.current) {
                 editorRef.current.setValue(savedChallengeCode);
                 setEditorCode(savedChallengeCode);
             }
             setPlaygroundMode(false);
         } else {
-            // Switching to playground mode - save current code
             const currentCode = editorRef.current?.getValue() || editorCode;
             setSavedChallengeCode(currentCode);
-            // Load playground code or start fresh
             const pgCode = playgroundCode || '# Playground - experiment freely!\n\n';
             if (editorRef.current) {
                 editorRef.current.setValue(pgCode);
@@ -185,8 +190,143 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
         clearOutput();
     }, [playgroundMode, savedChallengeCode, editorCode, playgroundCode, setPlaygroundMode, clearOutput]);
 
-    // Collaborator count for display
     const collaboratorCount = collaborators.size;
+
+    // Render Example Content Panel
+    const renderExampleContent = () => {
+        if (!exampleContent) {
+            return (
+                <div className="p-5">
+                    <h3 className="text-lg font-bold text-white mb-3">📚 Example Code</h3>
+                    <p className="text-slate-400">No example content available for this chapter.</p>
+                </div>
+            );
+        }
+
+        return (
+            <div className="p-5 space-y-6">
+                {/* Introduction */}
+                <div>
+                    <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                        <span>📚</span> Example Code
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed text-sm">
+                        {exampleContent.intro}
+                    </p>
+                </div>
+
+                {/* Code Blocks with Explanations */}
+                <div className="space-y-4">
+                    {exampleContent.codeBlocks.map((block, idx) => (
+                        <div key={idx} className="bg-[#1e1e1e] rounded-lg border border-[#3c3c3c] overflow-hidden">
+                            <pre className="p-3 text-sm font-mono text-emerald-300 bg-[#1a1a1a] border-b border-[#3c3c3c] overflow-x-auto">
+                                {block.code}
+                            </pre>
+                            <p className="p-3 text-xs text-slate-400 leading-relaxed">
+                                {block.explanation}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Tips */}
+                {exampleContent.tips && exampleContent.tips.length > 0 && (
+                    <div className="p-4 bg-[#1e1e1e] rounded-lg border border-[#3c3c3c]">
+                        <h4 className="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                            <span>💡</span> Tips
+                        </h4>
+                        <ul className="space-y-2 text-xs text-slate-400">
+                            {exampleContent.tips.map((tip, idx) => (
+                                <li key={idx} className="flex items-start gap-2">
+                                    <span className="text-amber-400 mt-0.5">•</span>
+                                    <span>{tip}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+
+                {/* Call to Action */}
+                <div className="p-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg">
+                    <p className="text-sm text-blue-200">
+                        <strong>Try it!</strong> The code on the right is ready to run. Edit it and press <kbd className="px-1.5 py-0.5 bg-[#3c3c3c] rounded text-white text-xs">Run Code</kbd> to see the output.
+                    </p>
+                </div>
+            </div>
+        );
+    };
+
+    // Render Challenge Content Panel (existing logic)
+    const renderChallengeContent = () => {
+        return (
+            <div className="p-5">
+                {/* Final Assessment Badge */}
+                {isFinalAssessment && (
+                    <div className="mb-4 p-3 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 rounded-lg">
+                        <div className="flex items-center gap-2 text-amber-400 font-semibold text-sm">
+                            <span>🏆</span>
+                            <span>FINAL ASSESSMENT</span>
+                        </div>
+                        <p className="text-xs text-amber-200/70 mt-1">
+                            Complete this challenge to master the chapter!
+                        </p>
+                    </div>
+                )}
+
+                {/* Challenge Title */}
+                <h3 className="text-lg font-bold text-white mb-3 leading-tight">
+                    {currentChallenge?.title || `Challenge ${currentChallenge?.number}`}
+                </h3>
+
+                {/* Challenge Description */}
+                <div className="prose prose-invert prose-sm max-w-none">
+                    <p className="text-slate-300 leading-relaxed text-sm">
+                        {currentChallenge?.description}
+                    </p>
+                </div>
+
+                {/* Expandable Hint */}
+                {currentChallenge?.hint && (
+                    <div className="mt-5">
+                        <button
+                            onClick={() => setShowHint(!showHint)}
+                            className="flex items-center gap-2 text-amber-400 hover:text-amber-300 text-sm font-medium transition-colors"
+                        >
+                            <span className="text-lg">{showHint ? '💡' : '🤔'}</span>
+                            <span>{showHint ? 'Hide Hint' : 'Need a hint?'}</span>
+                        </button>
+                        {showHint && (
+                            <div className="mt-3 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg animate-fade-in">
+                                <p className="text-amber-200/90 text-sm leading-relaxed">
+                                    {currentChallenge.hint}
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* Show Solution Toggle */}
+                {currentChallenge?.solutionCode && (
+                    <div className="mt-4">
+                        <button
+                            onClick={() => setShowSolution(!showSolution)}
+                            className="flex items-center gap-2 text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors"
+                        >
+                            <span className="text-lg">{showSolution ? '🔒' : '🔓'}</span>
+                            <span>{showSolution ? 'Hide Solution' : 'Reveal Solution'}</span>
+                        </button>
+                        {showSolution && (
+                            <div className="mt-3 p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg animate-fade-in">
+                                <pre className="text-purple-200/90 text-xs font-mono overflow-x-auto whitespace-pre-wrap">
+                                    {currentChallenge.solutionCode}
+                                </pre>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+        );
+    };
 
     return (
         <div className="flex h-full w-full bg-[#1e1e1e] overflow-hidden">
@@ -195,8 +335,13 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                 {/* Header */}
                 <div className="p-5 border-b border-[#3c3c3c] bg-gradient-to-r from-[#1e1e1e] to-[#252526]">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-                            <span className="text-white font-bold text-sm">{currentChallengeIndex + 1}</span>
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-lg ${isExamplePage
+                                ? 'bg-gradient-to-br from-purple-500 to-pink-600'
+                                : 'bg-gradient-to-br from-blue-500 to-indigo-600'
+                            }`}>
+                            <span className="text-white font-bold text-sm">
+                                {isExamplePage ? '📚' : currentChallengeIndex + 1}
+                            </span>
                         </div>
                         <div className="flex-1 min-w-0">
                             <h2 className="text-base font-semibold text-white truncate">{chapter.title}</h2>
@@ -207,110 +352,52 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                     {/* Progress Bar */}
                     <div className="mt-3">
                         <div className="flex justify-between text-xs text-slate-500 mb-1.5">
-                            <span>Progress</span>
-                            <span className="text-blue-400">{currentChallengeIndex + 1} / {chapter.challenges.length}</span>
+                            <span>{isExamplePage ? 'Examples' : 'Progress'}</span>
+                            <span className="text-blue-400">
+                                {isExamplePage ? 'Learn First!' : `${currentChallengeIndex + 1} / ${chapter.challenges.length}`}
+                            </span>
                         </div>
                         <div className="h-1.5 bg-[#3c3c3c] rounded-full overflow-hidden">
                             <div
-                                className="h-full bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full transition-all duration-500 ease-out"
-                                style={{ width: `${((currentChallengeIndex + 1) / chapter.challenges.length) * 100}%` }}
+                                className={`h-full rounded-full transition-all duration-500 ease-out ${isExamplePage
+                                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 w-full'
+                                        : 'bg-gradient-to-r from-blue-500 to-emerald-500'
+                                    }`}
+                                style={isExamplePage ? {} : { width: `${((currentChallengeIndex + 1) / chapter.challenges.length) * 100}%` }}
                             />
                         </div>
                     </div>
                 </div>
 
-                {/* Challenge Content */}
+                {/* Content Area */}
                 <div className="flex-1 overflow-y-auto">
-                    <div className="p-5">
-                        {/* Final Assessment Badge */}
-                        {isFinalAssessment && (
-                            <div className="mb-4 p-3 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 rounded-lg">
-                                <div className="flex items-center gap-2 text-amber-400 font-semibold text-sm">
-                                    <span>🏆</span>
-                                    <span>FINAL ASSESSMENT</span>
-                                </div>
-                                <p className="text-xs text-amber-200/70 mt-1">
-                                    Complete this challenge to master the chapter!
-                                </p>
+                    {isExamplePage ? renderExampleContent() : renderChallengeContent()}
+
+                    {/* Quick Tips Section - only show on challenge pages */}
+                    {!isExamplePage && (
+                        <div className="px-5 pb-5">
+                            <div className="p-4 bg-[#1e1e1e] rounded-lg border border-[#3c3c3c]">
+                                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Quick Tips</h4>
+                                <ul className="space-y-2 text-xs text-slate-400">
+                                    <li className="flex items-start gap-2">
+                                        <span className="text-emerald-400 mt-0.5">⌨️</span>
+                                        <span>Press <kbd className="px-1.5 py-0.5 bg-[#3c3c3c] rounded text-white">Ctrl</kbd> + <kbd className="px-1.5 py-0.5 bg-[#3c3c3c] rounded text-white">Enter</kbd> to run</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <span className="text-blue-400 mt-0.5">💾</span>
+                                        <span>Your code auto-saves in the editor</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <span className="text-amber-400 mt-0.5">🧪</span>
+                                        <span>Test with <code className="text-amber-200">print()</code> statements</span>
+                                    </li>
+                                </ul>
                             </div>
-                        )}
-
-                        {/* Challenge Title */}
-                        <h3 className="text-lg font-bold text-white mb-3 leading-tight">
-                            {currentChallenge?.title || `Challenge ${currentChallenge?.number}`}
-                        </h3>
-
-                        {/* Challenge Description */}
-                        <div className="prose prose-invert prose-sm max-w-none">
-                            <p className="text-slate-300 leading-relaxed text-sm">
-                                {currentChallenge?.description}
-                            </p>
                         </div>
-
-                        {/* Expandable Hint */}
-                        {currentChallenge?.hint && (
-                            <div className="mt-5">
-                                <button
-                                    onClick={() => setShowHint(!showHint)}
-                                    className="flex items-center gap-2 text-amber-400 hover:text-amber-300 text-sm font-medium transition-colors"
-                                >
-                                    <span className="text-lg">{showHint ? '💡' : '🤔'}</span>
-                                    <span>{showHint ? 'Hide Hint' : 'Need a hint?'}</span>
-                                </button>
-                                {showHint && (
-                                    <div className="mt-3 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg animate-fade-in">
-                                        <p className="text-amber-200/90 text-sm leading-relaxed">
-                                            {currentChallenge.hint}
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        {/* Show Solution Toggle */}
-                        {currentChallenge?.solutionCode && (
-                            <div className="mt-4">
-                                <button
-                                    onClick={() => setShowSolution(!showSolution)}
-                                    className="flex items-center gap-2 text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors"
-                                >
-                                    <span className="text-lg">{showSolution ? '🔒' : '🔓'}</span>
-                                    <span>{showSolution ? 'Hide Solution' : 'Reveal Solution'}</span>
-                                </button>
-                                {showSolution && (
-                                    <div className="mt-3 p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg animate-fade-in">
-                                        <pre className="text-purple-200/90 text-xs font-mono overflow-x-auto whitespace-pre-wrap">
-                                            {currentChallenge.solutionCode}
-                                        </pre>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Quick Tips Section */}
-                    <div className="px-5 pb-5">
-                        <div className="p-4 bg-[#1e1e1e] rounded-lg border border-[#3c3c3c]">
-                            <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Quick Tips</h4>
-                            <ul className="space-y-2 text-xs text-slate-400">
-                                <li className="flex items-start gap-2">
-                                    <span className="text-emerald-400 mt-0.5">⌨️</span>
-                                    <span>Press <kbd className="px-1.5 py-0.5 bg-[#3c3c3c] rounded text-white">Ctrl</kbd> + <kbd className="px-1.5 py-0.5 bg-[#3c3c3c] rounded text-white">Enter</kbd> to run</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <span className="text-blue-400 mt-0.5">💾</span>
-                                    <span>Your code auto-saves in the editor</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <span className="text-amber-400 mt-0.5">🧪</span>
-                                    <span>Test with <code className="text-amber-200">print()</code> statements</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    )}
 
                     {/* Homework Section */}
-                    {homeworkItems.length > 0 && (
+                    {homeworkItems.length > 0 && !isExamplePage && (
                         <div className="px-5 pb-5">
                             <div className="p-4 bg-[#1e1e1e] rounded-lg border border-[#3c3c3c]">
                                 <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
@@ -349,14 +436,25 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                     <div className="flex items-center justify-between gap-3">
                         <button
                             onClick={onPrevChallenge}
-                            disabled={currentChallengeIndex === 0}
+                            disabled={isExamplePage}
                             className="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-[#3c3c3c] rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                         >
                             ← Previous
                         </button>
 
-                        {/* Challenge Dots */}
-                        <div className="flex items-center gap-1.5 overflow-x-auto max-w-[140px] py-1">
+                        {/* Challenge Dots with Example dot */}
+                        <div className="flex items-center gap-1.5 overflow-x-auto max-w-[160px] py-1">
+                            {/* Example Code dot */}
+                            <button
+                                onClick={() => onSelectChallenge(-1)}
+                                className={`w-3 h-3 rounded-sm transition-all flex-shrink-0 ${isExamplePage
+                                        ? 'bg-purple-500 scale-125'
+                                        : 'bg-purple-500/40 hover:bg-purple-400'
+                                    }`}
+                                title="Example Code"
+                            />
+
+                            {/* Challenge dots */}
                             {chapter.challenges.map((_, i) => (
                                 <button
                                     key={i}
@@ -374,13 +472,13 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
 
                         <button
                             onClick={onNextChallenge}
-                            disabled={isLastChallenge}
-                            className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${isLastChallenge
-                                ? 'bg-emerald-600 text-white cursor-default'
-                                : 'text-slate-400 hover:text-white hover:bg-[#3c3c3c]'
+                            disabled={isLastChallenge && !isExamplePage}
+                            className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${isLastChallenge && !isExamplePage
+                                    ? 'bg-emerald-600 text-white cursor-default'
+                                    : 'text-slate-400 hover:text-white hover:bg-[#3c3c3c]'
                                 }`}
                         >
-                            {isLastChallenge ? '✓ Complete' : 'Next →'}
+                            {isLastChallenge && !isExamplePage ? '✓ Complete' : 'Next →'}
                         </button>
                     </div>
                 </div>
@@ -393,7 +491,9 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-2 px-3 py-1.5 bg-[#1e1e1e] rounded-md border border-[#3c3c3c]">
                             <span className="text-yellow-500 text-sm">🐍</span>
-                            <span className="text-xs text-slate-300 font-mono">main.py</span>
+                            <span className="text-xs text-slate-300 font-mono">
+                                {isExamplePage ? 'examples.py' : 'main.py'}
+                            </span>
                         </div>
                         <button
                             onClick={resetCode}
@@ -435,7 +535,7 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                         )}
 
                         <span className="text-xs text-slate-500">
-                            {isRunning ? 'Executing...' : isInSession ? 'Collaborative' : 'Ready'}
+                            {isRunning ? 'Executing...' : isExamplePage ? 'Examples' : isInSession ? 'Collaborative' : 'Ready'}
                         </span>
                         <button
                             onClick={handleRun}
@@ -465,7 +565,7 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                     <Editor
                         height="100%"
                         defaultLanguage="python"
-                        defaultValue={currentChallenge?.starterCode || ''}
+                        defaultValue={getInitialCode()}
                         onChange={handleEditorChange}
                         onMount={handleEditorMount}
                         theme="vs-dark"

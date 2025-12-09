@@ -20,12 +20,25 @@ export interface Homework {
   bullets?: string[];
 }
 
+export interface ExampleCodeBlock {
+  code: string;
+  explanation: string;
+}
+
+export interface ExampleContent {
+  intro: string;
+  codeBlocks: ExampleCodeBlock[];
+  tips?: string[];
+  runnable: string; // Code to put in the editor for students to run
+}
+
 export interface Chapter {
   id: string;
   title: string;
   description: string;
   explanation: string;
   exampleCode: string;
+  exampleContent?: ExampleContent;
   challenges: Challenge[];
   requiresLocalEnv?: boolean;
   homework?: Homework[];

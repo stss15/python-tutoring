@@ -91,7 +91,10 @@ export const PythonProvider: React.FC<{ children: React.ReactNode }> = ({ childr
                     indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/'
                 });
 
-                // Setup standard output capture
+                // Line buffer for raw output
+                let lineBuffer = '';
+
+                // Setup standard output capture - use raw mode for immediate output
                 py.setStdout({
                     batched: (msg) => {
                         if (msg.startsWith('__TEST_RESULTS__:')) {
@@ -103,13 +106,26 @@ export const PythonProvider: React.FC<{ children: React.ReactNode }> = ({ childr
                                 console.error("Failed to parse test results", e);
                             }
                         } else {
-                            outputBuffer.current.push(msg);
+                            // Split on newlines and push each line
+                            const lines = msg.split('\n');
+                            lines.forEach((line, idx) => {
+                                if (idx < lines.length - 1 || line.length > 0) {
+                                    outputBuffer.current.push(line);
+                                }
+                            });
+                            // Force immediate state update
+                            setOutput(prev => [...prev, ...outputBuffer.current]);
+                            outputBuffer.current = [];
                         }
                     }
                 });
 
                 py.setStderr({
-                    batched: (msg) => outputBuffer.current.push(`Error: ${msg}`)
+                    batched: (msg) => {
+                        outputBuffer.current.push(`Error: ${msg}`);
+                        setOutput(prev => [...prev, ...outputBuffer.current]);
+                        outputBuffer.current = [];
+                    }
                 });
 
                 setLoadingMessage('Loading standard libraries...');
@@ -186,6 +202,11 @@ __run_tests()
             // Pyodide errors formated as strings
             outputBuffer.current.push(error.toString());
         } finally {
+            // Explicit flush of output buffer to ensure print statements appear
+            if (outputBuffer.current.length > 0) {
+                setOutput(prev => [...prev, ...outputBuffer.current]);
+                outputBuffer.current = [];
+            }
             setIsRunning(false);
         }
     }, [pyodide]);

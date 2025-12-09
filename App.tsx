@@ -49,7 +49,7 @@ const AppContent: React.FC = () => {
   } = useSession();
 
   const [currentChapterId, setCurrentChapterId] = useState(chapters[0].id);
-  const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
+  const [currentChallengeIndex, setCurrentChallengeIndex] = useState(-1); // -1 = Example page
   const [showIntro, setShowIntro] = useState(true);
   const [showSessionModal, setShowSessionModal] = useState(false);
   const [localUnlockedMap, setLocalUnlockedMap] = useState<Record<string, boolean>>(loadUnlockedChapters);
@@ -161,7 +161,7 @@ const AppContent: React.FC = () => {
       return;
     }
     setCurrentChapterId(chapterId);
-    setCurrentChallengeIndex(0);
+    setCurrentChallengeIndex(-1); // Start on Example page when switching chapters
   };
 
   // Secret admin activation via keyboard shortcut
@@ -278,7 +278,7 @@ const AppContent: React.FC = () => {
             chapter={currentChapter}
             currentChallengeIndex={currentChallengeIndex}
             onNextChallenge={() => setCurrentChallengeIndex(i => Math.min(i + 1, currentChapter.challenges.length - 1))}
-            onPrevChallenge={() => setCurrentChallengeIndex(i => Math.max(i - 1, 0))}
+            onPrevChallenge={() => setCurrentChallengeIndex(i => Math.max(i - 1, -1))} // Allow going back to Example (-1)}
             onSelectChallenge={setCurrentChallengeIndex}
             isLocked={isCurrentLocked}
           />

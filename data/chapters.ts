@@ -1,4 +1,4 @@
-import { Chapter } from "../types";
+import { Chapter, ExampleContent } from "../types";
 import { homeworkByChapter } from "./homework";
 
 const basics_challenges = [
@@ -773,102 +773,100 @@ const for_challenges = [
         id: "042",
         number: 42,
         title: "Name Repeat",
-        description: "Write a function called `name_repeat` that takes a name. It should return the name repeated three times, with each repetition on a new line.",
-        starterCode: `def name_repeat(name: str) -> str:
+        description: "Write a function called `name_repeat` that takes a name. It should print the name three times, with each repetition on a new line. Then call your function with a name of your choice.",
+        hint: "Use a for loop with range(3) and print the name inside the loop.",
+        starterCode: `def name_repeat(name: str):
     # Your code here
-    pass`,
-        solutionCode: `def name_repeat(name: str) -> str:
-    return (name + "\\n") * 3`,
-        testCases: [
-            { input: "name_repeat('Bob').strip()", expected: "'Bob\\nBob\\nBob'" },
-            { input: "name_repeat('A').strip()", expected: "'A\\nA\\nA'" },
-            { input: "name_repeat('Python').strip()", expected: "'Python\\nPython\\nPython'" },
-            { input: "name_repeat('123').strip()", expected: "'123\\n123\\n123'" }
-        ]
+    pass
+
+# Call your function here
+name_repeat("Bob")`,
+        solutionCode: `def name_repeat(name: str):
+    for i in range(3):
+        print(name)
+
+name_repeat("Bob")`
+        // No test cases - visual verification
     },
     {
         id: "043",
         number: 43,
         title: "Name Count",
-        description: "Write a function called `name_count` that accepts a name and a number. It should return the name repeated that many times, with each repetition on a new line.",
-        starterCode: `def name_count(name: str, count: int) -> str:
+        description: "Write a function called `name_count` that accepts a name and a number. It should print the name that many times, with each repetition on a new line. Then call your function.",
+        hint: "Use range(count) to control how many times to loop.",
+        starterCode: `def name_count(name: str, count: int):
     # Your code here
-    pass`,
-        solutionCode: `def name_count(name: str, count: int) -> str:
-    return (name + "\\n") * count`,
-        testCases: [
-            { input: "name_count('Bob', 2).strip()", expected: "'Bob\\nBob'" },
-            { input: "name_count('Hi', 1).strip()", expected: "'Hi'" },
-            { input: "name_count('Loop', 3).strip()", expected: "'Loop\\nLoop\\nLoop'" },
-            { input: "name_count('Xa', 0).strip()", expected: "''" }
-        ]
+    pass
+
+# Call your function here
+name_count("Hello", 5)`,
+        solutionCode: `def name_count(name: str, count: int):
+    for i in range(count):
+        print(name)
+
+name_count("Hello", 5)`
     },
     {
         id: "044",
         number: 44,
         title: "Name Chars",
-        description: "Write a function called `name_chars` that takes a name. It should return a string where every character of the name is on a new line.",
-        starterCode: `def name_chars(name: str) -> str:
+        description: "Write a function called `name_chars` that takes a name. It should print every character of the name on a new line. Then call your function.",
+        hint: "Loop through the string directly: for char in name",
+        starterCode: `def name_chars(name: str):
     # Your code here
-    pass`,
-        solutionCode: `def name_chars(name: str) -> str:
-    output = ""
+    pass
+
+# Call your function here
+name_chars("Python")`,
+        solutionCode: `def name_chars(name: str):
     for char in name:
-        output += char + "\\n"
-    return output`,
-        testCases: [
-            { input: "name_chars('Bob').strip()", expected: "'B\\no\\nb'" },
-            { input: "name_chars('Hi').strip()", expected: "'H\\ni'" },
-            { input: "name_chars('World').strip()", expected: "'W\\no\\nr\\nl\\nd'" },
-            { input: "name_chars('A').strip()", expected: "'A'" }
-        ]
+        print(char)
+
+name_chars("Python")`
     },
     {
         id: "045",
         number: 45,
         title: "Name Chars Count",
-        description: "Write a function called `name_chars_count` that takes a name and a number. It should iterate through each character of the name and display it that many times, with each repetition on a new line.",
-        starterCode: `def name_chars_count(name: str, count: int) -> str:
+        description: "Write a function called `name_chars_count` that takes a name and a number. It should print each character of the name that many times before moving to the next character. Then call your function.",
+        hint: "Use nested loops: outer loop for characters, inner loop for repetitions.",
+        starterCode: `def name_chars_count(name: str, count: int):
     # Your code here
-    pass`,
-        solutionCode: `def name_chars_count(name: str, count: int) -> str:
-    output = ""
-    for x in name:
+    pass
+
+# Call your function here
+name_chars_count("Hi", 3)`,
+        solutionCode: `def name_chars_count(name: str, count: int):
+    for char in name:
         for i in range(count):
-            output += x + "\\n"
-    return output`,
-        testCases: [
-            { input: "name_chars_count('Bo', 2).strip()", expected: "'B\\nB\\no\\no'" },
-            { input: "name_chars_count('Hi', 1).strip()", expected: "'H\\ni'" },
-            { input: "name_chars_count('A', 3).strip()", expected: "'A\\nA\\nA'" },
-            { input: "name_chars_count('', 5).strip()", expected: "''" }
-        ]
+            print(char)
+
+name_chars_count("Hi", 3)`
     },
     {
         id: "046",
         number: 46,
         title: "Times Table",
-        description: "Write a function called `times_table` that takes a number. It should return a string containing the times table for that number from 1 to 10, formatted as '1 x [num] = [result]', '2 x [num] = [result]', etc., each on a new line.",
-        starterCode: `def times_table(num: int) -> str:
+        description: "Write a function called `times_table` that takes a number. It should print the times table for that number from 1 to 10, formatted as '1 x [num] = [result]'. Then call your function.",
+        hint: "Use range(1, 11) and f-strings to format the output.",
+        starterCode: `def times_table(num: int):
     # Your code here
-    pass`,
-        solutionCode: `def times_table(num: int) -> str:
-    output = ""
+    pass
+
+# Call your function here
+times_table(7)`,
+        solutionCode: `def times_table(num: int):
     for i in range(1, 11):
-        output += f"{i} x {num} = {i * num}\\n"
-    return output`,
-        testCases: [
-            { input: "times_table(5).splitlines()[0]", expected: "'1 x 5 = 5'" },
-            { input: "times_table(5).splitlines()[4]", expected: "'5 x 5 = 25'" },
-            { input: "times_table(3).splitlines()[9]", expected: "'10 x 3 = 30'" },
-            { input: "times_table(10).splitlines()[0]", expected: "'1 x 10 = 10'" }
-        ]
+        print(f"{i} x {num} = {i * num}")
+
+times_table(7)`
     },
     {
         id: "047",
         number: 47,
         title: "Count Down",
         description: "Write a function called `count_down_50` that takes a number (below 50). It should return a list of numbers counting down from 50 to that number (inclusive).",
+        hint: "Use range(50, num - 1, -1) to count backwards.",
         starterCode: `def count_down_50(num: int) -> list:
     # Your code here
     pass`,
@@ -888,26 +886,30 @@ const for_challenges = [
         id: "048",
         number: 48,
         title: "Name Conditional Loop",
-        description: "Write a function called `name_loop_conditional` that takes a name and a number. If the number is less than 10, return the name repeated that many times. If the number is 10 or higher, return the message 'Too high' three times.",
-        starterCode: `def name_loop_conditional(name: str, count: int) -> str:
+        description: "Write a function called `name_loop_conditional` that takes a name and a number. If the number is less than 10, print the name that many times. If the number is 10 or higher, print 'Too high' three times. Then call your function.",
+        hint: "Use an if statement to check the condition, then loop with range().",
+        starterCode: `def name_loop_conditional(name: str, count: int):
     # Your code here
-    pass`,
-        solutionCode: `def name_loop_conditional(name: str, count: int) -> str:
+    pass
+
+# Call your function here
+name_loop_conditional("Bob", 5)`,
+        solutionCode: `def name_loop_conditional(name: str, count: int):
     if count < 10:
-        return (name + "\\n") * count
-    return ("Too high\\n") * 3`,
-        testCases: [
-            { input: "name_loop_conditional('Bob', 2).strip()", expected: "'Bob\\nBob'" },
-            { input: "name_loop_conditional('Bob', 12).strip()", expected: "'Too high\\nToo high\\nToo high'" },
-            { input: "name_loop_conditional('Hi', 9).strip().count('\\n')", expected: "8" }, // 9 lines, 8 newlines inside? count newlines
-            { input: "name_loop_conditional('Test', 10).strip()", expected: "'Too high\\nToo high\\nToo high'" }
-        ]
+        for i in range(count):
+            print(name)
+    else:
+        for i in range(3):
+            print("Too high")
+
+name_loop_conditional("Bob", 5)`
     },
     {
         id: "049",
         number: 49,
         title: "Sum List",
         description: "Write a function called `sum_list` that accepts a list of numbers. It should calculate and return the total sum of all the numbers in the list.",
+        hint: "Create a total variable, loop through the list, and add each number.",
         starterCode: `def sum_list(nums: list) -> int:
     # Your code here
     pass`,
@@ -928,6 +930,7 @@ const for_challenges = [
         number: 50,
         title: "Count Direction",
         description: "Write a function called `count_direction` that takes a direction ('up' or 'down') and a number. If 'up', return a list of numbers from 1 to that number. If 'down', return a list of numbers from 20 down to that number. Otherwise, return an empty list.",
+        hint: "Use if/elif to check direction, and range() with different parameters for each.",
         starterCode: `def count_direction(direction: str, num: int) -> list:
     # Your code here
     pass`,
@@ -951,23 +954,22 @@ const for_challenges = [
         id: "051",
         number: 51,
         title: "Invite Guests",
-        description: "Write a function called `invite_guests` that accepts a list of guest names. If there look to be fewer than 10 guests, return a string saying '[Name] has been invited' for each one. If there are 10 or more, return 'Too many people'.",
-        starterCode: `def invite_guests(guests: list) -> str:
+        description: "Write a function called `invite_guests` that accepts a list of guest names. If there are fewer than 10 guests, print '[Name] has been invited' for each one. If there are 10 or more, print 'Too many people'. Then call your function.",
+        hint: "Use len() to check the guest count, then loop if under 10.",
+        starterCode: `def invite_guests(guests: list):
     # Your code here
-    pass`,
-        solutionCode: `def invite_guests(guests: list) -> str:
+    pass
+
+# Call your function here
+invite_guests(["Bob", "Alice", "Charlie"])`,
+        solutionCode: `def invite_guests(guests: list):
     if len(guests) < 10:
-        output = ""
         for name in guests:
-            output += f"{name} has been invited\\n"
-        return output
-    return "Too many people"`,
-        testCases: [
-            { input: "invite_guests(['Bob', 'Alice']).strip()", expected: "'Bob has been invited\\nAlice has been invited'" },
-            { input: "invite_guests(['A'] * 10)", expected: "'Too many people'" },
-            { input: "invite_guests(['One'])", expected: "'One has been invited\\n'" },
-            { input: "invite_guests([]).strip()", expected: "''" }
-        ]
+            print(f"{name} has been invited")
+    else:
+        print("Too many people")
+
+invite_guests(["Bob", "Alice", "Charlie"])`
     }
 ];
 
@@ -2242,6 +2244,706 @@ def circle_area(radius: float) -> float:
     }
 ];
 
+// ============================================================
+// EXAMPLE CONTENT FOR EACH CHAPTER
+// ============================================================
+
+const basicsExampleContent: ExampleContent = {
+    intro: "Python is a powerful programming language. Let's learn the fundamentals: displaying output, storing data in variables, and combining them together.",
+    codeBlocks: [
+        {
+            code: `print("Hello World")`,
+            explanation: "The print() function displays text on the screen. Text (called strings) must be wrapped in quotes."
+        },
+        {
+            code: `name = "Alice"
+print(name)`,
+            explanation: "Variables store data. Here we store the text 'Alice' in a variable called 'name', then print it."
+        },
+        {
+            code: `age = 25
+print("I am", age, "years old")`,
+            explanation: "Variables can store numbers too. You can print multiple items separated by commas."
+        },
+        {
+            code: `first = "Bob"
+last = "Smith"
+print(f"Hello {first} {last}")`,
+            explanation: "F-strings (formatted strings) let you embed variables directly in text using {curly braces}. Start the string with 'f' before the quote."
+        }
+    ],
+    tips: [
+        "Variable names should be descriptive (e.g., 'user_age' not 'x')",
+        "Python is case-sensitive: 'Name' and 'name' are different variables",
+        "Use f-strings for cleaner code when combining text and variables"
+    ],
+    runnable: `# Try it yourself!
+# Create variables and print them
+
+name = "Your Name"
+age = 16
+subject = "Computer Science"
+
+print(f"Hello, my name is {name}")
+print(f"I am {age} years old")
+print(f"I love {subject}!")
+
+# Experiment: Change the values above and run again!`
+};
+
+const ifExampleContent: ExampleContent = {
+    intro: "If statements let your program make decisions. The code inside an if block only runs when the condition is True.",
+    codeBlocks: [
+        {
+            code: `age = 18
+if age >= 18:
+    print("You can vote!")`,
+            explanation: "The if statement checks if age is 18 or more. If True, the indented code runs. If False, it's skipped."
+        },
+        {
+            code: `temperature = 15
+if temperature > 20:
+    print("It's warm")
+else:
+    print("It's cold")`,
+            explanation: "The else block runs when the if condition is False. You always get one or the other."
+        },
+        {
+            code: `score = 75
+if score >= 90:
+    print("A")
+elif score >= 80:
+    print("B")
+elif score >= 70:
+    print("C")
+else:
+    print("D")`,
+            explanation: "Use elif (else if) to check multiple conditions. Python checks each one in order and runs the first that's True."
+        },
+        {
+            code: `x = 5
+if x > 0 and x < 10:
+    print("x is between 0 and 10")`,
+            explanation: "Use 'and' to check multiple conditions at once. Both must be True. Use 'or' if only one needs to be True."
+        }
+    ],
+    tips: [
+        "Comparison operators: == (equal), != (not equal), <, >, <=, >=",
+        "Indentation matters! Code inside if/else must be indented",
+        "Use 'and', 'or', 'not' to combine conditions"
+    ],
+    runnable: `# Try it yourself!
+# Change the values and see what happens
+
+age = 17
+has_permission = True
+
+if age >= 18:
+    print("You're an adult")
+elif age >= 13:
+    print("You're a teenager")
+else:
+    print("You're a child")
+
+# Try using 'and' / 'or'
+if age >= 16 and has_permission:
+    print("You can learn to drive!")
+else:
+    print("Not yet eligible to drive")`
+};
+
+const stringsExampleContent: ExampleContent = {
+    intro: "Strings are sequences of characters. Python has powerful built-in methods to manipulate and format text.",
+    codeBlocks: [
+        {
+            code: `text = "Hello World"
+print(len(text))  # 11`,
+            explanation: "len() returns the number of characters in a string, including spaces."
+        },
+        {
+            code: `name = "python"
+print(name.upper())  # PYTHON
+print(name.lower())  # python
+print(name.title())  # Python`,
+            explanation: "String methods like upper(), lower(), and title() change the case. They return a new string."
+        },
+        {
+            code: `text = "Hello World"
+print(text[0])    # H (first character)
+print(text[0:5])  # Hello (slice)
+print(text[-1])   # d (last character)`,
+            explanation: "Access individual characters with [index]. Slice with [start:end]. Negative indices count from the end."
+        },
+        {
+            code: `sentence = "I like cats"
+new_sentence = sentence.replace("cats", "dogs")
+print(new_sentence)  # I like dogs`,
+            explanation: "The replace() method substitutes one substring with another."
+        }
+    ],
+    tips: [
+        "String indices start at 0, not 1",
+        "Strings are immutable - methods return new strings, they don't change the original",
+        "Use .strip() to remove whitespace from the start and end"
+    ],
+    runnable: `# Try it yourself!
+# Experiment with string methods
+
+name = "john smith"
+
+# Convert to title case
+print(name.title())
+
+# Get the length
+print(f"Name has {len(name)} characters")
+
+# Slice the first name
+first_name = name[0:4]
+print(f"First name: {first_name}")
+
+# Replace a word
+message = "I love Python"
+new_message = message.replace("love", "really love")
+print(new_message)`
+};
+
+const mathsExampleContent: ExampleContent = {
+    intro: "Python can perform calculations from simple arithmetic to complex mathematical operations using the math library.",
+    codeBlocks: [
+        {
+            code: `a = 10
+b = 3
+print(a + b)   # 13 (addition)
+print(a - b)   # 7 (subtraction)
+print(a * b)   # 30 (multiplication)
+print(a / b)   # 3.333... (division)`,
+            explanation: "Basic arithmetic operators work as expected. Division always returns a float."
+        },
+        {
+            code: `print(10 // 3)  # 3 (floor division)
+print(10 % 3)   # 1 (remainder/modulo)
+print(2 ** 4)   # 16 (power)`,
+            explanation: "// gives whole number division, % gives the remainder, ** raises to a power."
+        },
+        {
+            code: `import math
+
+print(math.sqrt(16))    # 4.0
+print(math.pi)          # 3.14159...
+print(round(3.7))       # 4`,
+            explanation: "Import the math library for advanced functions. sqrt() for square root, pi for π, round() for rounding."
+        },
+        {
+            code: `radius = 5
+area = math.pi * radius ** 2
+print(round(area, 2))  # 78.54`,
+            explanation: "Combine operators and math functions. round(x, 2) rounds to 2 decimal places."
+        }
+    ],
+    tips: [
+        "Use parentheses to control order of operations",
+        "Integer division // always rounds down",
+        "Import math at the top of your file"
+    ],
+    runnable: `# Try it yourself!
+import math
+
+# Basic calculations
+length = 10
+width = 5
+area = length * width
+print(f"Area: {area}")
+
+# Circle calculations
+radius = 7
+circle_area = math.pi * radius ** 2
+print(f"Circle area: {round(circle_area, 2)}")
+
+# Try modulo (remainder) - useful for checking odd/even
+number = 17
+if number % 2 == 0:
+    print(f"{number} is even")
+else:
+    print(f"{number} is odd")`
+};
+
+const forLoopsExampleContent: ExampleContent = {
+    intro: "For loops repeat code a specific number of times. The range() function is commonly used to control how many times the loop runs.",
+    codeBlocks: [
+        {
+            code: `for i in range(5):
+    print(i)`,
+            explanation: "This prints 0, 1, 2, 3, 4 (each on a new line). range(5) generates numbers from 0 up to (but not including) 5."
+        },
+        {
+            code: `for i in range(1, 6):
+    print(i)`,
+            explanation: "range(1, 6) starts at 1 and goes up to (but not including) 6. This prints 1, 2, 3, 4, 5."
+        },
+        {
+            code: `for i in range(0, 10, 2):
+    print(i)`,
+            explanation: "The third value is the 'step'. This prints 0, 2, 4, 6, 8 (counting by 2s)."
+        },
+        {
+            code: `name = "Python"
+for letter in name:
+    print(letter)`,
+            explanation: "You can loop through each character in a string. This prints P, y, t, h, o, n (each on a new line)."
+        }
+    ],
+    tips: [
+        "range(n) gives 0 to n-1",
+        "range(start, end) gives start to end-1",
+        "range(start, end, step) lets you count by any amount",
+        "Use negative step to count backwards: range(10, 0, -1)"
+    ],
+    runnable: `# Try it yourself!
+
+# Print numbers 1 to 5
+print("Counting to 5:")
+for i in range(1, 6):
+    print(i)
+
+print()  # Empty line
+
+# Print a times table
+num = 7
+print(f"Times table for {num}:")
+for i in range(1, 11):
+    print(f"{i} x {num} = {i * num}")
+
+print()
+
+# Loop through a word
+word = "Hello"
+print(f"Letters in '{word}':")
+for letter in word:
+    print(letter)`
+};
+
+const whileLoopsExampleContent: ExampleContent = {
+    intro: "While loops repeat code as long as a condition is True. They're useful when you don't know how many times you need to repeat.",
+    codeBlocks: [
+        {
+            code: `count = 0
+while count < 5:
+    print(count)
+    count = count + 1`,
+            explanation: "The loop checks the condition before each iteration. When count reaches 5, the condition is False and the loop stops."
+        },
+        {
+            code: `total = 0
+while total < 100:
+    total = total + 25
+    print(f"Total: {total}")`,
+            explanation: "This keeps adding 25 until total reaches or exceeds 100. Prints: 25, 50, 75, 100."
+        },
+        {
+            code: `while True:
+    answer = input("Type 'quit' to exit: ")
+    if answer == "quit":
+        break
+print("Goodbye!")`,
+            explanation: "Use 'break' to exit a loop early. This pattern is common for menus and input validation."
+        },
+        {
+            code: `for i in range(10):
+    if i == 3:
+        continue
+    print(i)`,
+            explanation: "'continue' skips to the next iteration. This prints 0, 1, 2, 4, 5, 6, 7, 8, 9 (skipping 3)."
+        }
+    ],
+    tips: [
+        "Always make sure your condition will eventually become False, or use 'break'",
+        "Infinite loops happen when the condition never becomes False",
+        "'break' exits the loop completely, 'continue' skips to the next iteration"
+    ],
+    runnable: `# Try it yourself!
+
+# Count down from 10
+print("Countdown:")
+count = 10
+while count > 0:
+    print(count)
+    count = count - 1
+print("Blast off!")
+
+print()
+
+# Sum until we reach a target
+total = 0
+numbers_added = 0
+while total < 50:
+    total = total + 10
+    numbers_added = numbers_added + 1
+    print(f"Added 10, total is now {total}")
+
+print(f"Added {numbers_added} numbers to reach {total}")`
+};
+
+const randomExampleContent: ExampleContent = {
+    intro: "The random module lets you generate random numbers and make random choices. Essential for games and simulations.",
+    codeBlocks: [
+        {
+            code: `import random
+
+num = random.randint(1, 10)
+print(num)`,
+            explanation: "randint(a, b) returns a random integer between a and b (inclusive). Both endpoints are possible."
+        },
+        {
+            code: `import random
+
+num = random.random()
+print(num)`,
+            explanation: "random() returns a random float between 0.0 and 1.0. Multiply to get larger ranges."
+        },
+        {
+            code: `import random
+
+colours = ["red", "green", "blue"]
+pick = random.choice(colours)
+print(pick)`,
+            explanation: "choice() picks a random item from a list. Great for picking random options."
+        },
+        {
+            code: `import random
+
+cards = [1, 2, 3, 4, 5]
+random.shuffle(cards)
+print(cards)`,
+            explanation: "shuffle() randomizes the order of a list in place. The original list is modified."
+        }
+    ],
+    tips: [
+        "Always import random at the top of your file",
+        "randint includes both endpoints",
+        "Use choice() for picking from a list, randint() for number ranges"
+    ],
+    runnable: `# Try it yourself!
+import random
+
+# Roll a dice
+dice = random.randint(1, 6)
+print(f"You rolled a {dice}")
+
+# Pick a random colour
+colours = ["red", "blue", "green", "yellow", "purple"]
+colour = random.choice(colours)
+print(f"Random colour: {colour}")
+
+# Generate a random percentage
+percent = random.randint(0, 100)
+print(f"Random percentage: {percent}%")
+
+# Simulate a coin flip
+if random.randint(0, 1) == 0:
+    print("Heads!")
+else:
+    print("Tails!")`
+};
+
+const listsExampleContent: ExampleContent = {
+    intro: "Lists store multiple items in order. Dictionaries store items with named keys. Tuples are like lists but cannot be changed.",
+    codeBlocks: [
+        {
+            code: `fruits = ["apple", "banana", "cherry"]
+print(fruits[0])   # apple
+print(fruits[-1])  # cherry
+print(len(fruits)) # 3`,
+            explanation: "Lists use square brackets. Access items by index (starting at 0). Use -1 for the last item."
+        },
+        {
+            code: `fruits = ["apple", "banana"]
+fruits.append("cherry")
+fruits.remove("banana")
+print(fruits)  # ['apple', 'cherry']`,
+            explanation: "append() adds to the end, remove() deletes by value. Lists are mutable (can be changed)."
+        },
+        {
+            code: `person = {
+    "name": "Alice",
+    "age": 25,
+    "city": "London"
+}
+print(person["name"])  # Alice`,
+            explanation: "Dictionaries use curly braces with key:value pairs. Access values using the key in square brackets."
+        },
+        {
+            code: `coordinates = (10, 20)
+x, y = coordinates
+print(x)  # 10`,
+            explanation: "Tuples use parentheses. They cannot be modified after creation. Useful for fixed data like coordinates."
+        }
+    ],
+    tips: [
+        "Lists: ordered, changeable, allow duplicates",
+        "Dictionaries: unordered, changeable, no duplicate keys",
+        "Tuples: ordered, unchangeable, allow duplicates"
+    ],
+    runnable: `# Try it yourself!
+
+# Working with lists
+shopping = ["bread", "milk", "eggs"]
+print("Shopping list:", shopping)
+
+shopping.append("butter")
+print("After adding butter:", shopping)
+
+shopping.remove("milk")
+print("After removing milk:", shopping)
+
+# Working with dictionaries
+student = {
+    "name": "Bob",
+    "grade": "A",
+    "score": 95
+}
+print(f"{student['name']} got a {student['grade']}")
+
+# Add a new key
+student["subject"] = "Maths"
+print(student)`
+};
+
+const moreStringsExampleContent: ExampleContent = {
+    intro: "Advanced string operations let you check content, find patterns, and transform text in powerful ways.",
+    codeBlocks: [
+        {
+            code: `text = "Hello World"
+print(text.startswith("Hello"))  # True
+print(text.endswith("World"))    # True
+print("llo" in text)             # True`,
+            explanation: "Check if strings start/end with certain text, or if they contain a substring."
+        },
+        {
+            code: `text = "apple,banana,cherry"
+items = text.split(",")
+print(items)  # ['apple', 'banana', 'cherry']`,
+            explanation: "split() divides a string into a list based on a delimiter."
+        },
+        {
+            code: `items = ['apple', 'banana', 'cherry']
+text = " - ".join(items)
+print(text)  # apple - banana - cherry`,
+            explanation: "join() combines a list into a string with a separator between items."
+        },
+        {
+            code: `text = "python"
+print(text.isalpha())   # True (all letters)
+print("123".isdigit())  # True (all digits)
+print("Hi".isupper())   # False (not all upper)`,
+            explanation: "Check string content with isalpha(), isdigit(), isupper(), islower(), and more."
+        }
+    ],
+    tips: [
+        "split() with no argument splits on whitespace",
+        "Use 'in' to check if a substring exists",
+        "String methods can be chained: text.strip().lower()"
+    ],
+    runnable: `# Try it yourself!
+
+# Split and join
+csv_data = "John,25,London"
+parts = csv_data.split(",")
+print(f"Name: {parts[0]}, Age: {parts[1]}, City: {parts[2]}")
+
+# Join with different separator
+words = ["Python", "is", "fun"]
+sentence = " ".join(words)
+print(sentence)
+
+# Check string content
+password = "Secret123"
+has_letters = any(c.isalpha() for c in password)
+has_numbers = any(c.isdigit() for c in password)
+print(f"Has letters: {has_letters}, Has numbers: {has_numbers}")`
+};
+
+const arraysExampleContent: ExampleContent = {
+    intro: "Working with lists of numbers is common in programming. Learn to sort, filter, and perform calculations on numeric lists.",
+    codeBlocks: [
+        {
+            code: `numbers = [5, 2, 8, 1, 9]
+numbers.sort()
+print(numbers)  # [1, 2, 5, 8, 9]`,
+            explanation: "sort() arranges items from smallest to largest. It modifies the original list."
+        },
+        {
+            code: `numbers = [5, 2, 8, 1, 9]
+print(min(numbers))  # 1
+print(max(numbers))  # 9
+print(sum(numbers))  # 25`,
+            explanation: "Built-in functions for finding minimum, maximum, and sum of a list."
+        },
+        {
+            code: `numbers = [1, 2, 3, 4, 5]
+squares = [x ** 2 for x in numbers]
+print(squares)  # [1, 4, 9, 16, 25]`,
+            explanation: "List comprehension creates a new list by applying an expression to each item."
+        },
+        {
+            code: `numbers = [1, 2, 3, 4, 5, 6]
+evens = [x for x in numbers if x % 2 == 0]
+print(evens)  # [2, 4, 6]`,
+            explanation: "Add a condition to filter items. Only items where the condition is True are included."
+        }
+    ],
+    tips: [
+        "sorted() returns a new sorted list without modifying the original",
+        "Use reverse=True for descending order: numbers.sort(reverse=True)",
+        "List comprehensions are a concise way to create or filter lists"
+    ],
+    runnable: `# Try it yourself!
+
+scores = [85, 92, 78, 95, 88, 76]
+
+print("Original:", scores)
+scores.sort()
+print("Sorted:", scores)
+
+print(f"Highest: {max(scores)}")
+print(f"Lowest: {min(scores)}")
+print(f"Average: {sum(scores) / len(scores)}")
+
+# Filter to only high scores
+high_scores = [s for s in scores if s >= 85]
+print(f"Scores 85+: {high_scores}")`
+};
+
+const dict2DExampleContent: ExampleContent = {
+    intro: "Complex data often requires nested structures: 2D lists (grids) and nested dictionaries (structured records).",
+    codeBlocks: [
+        {
+            code: `grid = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+print(grid[0][1])  # 2 (row 0, column 1)`,
+            explanation: "A 2D list is a list of lists. Access items with [row][column]."
+        },
+        {
+            code: `for row in grid:
+    for cell in row:
+        print(cell, end=" ")
+    print()`,
+            explanation: "Use nested loops to iterate through all items. The inner loop handles each row."
+        },
+        {
+            code: `student = {
+    "name": "Alice",
+    "grades": {
+        "maths": 90,
+        "english": 85
+    }
+}
+print(student["grades"]["maths"])  # 90`,
+            explanation: "Dictionaries can contain dictionaries. Chain the keys to access nested values."
+        },
+        {
+            code: `students = [
+    {"name": "Alice", "score": 90},
+    {"name": "Bob", "score": 85}
+]
+for s in students:
+    print(f"{s['name']}: {s['score']}")`,
+            explanation: "A list of dictionaries is great for storing multiple records with the same structure."
+        }
+    ],
+    tips: [
+        "Think of 2D lists like spreadsheets: rows and columns",
+        "Access nested data step by step: outer first, then inner",
+        "List of dicts is like a database table"
+    ],
+    runnable: `# Try it yourself!
+
+# 2D grid example
+grid = [
+    ["X", "O", "X"],
+    ["O", "X", "O"],
+    ["X", "O", "X"]
+]
+
+print("Tic-tac-toe board:")
+for row in grid:
+    print(" | ".join(row))
+    print("---------")
+
+# Nested dictionary
+school = {
+    "class_A": {"students": 25, "teacher": "Mr Smith"},
+    "class_B": {"students": 28, "teacher": "Ms Jones"}
+}
+
+for class_name, info in school.items():
+    print(f"{class_name}: {info['students']} students, taught by {info['teacher']}")`
+};
+
+const subprogramsExampleContent: ExampleContent = {
+    intro: "Functions (subprograms) let you organize code into reusable blocks. They can take inputs (parameters) and return outputs.",
+    codeBlocks: [
+        {
+            code: `def greet(name):
+    print(f"Hello, {name}!")
+
+greet("Alice")  # Hello, Alice!`,
+            explanation: "Define a function with 'def'. The parameter 'name' receives the value passed in when calling."
+        },
+        {
+            code: `def add(a, b):
+    return a + b
+
+result = add(5, 3)
+print(result)  # 8`,
+            explanation: "'return' sends a value back. The function call can be used in expressions or assigned to variables."
+        },
+        {
+            code: `def describe(name, age=18):
+    return f"{name} is {age}"
+
+print(describe("Bob"))      # Bob is 18
+print(describe("Alice", 25)) # Alice is 25`,
+            explanation: "Default values make parameters optional. If not provided, the default is used."
+        },
+        {
+            code: `def get_stats(numbers):
+    return min(numbers), max(numbers), sum(numbers)
+
+low, high, total = get_stats([1, 5, 3])
+print(low, high, total)  # 1 5 9`,
+            explanation: "Functions can return multiple values as a tuple. Unpack them into separate variables."
+        }
+    ],
+    tips: [
+        "Functions should do one thing well",
+        "Use descriptive names: calculate_area() not ca()",
+        "Return values for calculations, print for display only"
+    ],
+    runnable: `# Try it yourself!
+
+# Define a function
+def calculate_rectangle(length, width):
+    area = length * width
+    perimeter = 2 * (length + width)
+    return area, perimeter
+
+# Call the function
+a, p = calculate_rectangle(10, 5)
+print(f"Area: {a}")
+print(f"Perimeter: {p}")
+
+# Function with default parameter
+def greet(name, greeting="Hello"):
+    return f"{greeting}, {name}!"
+
+print(greet("Alice"))
+print(greet("Bob", "Hi"))
+print(greet("Charlie", "Welcome"))`
+};
+
 // Placeholder for remaining chapters
 export const chapters: Chapter[] = [
     {
@@ -2250,6 +2952,7 @@ export const chapters: Chapter[] = [
         description: "Input, Output and Variables",
         explanation: "Learn to display text, handle user input, and use variables.",
         exampleCode: "print('Hello World')",
+        exampleContent: basicsExampleContent,
         challenges: basics_challenges,
         homework: homeworkByChapter["01_basics"]
     },
@@ -2259,6 +2962,7 @@ export const chapters: Chapter[] = [
         description: "Control Flow and Conditionals",
         explanation: "Use if, elif, and else to make decisions.",
         exampleCode: "if True:\\n    print('Yes')",
+        exampleContent: ifExampleContent,
         challenges: if_challenges,
         homework: homeworkByChapter["02_if_statements"]
     },
@@ -2268,6 +2972,7 @@ export const chapters: Chapter[] = [
         description: "String Manipulation",
         explanation: "Work with text: splitting, slicing, and formatting.",
         exampleCode: "print('hello'.upper())",
+        exampleContent: stringsExampleContent,
         challenges: string_challenges,
         homework: homeworkByChapter["03_strings"]
     },
@@ -2277,6 +2982,7 @@ export const chapters: Chapter[] = [
         description: "Math Operations",
         explanation: "Perform calculations using Python's math library.",
         exampleCode: "import math\\nprint(math.sqrt(16))",
+        exampleContent: mathsExampleContent,
         challenges: math_challenges,
         homework: homeworkByChapter["04_maths"]
     },
@@ -2286,6 +2992,7 @@ export const chapters: Chapter[] = [
         description: "Iteration",
         explanation: "Repeat code a specific number of times.",
         exampleCode: "for i in range(5):\\n    print(i)",
+        exampleContent: forLoopsExampleContent,
         challenges: for_challenges,
         homework: homeworkByChapter["05_for_loops"]
     },
@@ -2295,6 +3002,7 @@ export const chapters: Chapter[] = [
         description: "Conditional Loops",
         explanation: "Repeat code while a condition is true.",
         exampleCode: "while True:\\n    break",
+        exampleContent: whileLoopsExampleContent,
         challenges: while_challenges,
         homework: homeworkByChapter["06_while_loops"]
     },
@@ -2304,6 +3012,7 @@ export const chapters: Chapter[] = [
         description: "Random Numbers",
         explanation: "Generate random numbers and choices.",
         exampleCode: "import random\\nprint(random.randint(1, 10))",
+        exampleContent: randomExampleContent,
         challenges: random_challenges,
         homework: homeworkByChapter["07_random"]
     },
@@ -2313,6 +3022,7 @@ export const chapters: Chapter[] = [
         description: "Data Structures",
         explanation: "Store multiple values in tuples, lists, and dictionaries.",
         exampleCode: "x = [1, 2, 3]\\nprint(x[0])",
+        exampleContent: listsExampleContent,
         challenges: list_challenges,
         homework: homeworkByChapter["08_lists_dicts"]
     },
@@ -2322,6 +3032,7 @@ export const chapters: Chapter[] = [
         description: "Advanced Strings",
         explanation: "String formatting and advanced manipulation.",
         exampleCode: "print('Hello'.isupper())",
+        exampleContent: moreStringsExampleContent,
         challenges: string_more_challenges,
         homework: homeworkByChapter["09_more_strings"]
     },
@@ -2331,6 +3042,7 @@ export const chapters: Chapter[] = [
         description: "Working with Lists of Numbers",
         explanation: "Manipulating lists of numbers: sorting, deleting, calculating.",
         exampleCode: "x = [3, 1, 2]\\nx.sort()",
+        exampleContent: arraysExampleContent,
         challenges: array_challenges,
         homework: homeworkByChapter["10_arrays"]
     },
@@ -2340,6 +3052,7 @@ export const chapters: Chapter[] = [
         description: "Complex Data Structures",
         explanation: "Working with 2D lists and nested dictionaries.",
         exampleCode: "x = [[1, 2], [3, 4]]",
+        exampleContent: dict2DExampleContent,
         challenges: dict_2d_challenges,
         homework: homeworkByChapter["11_2d_lists_dicts"]
     },
@@ -2349,6 +3062,7 @@ export const chapters: Chapter[] = [
         description: "Functions and Logic",
         explanation: "Define functions and manage program flow.",
         exampleCode: "def my_func():\\n    pass",
+        exampleContent: subprogramsExampleContent,
         challenges: subprogram_challenges,
         homework: homeworkByChapter["12_subprograms"]
     }
