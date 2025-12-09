@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import * as Y from 'yjs';
-import { WebrtcProvider } from 'y-webrtc';
 import { MonacoBinding } from 'y-monaco';
+import { FirebaseProvider } from '../lib/FirebaseProvider';
 import type { editor } from 'monaco-editor';
 
 interface CollaboratorInfo {
@@ -45,7 +45,7 @@ export const useCollaborativeEditor = ({
     monacoInstance
 }: UseCollaborativeEditorOptions): UseCollaborativeEditorReturn => {
     const ydocRef = useRef<Y.Doc | null>(null);
-    const providerRef = useRef<WebrtcProvider | null>(null);
+    const providerRef = useRef<FirebaseProvider | null>(null);
     const bindingRef = useRef<MonacoBinding | null>(null);
     const [isConnected, setIsConnected] = useState(false);
     const [collaborators, setCollaborators] = useState<Map<number, CollaboratorInfo>>(new Map());
@@ -81,12 +81,8 @@ export const useCollaborativeEditor = ({
         const ydoc = new Y.Doc();
         ydocRef.current = ydoc;
 
-        // Create WebRTC provider - uses session code as room name
-        // Using public signaling server (works out of the box)
-        const provider = new WebrtcProvider(`python-tutoring-${sessionCode}`, ydoc, {
-            signaling: ['wss://signaling.yjs.dev', 'wss://y-webrtc-signaling-eu.herokuapp.com'],
-            password: sessionCode, // Use session code as password for basic security
-        });
+        // Create Firebase provider
+        const provider = new FirebaseProvider(`session-${sessionCode}`, ydoc);
         providerRef.current = provider;
 
         // Set up awareness (cursor positions, user info)
@@ -99,11 +95,8 @@ export const useCollaborativeEditor = ({
             isTeacher
         });
 
-        // Track connection status
-        provider.on('synced', ({ synced }: { synced: boolean }) => {
-            console.log('[Collab] Synced:', synced);
-            setIsConnected(synced);
-        });
+        // Mark as connected (Firebase is always "connected" if initialized)
+        setIsConnected(true);
 
         // Track collaborators
         const updateCollaborators = () => {
@@ -123,22 +116,20 @@ export const useCollaborativeEditor = ({
         // Get the shared text type
         const ytext = ydoc.getText('monaco');
 
-        // Create Monaco binding
+        // Create Monaco binding (without awareness - cursor sync handled by Firebase)
         const binding = new MonacoBinding(
             ytext,
             editorInstance.getModel()!,
-            new Set([editorInstance]),
-            awareness
+            new Set([editorInstance])
         );
         bindingRef.current = binding;
 
-        console.log('[Collab] Collaborative editing ready');
+        console.log('[Collab] Collaborative editing ready (Firebase sync)');
 
         // Cleanup
         return () => {
             console.log('[Collab] Cleaning up collaborative editing');
             binding.destroy();
-            provider.disconnect();
             provider.destroy();
             ydoc.destroy();
             ydocRef.current = null;
