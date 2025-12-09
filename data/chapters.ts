@@ -553,23 +553,18 @@ const string_challenges = [
     {
         id: "031",
         number: 31,
-        title: "Count Vowels",
-        description: "Write a function called `count_vowels` that takes a string and returns the count of vowels (a, e, i, o, u) in it. Count both uppercase and lowercase vowels.",
-        starterCode: `def count_vowels(text: str) -> int:
+        title: "Censor Word",
+        description: "Write a function called `censor_word` that takes a sentence. It should return the sentence with all occurrences of the word 'bad' replaced with 'good'.",
+        starterCode: `def censor_word(text: str) -> str:
     # Your code here
     pass`,
-        solutionCode: `def count_vowels(text: str) -> int:
-    vowels = "aeiouAEIOU"
-    count = 0
-    for char in text:
-        if char in vowels:
-            count += 1
-    return count`,
+        solutionCode: `def censor_word(text: str) -> str:
+    return text.replace("bad", "good")`,
         testCases: [
-            { input: "count_vowels('hello')", expected: "2" },
-            { input: "count_vowels('Python')", expected: "1" },
-            { input: "count_vowels('AEIOU')", expected: "5" },
-            { input: "count_vowels('xyz')", expected: "0" }
+            { input: "censor_word('This is a bad idea')", expected: "'This is a good idea'" },
+            { input: "censor_word('bad things are bad')", expected: "'good things are good'" },
+            { input: "censor_word('not bad at all')", expected: "'not good at all'" },
+            { input: "censor_word('hello world')", expected: "'hello world'" }
         ]
     }
 ];
