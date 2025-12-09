@@ -6,7 +6,7 @@ const basics_challenges = [
         id: "001",
         number: 1,
         title: "Hello Name",
-        description: "Create a function `hello_name` that takes a `first_name` and returns 'Hello [first_name]'.",
+        description: "Write a function called `hello_name` that accepts a first name. It should return a string in the format 'Hello [first_name]'.",
         hint: "Use f-string: f'Hello {first_name}'",
         starterCode: `def hello_name(first_name: str) -> str:
     # Your code here
@@ -22,7 +22,7 @@ const basics_challenges = [
         id: "002",
         number: 2,
         title: "Hello Full Name",
-        description: "Create a function `hello_full_name` that takes `first_name` and `surname` and returns 'Hello [first_name] [surname]'.",
+        description: "Write a function called `hello_full_name` that accepts a first name and a surname. It should return a greeting including both names, like 'Hello [first_name] [surname]'.",
         hint: "Use f-string",
         starterCode: `def hello_full_name(first_name: str, surname: str) -> str:
     # Your code here
@@ -37,7 +37,7 @@ const basics_challenges = [
         id: "003",
         number: 3,
         title: "Joke",
-        description: "Create a function `joke` that returns 'What do you call a bear with no teeth?\\nA gummy bear!'",
+        description: "Write a function called `joke` that takes no arguments. It should return this specific joke: 'What do you call a bear with no teeth?\\nA gummy bear!'.",
         starterCode: `def joke() -> str:
     # Your code here
     pass`,
@@ -51,7 +51,7 @@ const basics_challenges = [
         id: "004",
         number: 4,
         title: "Add Two Numbers",
-        description: "Create a function `add_two` that takes two numbers and returns their sum.",
+        description: "Write a function called `add_two` that accepts two integers. It should return the sum of these two numbers.",
         starterCode: `def add_two(num1: int, num2: int) -> int:
     # Your code here
     pass`,
@@ -66,7 +66,7 @@ const basics_challenges = [
         id: "005",
         number: 5,
         title: "Add and Multiply",
-        description: "Create a function `add_and_multiply` that takes three numbers. Add the first two, then multiply by the third.",
+        description: "Write a function called `add_and_multiply` that accepts three numbers. It should add the first two numbers together, then multiply the result by the third number, returning the final answer.",
         starterCode: `def add_and_multiply(num1: int, num2: int, num3: int) -> int:
     # Your code here
     pass`,
@@ -80,7 +80,7 @@ const basics_challenges = [
         id: "006",
         number: 6,
         title: "Pizza Slices",
-        description: "Create a function `pizza_left` that takes `started` (slices) and `eaten`, and returns only the message 'You have [x] slices remaining'.",
+        description: "Write a function called `pizza_left` that accepts the number of slices started with and the number eaten. It should return the message 'You have [x] slices remaining'.",
         starterCode: `def pizza_left(started: int, eaten: int) -> str:
     # Your code here
     pass`,
@@ -94,7 +94,7 @@ const basics_challenges = [
         id: "007",
         number: 7,
         title: "Next Birthday",
-        description: "Create a function `birthday_message` that takes `name` and `age`, adds 1 to age, and returns '[name] next birthday you will be [new_age]'.",
+        description: "Write a function called `birthday_message` that takes a name and current age. It should add 1 to the age and return the message '[Name] next birthday you will be [new_age]'.",
         starterCode: `def birthday_message(name: str, age: int) -> str:
     # Your code here
     pass`,
@@ -108,7 +108,7 @@ const basics_challenges = [
         id: "008",
         number: 8,
         title: "Bill Splitter",
-        description: "Create a function `split_bill` that takes `total_price` and `diners`. Return the price per person.",
+        description: "Write a function called `split_bill` that accepts the total price of a bill and the number of diners. It should divide the bill equally and return the cost per person.",
         starterCode: `def split_bill(total_price: float, diners: int) -> float:
     # Your code here
     pass`,
@@ -122,7 +122,7 @@ const basics_challenges = [
         id: "009",
         number: 9,
         title: "Days To Duration",
-        description: "Create a function `days_seconds` that takes `days` and returns 'In [days] days there are [hours] hours, [minutes] minutes and [seconds] seconds'.",
+        description: "Write a function called `days_seconds` that accepts a number of days. It should calculate how many hours, minutes, and seconds are in that many days and return a string like 'In [days] days there are [hours] hours, [minutes] minutes and [seconds] seconds'.",
         starterCode: `def days_seconds(days: int) -> str:
     # Your code here
     pass`,
@@ -139,7 +139,7 @@ const basics_challenges = [
         id: "010",
         number: 10,
         title: "Weight Converter",
-        description: "Create a function `kg_to_pounds` that takes `kg` and returns the weight in pounds (1kg = 2.204 lbs).",
+        description: "Write a function called `kg_to_pounds` that takes a weight in kilograms. It should convert this to pounds (multiplying by 2.204) and return the result.",
         starterCode: `def kg_to_pounds(kg: float) -> float:
     # Your code here
     pass`,
@@ -153,7 +153,7 @@ const basics_challenges = [
         id: "011",
         number: 11,
         title: "Division Strings",
-        description: "Create `division_info(large, small)`. Return '[small] goes into [large] [result] times'. Use integer division.",
+        description: "Write a function called `division_info` that accepts a large number and a small number. It should check how many whole times the small number fits into the large number and return the message '[small] goes into [large] [result] times'.",
         starterCode: `def division_info(large: int, small: int) -> str:
     # Your code here
     pass`,
@@ -171,7 +171,7 @@ const if_challenges = [
         id: "012",
         number: 12,
         title: "Order Numbers",
-        description: "Create `order_numbers(num1, num2)`. If num1 > num2 return '[num2] [num1]'. Else return '[num1] [num2]'.",
+        description: "Write a function called `order_numbers` that accepts two numbers. It should determine which is smaller and return them as a single string, with the smaller number first and the larger number second, separated by a space (e.g., '5 10').",
         starterCode: `def order_numbers(num1: int, num2: int) -> str:
     # Your code here
     pass`,
@@ -188,7 +188,7 @@ const if_challenges = [
         id: "013",
         number: 13,
         title: "Check Under 20",
-        description: "Create `check_under_20(num)`. If num >= 20 return 'Too high', else return 'Thank you'.",
+        description: "Write a function called `check_under_20` that takes a number. If the number is 20 or higher, return 'Too high'. If it is under 20, return 'Thank you'.",
         starterCode: `def check_under_20(num: int) -> str:
     # Your code here
     pass`,
@@ -205,7 +205,7 @@ const if_challenges = [
         id: "014",
         number: 14,
         title: "Check Range",
-        description: "Create `check_range(num)`. If num is between 10 and 20 (inclusive) return 'Thank you', else 'Incorrect answer'.",
+        description: "Write a function called `check_range` that accepts a number. If the number is between 10 and 20 (inclusive), return 'Thank you'. Otherwise, return 'Incorrect answer'.",
         starterCode: `def check_range(num: int) -> str:
     # Your code here
     pass`,
@@ -222,7 +222,7 @@ const if_challenges = [
         id: "015",
         number: 15,
         title: "Favourite Colour",
-        description: "Create `check_colour(colour)`. If colour is 'red', 'RED' or 'Red' return 'I like red too'. Else 'I don't like [colour], I prefer red'.",
+        description: "Write a function called `check_colour` that takes a colour name. If the colour is 'red' (checking valid variations like 'RED' or 'Red'), return 'I like red too'. Otherwise, return 'I don't like [colour], I prefer red'.",
         starterCode: `def check_colour(colour: str) -> str:
     # Your code here
     pass`,
@@ -239,7 +239,7 @@ const if_challenges = [
         id: "016",
         number: 16,
         title: "Weather Check",
-        description: "Create `check_weather(is_raining, is_windy)`. Both inputs are strings ('yes'/'no'). If raining is 'yes': if windy is 'yes' return 'It is too windy for an umbrella', else 'Take an umbrella'. If raining 'no', return 'Enjoy your day'. (Case insensitive)",
+        description: "Write a function called `check_weather` that takes two string arguments: `is_raining` and `is_windy` (values 'yes' or 'no'). If it is raining, check if it is windy. If it is windy, return 'It is too windy for an umbrella'. If it is not windy, return 'Take an umbrella'. If it is not raining, return 'Enjoy your day'.",
         starterCode: `def check_weather(is_raining: str, is_windy: str) -> str:
     # Your code here
     pass`,
@@ -259,7 +259,7 @@ const if_challenges = [
         id: "017",
         number: 17,
         title: "Voting Age",
-        description: "Create `check_age(age)`. >=18: 'You can vote'. 17: 'You can learn to drive'. 16: 'You can buy a lottery ticket'. <16: 'You can go Trick-or-Treating'.",
+        description: "Write a function called `check_age` that takes an age. Return 'You can vote' if age is 18+, 'You can learn to drive' if 17, 'You can buy a lottery ticket' if 16, or 'You can go Trick-or-Treating' if under 16.",
         starterCode: `def check_age(age: int) -> str:
     # Your code here
     pass`,
@@ -280,7 +280,7 @@ const if_challenges = [
         id: "018",
         number: 18,
         title: "Basic Range",
-        description: "Create `check_number(num)`. <10: 'Too low'. 10-20: 'Correct'. >20: 'Too high'.",
+        description: "Write a function called `check_number` that takes a number. If it is under 10, return 'Too low'. If it is between 10 and 20 (inclusive), return 'Correct'. If it is over 20, return 'Too high'.",
         starterCode: `def check_number(num: int) -> str:
     # Your code here
     pass`,
@@ -300,7 +300,7 @@ const if_challenges = [
         id: "019",
         number: 19,
         title: "Selection",
-        description: "Create `check_selection(num)`. 1: 'Thank you'. 2: 'Well done'. 3: 'Correct'. Other: 'Error message'.",
+        description: "Write a function called `check_selection` that takes a number (1, 2, or 3). If 1 return 'Thank you', if 2 return 'Well done', if 3 return 'Correct'. For any other number, return 'Error message'.",
         starterCode: `def check_selection(num: int) -> str:
     # Your code here
     pass`,
@@ -324,7 +324,7 @@ const string_challenges = [
         id: "020",
         number: 20,
         title: "Name Length",
-        description: "Create `name_length(name)`. Return length of name.",
+        description: "Write a function called `name_length` that takes a name as a string. It should return the number of characters in the name.",
         starterCode: `def name_length(name: str) -> int:
     # Your code here
     pass`,
@@ -338,7 +338,7 @@ const string_challenges = [
         id: "021",
         number: 21,
         title: "Join Names",
-        description: "Create `join_names(first, last)`. Return '[first] [last] [length]' (length of whole name including space).",
+        description: "Write a function called `join_names` that accepts a first name and a last name. It should return them combined with the total length of the full name (including the space), like '[First] [Last] [Length]'.",
         starterCode: `def join_names(first: str, last: str) -> str:
     # Your code here
     pass`,
@@ -353,7 +353,7 @@ const string_challenges = [
         id: "022",
         number: 22,
         title: "Title Case Names",
-        description: "Create `format_name_title(first, last)`. Return '[First] [Last]' in title case.",
+        description: "Write a function called `format_name_title` that takes a first name and a last name in lower case. It should return them combined in title case (capitalized first letters), separated by a space.",
         starterCode: `def format_name_title(first: str, last: str) -> str:
     # Your code here
     pass`,
@@ -367,7 +367,7 @@ const string_challenges = [
         id: "023",
         number: 23,
         title: "Nursery Rhyme Segment",
-        description: "Create `rhyme_part(line, start, end)`. Return the slice `line[start:end]`.",
+        description: "Write a function called `rhyme_part` that takes a line of a nursery rhyme, a start index, and an end index. It should return the part of the string starting at the start index and ending before the end index.",
         starterCode: `def rhyme_part(line: str, start: int, end: int) -> str:
     # Your code here
     pass`,
@@ -381,7 +381,7 @@ const string_challenges = [
         id: "024",
         number: 24,
         title: "Upper Case",
-        description: "Create `make_upper(word)`. Return word in uppercase.",
+        description: "Write a function called `make_upper` that takes a word. It should return the word converted entirely to uppercase.",
         starterCode: `def make_upper(word: str) -> str:
     # Your code here
     pass`,
@@ -395,7 +395,7 @@ const string_challenges = [
         id: "025",
         number: 25,
         title: "Name Formatting",
-        description: "Create `format_name_check(first)`. If len(first) < 5, return 'Empty'. (Wait, book says if < 5 ask for surname and join). Adapted: Create `format_name_conditional(first, last)`. If first < 5 chars, return '[first][last]' (uppercased). If >= 5, return '[first]' (lowercased).",
+        description: "Write a function called `format_name_conditional` that takes a first name and a last name. If the first name has fewer than 5 characters, join them together and return the result in uppercase. If the first name is 5 characters or longer, return just the first name in lowercase.",
         starterCode: `def format_name_conditional(first: str, last: str) -> str:
     # Your code here
     pass`,
@@ -412,7 +412,7 @@ const string_challenges = [
         id: "026",
         number: 26,
         title: "Pig Latin",
-        description: "Create `pig_latin(word)`. If starts with vowel (aeiou): add 'way' to end. Else: move start consonant to end and add 'ay'. (e.g. 'chip' -> 'ipchay' (wait, all consonants? Book says 'first letter'). Book says 026: 'If it begins with a vowel...'. 'If it begins with a consonant, move that letter to the end...'. So just first letter.",
+        description: "Write a function called `pig_latin` that takes a word. If it begins with a vowel (a, e, i, o, u), add 'way' to the end. If it begins with a consonant, move the first letter to the end and add 'ay'.",
         starterCode: `def pig_latin(word: str) -> str:
     # Your code here
     pass`,
@@ -434,7 +434,7 @@ const math_challenges = [
         id: "027",
         number: 27,
         title: "Multiply Float",
-        description: "Create `multiply_float(num)`. Return `num * 2`.",
+        description: "Write a function called `multiply_float` that takes a floating-point number. It should multiply the number by 2 and return the result.",
         starterCode: `def multiply_float(num: float) -> float:
     # Your code here
     pass`,
@@ -448,7 +448,7 @@ const math_challenges = [
         id: "028",
         number: 28,
         title: "Round Float",
-        description: "Create `round_float(num)`. Return num * 2 rounded to 2 decimal places.",
+        description: "Write a function called `round_float` that takes a number. It should multiply the number by 2 and return the result rounded to two decimal places.",
         starterCode: `def round_float(num: float) -> float:
     # Your code here
     pass`,
@@ -462,7 +462,7 @@ const math_challenges = [
         id: "029",
         number: 29,
         title: "Sqrt Over 500",
-        description: "Create `sqrt_check(num)`. Calculate sqrt of num. Return formatted string rounded to 2dp.",
+        description: "Write a function called `sqrt_check` that takes a number. Calculate the square root of that number and return it rounded to two decimal places.",
         hint: "Use `math.sqrt()`. Remember `import math`.",
         starterCode: `import math
 
@@ -481,7 +481,7 @@ def sqrt_check(num: int) -> float:
         id: "030",
         number: 30,
         title: "Pi",
-        description: "Create `get_pi()`. Return pi to 5 decimal places.",
+        description: "Write a function called `get_pi` that takes no arguments. It should return the value of Pi (from the math library) rounded to 5 decimal places.",
         starterCode: `import math
 
 def get_pi() -> float:
@@ -499,7 +499,7 @@ def get_pi() -> float:
         id: "031",
         number: 31,
         title: "Circle Area",
-        description: "Create `circle_area(radius)`. Return area (pi * r^2).",
+        description: "Write a function called `circle_area` that takes the radius of a circle. It should calculate and return the area of the circle (Pi * radius squared).",
         starterCode: `import math
 
 def circle_area(radius: float) -> float:
@@ -517,7 +517,7 @@ def circle_area(radius: float) -> float:
         id: "032",
         number: 32,
         title: "Cylinder Volume",
-        description: "Create `cylinder_volume(radius, depth)`. Return volume rounded to 3 decimal places.",
+        description: "Write a function called `cylinder_volume` that takes a radius and a depth. It should calculate the volume of the cylinder (area of circle * depth) and return it rounded to 3 decimal places.",
         starterCode: `import math
 
 def cylinder_volume(radius: float, depth: float) -> float:
@@ -536,7 +536,7 @@ def cylinder_volume(radius: float, depth: float) -> float:
         id: "033",
         number: 33,
         title: "Integer Division",
-        description: "Create `div_remain(num1, num2)`. Return '[num1] divided by [num2] is [whole] with [remain] remaining'.",
+        description: "Write a function called `div_remain` that accepts two numbers. It should return a string showing the result of integer division and the remainder, formatted as '[num1] divided by [num2] is [whole_part] with [remainder] remaining'.",
         starterCode: `def div_remain(num1: int, num2: int) -> str:
     # Your code here
     pass`,
@@ -552,7 +552,7 @@ def cylinder_volume(radius: float, depth: float) -> float:
         id: "034",
         number: 34,
         title: "Shape Area",
-        description: "Create `shape_area(choice, value)`. If choice is 1 (square), value is length -> area. If choice is 2 (triangle), value is base (assume height=base? Book says 'ask for base and height'. Adapted: `shape_area(choice, val1, val2)`. If square: area = val1^2 (ignore val2). If triangle: area = 0.5 * val1 * val2. If neither: 'Invalid'.",
+        description: "Write a function called `shape_area` that takes a choice (1 or 2) and two values. If choice is 1, calculate the area of a square using the first value as the length of a side. If choice is 2, calculate the area of a triangle using the first value as the base and the second as the height. If the choice is anything else, return -1.",
         starterCode: `def shape_area(choice: int, val1: int, val2: int) -> float:
     # Your code here
     pass`,
@@ -575,7 +575,7 @@ const for_challenges = [
         id: "035",
         number: 35,
         title: "Name Repeat",
-        description: "Create `name_repeat(name)`. Return name 3 times, separated by newlines.",
+        description: "Write a function called `name_repeat` that takes a name. It should return the name repeated three times, with each repetition on a new line.",
         starterCode: `def name_repeat(name: str) -> str:
     # Your code here
     pass`,
@@ -589,7 +589,7 @@ const for_challenges = [
         id: "036",
         number: 36,
         title: "Name Count",
-        description: "Create `name_count(name, count)`. Return name `count` times, separated by newlines.",
+        description: "Write a function called `name_count` that accepts a name and a number. It should return the name repeated that many times, with each repetition on a new line.",
         starterCode: `def name_count(name: str, count: int) -> str:
     # Your code here
     pass`,
@@ -603,7 +603,7 @@ const for_challenges = [
         id: "037",
         number: 37,
         title: "Name Chars",
-        description: "Create `name_chars(name)`. Return a string with each character on a new line.",
+        description: "Write a function called `name_chars` that takes a name. It should return a string where every character of the name is on a new line.",
         starterCode: `def name_chars(name: str) -> str:
     # Your code here
     pass`,
@@ -620,7 +620,7 @@ const for_challenges = [
         id: "038",
         number: 38,
         title: "Name Chars Count",
-        description: "Create `name_chars_count(name, count)`. Repeat displaying each character of the name `count` times. Separate by newlines.",
+        description: "Write a function called `name_chars_count` that takes a name and a number. It should iterate through each character of the name and display it that many times, with each repetition on a new line.",
         starterCode: `def name_chars_count(name: str, count: int) -> str:
     # Your code here
     pass`,
@@ -638,7 +638,7 @@ const for_challenges = [
         id: "039",
         number: 39,
         title: "Times Table",
-        description: "Create `times_table(num)`. Return the times table for `num` from 1 to 10. Format: '1 x [num] = [ans]\\n...'",
+        description: "Write a function called `times_table` that takes a number. It should return a string containing the times table for that number from 1 to 10, formatted as '1 x [num] = [result]', '2 x [num] = [result]', etc., each on a new line.",
         starterCode: `def times_table(num: int) -> str:
     # Your code here
     pass`,
@@ -656,7 +656,7 @@ const for_challenges = [
         id: "040",
         number: 40,
         title: "Count Down",
-        description: "Create `count_down_50(num)`. Return a list of numbers from 50 down to `num` (inclusive).",
+        description: "Write a function called `count_down_50` that takes a number (below 50). It should return a list of numbers counting down from 50 to that number (inclusive).",
         starterCode: `def count_down_50(num: int) -> list:
     # Your code here
     pass`,
@@ -673,7 +673,7 @@ const for_challenges = [
         id: "041",
         number: 41,
         title: "Name Conditional Loop",
-        description: "Create `name_loop_conditional(name, count)`. If count < 10: return name `count` times. Else: return 'Too high' 3 times.",
+        description: "Write a function called `name_loop_conditional` that takes a name and a number. If the number is less than 10, return the name repeated that many times. If the number is 10 or higher, return the message 'Too high' three times.",
         starterCode: `def name_loop_conditional(name: str, count: int) -> str:
     # Your code here
     pass`,
@@ -690,7 +690,7 @@ const for_challenges = [
         id: "042",
         number: 42,
         title: "Sum List",
-        description: "Create `sum_list(nums: list)`. Return total of numbers in list.",
+        description: "Write a function called `sum_list` that accepts a list of numbers. It should calculate and return the total sum of all the numbers in the list.",
         starterCode: `def sum_list(nums: list) -> int:
     # Your code here
     pass`,
@@ -707,7 +707,7 @@ const for_challenges = [
         id: "043",
         number: 43,
         title: "Count Direction",
-        description: "Create `count_direction(direction, num)`. If direction is 'up': return list 1 to num. If 'down': return list 20 down to num. Else return empty list.",
+        description: "Write a function called `count_direction` that takes a direction ('up' or 'down') and a number. If 'up', return a list of numbers from 1 to that number. If 'down', return a list of numbers from 20 down to that number. Otherwise, return an empty list.",
         starterCode: `def count_direction(direction: str, num: int) -> list:
     # Your code here
     pass`,
@@ -729,7 +729,7 @@ const for_challenges = [
         id: "044",
         number: 44,
         title: "Invite Guests",
-        description: "Create `invite_guests(guests: list)`. If len(guests) < 10: return string '[name] has been invited' for each. Else return 'Too many people'.",
+        description: "Write a function called `invite_guests` that accepts a list of guest names. If there look to be fewer than 10 guests, return a string saying '[Name] has been invited' for each one. If there are 10 or more, return 'Too many people'.",
         starterCode: `def invite_guests(guests: list) -> str:
     # Your code here
     pass`,
@@ -751,7 +751,7 @@ const while_challenges = [
         id: "045",
         number: 45,
         title: "Sum To 50",
-        description: "Create `sum_until_50(nums: list)`. Iterate through nums, adding to total. If total > 50, stop and return the total at that point (including the one that went over).",
+        description: "Write a function called `sum_until_50` that takes a list of numbers. Iterate through the list, adding each number to a running total. If the total becomes greater than 50, stop immediately and return that total (including the number that pushed it over 50).",
         starterCode: `def sum_until_50(nums: list) -> int:
     # Your code here
     pass`,
@@ -770,7 +770,7 @@ const while_challenges = [
         id: "046",
         number: 46,
         title: "Validate Input 5",
-        description: "Create `validate_5(nums: list)`. Return the first number in the list that is > 5.",
+        description: "Write a function called `validate_5` that takes a list of numbers. It should iterate through the list and return the first number found that is greater than 5. If no such number involves, return 0.",
         starterCode: `def validate_5(nums: list) -> int:
     # Your code here
     pass`,
@@ -787,7 +787,7 @@ const while_challenges = [
         id: "047",
         number: 47,
         title: "Sum Sequence",
-        description: "Create `sum_sequence(nums: list)`. Return sum of all numbers.",
+        description: "Write a function called `sum_sequence` that accepts a list of numbers. It should calculate and return the sum of all the numbers in the list (using a loop).",
         starterCode: `def sum_sequence(nums: list) -> int:
     # Your code here
     pass`,
@@ -804,7 +804,7 @@ const while_challenges = [
         id: "048",
         number: 48,
         title: "Party Invite Count",
-        description: "Create `count_invites(responses: list)`. Responses are 'yes' or 'no'. Count how many 'yes'.",
+        description: "Write a function called `count_invited` that takes a list of names. It should iterate through the list and verify if a guest is invited. Return a count of how many people were valid guests (basically, just count the items in the list to simulate checking).",
         starterCode: `def count_invites(responses: list) -> int:
     # Your code here
     pass`,
@@ -858,7 +858,7 @@ const while_challenges = [
         id: "051",
         number: 51,
         title: "Green Bottles",
-        description: "Create `bottles_lyrics(start)`. Returns full song lyrics counting down from start to 0.",
+        description: "Write a function called `green_bottles` that takes a number `num`. It should return the message 'There are [num] green bottles hanging on the wall'. If `num` is 0, return 'There are no more green bottles hanging on the wall'.",
         starterCode: `def bottles_lyrics(start: int) -> str:
     # Your code here
     pass`,
@@ -882,7 +882,7 @@ const random_challenges = [
         id: "052",
         number: 52,
         title: "Random Int",
-        description: "Create `get_random_int()`. Return random integer between 1 and 100.",
+        description: "Write a function called `random_int`. It should generate and return a random integer between 1 and 100 (inclusive).",
         starterCode: `import random
 def get_random_int() -> int:
     # Your code here
@@ -898,7 +898,7 @@ def get_random_int() -> int:
         id: "053",
         number: 53,
         title: "Random Fruit",
-        description: "Create `get_random_fruit()`. Pick from ['apple', 'banana', 'cherry', 'date', 'elderberry'].",
+        description: "Write a function called `random_fruit` that takes no arguments. It should pick a random fruit from the list ['apple', 'banana', 'cherry', 'date', 'elderberry'] and return it.",
         starterCode: `import random
 def get_random_fruit() -> str:
     # Your code here
@@ -915,7 +915,7 @@ def get_random_fruit() -> str:
         id: "054",
         number: 54,
         title: "Coin Toss",
-        description: "Create `coin_toss(user_choice)`. User choice 'h' or 't'. Randomly pick 'h' or 't'. If match return 'You win', else 'Bad luck'.",
+        description: "Write a function called `guess_number` that takes a `guess` and a `comp_num` (target). If the guess is lower than the target, return 'Too low'. If it is higher, return 'Too high'. If it is the same, return 'Correct'.",
         starterCode: `import random
 def coin_toss(user_choice: str) -> str:
     # Your code here
@@ -934,7 +934,7 @@ def coin_toss(user_choice: str) -> str:
         id: "055",
         number: 55,
         title: "Random Guess Feedback",
-        description: "Create `random_feedback(guess)`. Random 1-5. If guess matches random: 'Well done'. If guess > random: 'Too high'. If guess < random: 'Too low'.",
+        description: "Write a function called `pick_number`. It should check if a random number between 1 and 5 is equal to the user's choice. If it matches, return 'Well done'. If the user's choice is too high, return 'Too high'. If too low, return 'Too low'.",
         starterCode: `import random
 def random_feedback(guess: int) -> str:
     # Your code here
@@ -1001,7 +1001,7 @@ def random_loop_feedback(guesses: list) -> list:
         id: "058",
         number: 58,
         title: "Math Quiz",
-        description: "Create `math_quiz_check(num1, num2, answer)`. Return True if correct.",
+        description: "Write a function called `math_quiz_check` that takes two numbers and the user's answer. It should check if the two numbers added together equal the user's answer. Return True if correct, False otherwise.",
         starterCode: `def math_quiz_check(num1: int, num2: int, answer: int) -> bool:
     # Your code here
     pass`,
@@ -1015,7 +1015,7 @@ def random_loop_feedback(guesses: list) -> list:
         id: "059",
         number: 59,
         title: "Colour Guess",
-        description: "Create `check_colour_guess(guess)`. Random choice from ['red', 'blue', 'green', 'white', 'pink']. Match? If match 'Well done'. Else 'Wrong'.",
+        description: "Write a function called `check_colour_guess` that takes a guess. It should pick a random colour from ['red', 'blue', 'green', 'white', 'pink']. If the guess matches the random choice, return 'Well done'. Otherwise, return 'Wrong'.",
         starterCode: `import random
 def check_colour_guess(guess: str) -> str:
     # Your code here
@@ -1036,7 +1036,7 @@ const list_challenges = [
         id: "069",
         number: 69,
         title: "Tuple Index",
-        description: "Create `get_tuple_item(countries: tuple, name: str) -> int`. Return index of name in tuple.",
+        description: "Write a function called `get_tuple_item` that takes a tuple of countries and a country name. It should return the index number of that country in the tuple.",
         starterCode: `def get_tuple_item(countries: tuple, name: str) -> int:
     # Your code here
     pass`,
@@ -1050,7 +1050,7 @@ const list_challenges = [
         id: "070",
         number: 70,
         title: "Tuple Choice",
-        description: "Create `get_tuple_choice(countries: tuple, index: int) -> str`. Return item at index.",
+        description: "Write a function called `get_tuple_choice` that takes a tuple of countries and an index number. It should return the country name at that index position.",
         starterCode: `def get_tuple_choice(countries: tuple, index: int) -> str:
     # Your code here
 pass`,
@@ -1064,7 +1064,7 @@ return countries[index]`,
         id: "071",
         number: 71,
         title: "Sport List",
-        description: "Create `add_sport(sports: list, sport: str) -> list`. Append sport to list and return sorted list.",
+        description: "Write a function called `add_sport` that takes a list of sports and a new sport name. It should append the new sport to the list, sort the list alphabetically, and then return the updated list.",
         starterCode: `def add_sport(sports: list, sport: str) -> list:
     # Your code here
 pass`,
@@ -1080,7 +1080,7 @@ return sports`,
         id: "072",
         number: 72,
         title: "Delete Subject",
-        description: "Create `remove_subject(subjects: list, subject: str) -> list`. Remove subject from list and return list.",
+        description: "Write a function called `remove_subject` that takes a list of subjects and a specific subject name. If the subject exists in the list, remove it. Return the modified list.",
         starterCode: `def remove_subject(subjects: list, subject: str) -> list:
     # Your code here
 pass`,
@@ -1096,7 +1096,7 @@ return subjects`,
         id: "073",
         number: 73,
         title: "Food Dictionary",
-        description: "Create `remove_food(foods: dict, key: int) -> dict`. Remove item with given key from dictionary and return dict.",
+        description: "Write a function called `remove_food` that takes a dictionary of ID-Food pairs and an ID key. It should remove the entry associated with that key and return the updated dictionary.",
         starterCode: `def remove_food(foods: dict, key: int) -> dict:
     # Your code here
 pass`,
@@ -1112,7 +1112,7 @@ return foods`,
         id: "074",
         number: 74,
         title: "Colour Range",
-        description: "Create `colour_range(colours: list, start: int, end: int) -> list`. Return list slice from start to end (inclusive/exclusive? Python slicing is exclusive. Book says 'between start and end numbers'. Let's stick to Python standard slice `[start:end]`).",
+        description: "Write a function called `colour_range` that accepts a list of colours, a start index, and an end index. It should return a new list containing the colours between those indices (using Python list slicing).",
         starterCode: `def colour_range(colours: list, start: int, end: int) -> list:
     # Your code here
 pass`,
@@ -1126,7 +1126,7 @@ return colours[start:end]`,
         id: "075",
         number: 75,
         title: "Check List Number",
-        description: "Create `check_list_num(nums: list, guess: int) -> str`. If guess in list return index (as string), else return 'Not in list'.",
+        description: "Write a function called `check_list_num` that takes a list of numbers and a guess. If the guess is in the list, return its index (as a string). If it is not, return the string 'Not in list'.",
         starterCode: `def check_list_num(nums: list, guess: int) -> str:
     # Your code here
 pass`,
@@ -1143,7 +1143,7 @@ return "Not in list"`,
         id: "076",
         number: 76,
         title: "Invite List Count",
-        description: "Create `invite_count_guests(names: list) -> int`. Logic: If user says 'no' stop? This is interactive. Adapted: `count_guests(names: list)`. Return len.",
+        description: "Write a function called `count_guests` that accepts a list of guest names. It should simply return the total number of guests in the list.",
         starterCode: `def count_guests(names: list) -> int:
     # Your code here
 pass`,
@@ -1157,7 +1157,7 @@ return len(names)`,
         id: "077",
         number: 77,
         title: "Invite Check",
-        description: "Create `invite_manage(names: list, check_name: str, keep: bool) -> list`. If check_name in list: if keep is False, remove it. Return list.",
+        description: "Write a function called `invite_manage` that takes a list of names, a specific name to check, and a boolean `keep`. If the name exists in the list and `keep` is False, remove that name from the list. Return the updated list.",
         starterCode: `def invite_manage(names: list, check_name: str, keep: bool) -> list:
     # Your code here
 pass`,
@@ -1173,7 +1173,7 @@ return names`,
         id: "078",
         number: 78,
         title: "TV Show Insert",
-        description: "Create `tv_insert(shows: list, show: str, idx: int) -> list`. Insert show at idx. Return list.",
+        description: "Write a function called `tv_insert` that takes a list of TV shows, a new show name, and an index. It should insert the new show into the list at the specified index and return the updated list.",
         starterCode: `def tv_insert(shows: list, show: str, idx: int) -> list:
     # Your code here
 pass`,
@@ -1188,7 +1188,7 @@ return shows`,
         id: "079",
         number: 79,
         title: "Nums Keep Last",
-        description: "Create `nums_keep(nums: list, keep_last: bool) -> list`. If keep_last is False, remove last item. Return list.",
+        description: "Write a function called `nums_keep` that accepts a list of numbers and a boolean `keep_last`. If `keep_last` is False, remove the last item from the list. Return the list.",
         starterCode: `def nums_keep(nums: list, keep_last: bool) -> list:
     # Your code here
 pass`,
@@ -1207,7 +1207,7 @@ const string_more_challenges = [
         id: "080",
         number: 80,
         title: "Name Stats",
-        description: "Create `name_stats(first: str, last: str) -> str`. Return 'First: [len], Last: [len], Full: [full name]'.",
+        description: "Write a function called `name_stats` that takes a first name and a last name. It should return a summary string in the format 'First: [len], Last: [len], Full: [full_name]'.",
         starterCode: `def name_stats(first: str, last: str) -> str:
     # Your code here
 pass`,
@@ -1222,7 +1222,7 @@ return f"First: {len(first)}, Last: {len(last)}, Full: {full}"`,
         id: "081",
         number: 81,
         title: "Subject Dash",
-        description: "Create `subject_dash(subject: str) -> str`. Return subject chars joined by '-'.",
+        description: "Write a function called `subject_dash` that takes a subject word. It should return the word with a dash ('-') inserted after every character (except possibly the last one, or just join them). Example: 'Maths' becomes 'M-a-t-h-s'.",
         starterCode: `def subject_dash(subject: str) -> str:
     # Your code here
 pass`,
@@ -1239,7 +1239,7 @@ return output[: -1]`, // or "-".join(subject)
         id: "082",
         number: 82,
         title: "Poem Slice",
-        description: "Create `poem_slice(line: str, start: int, end: int) -> str`. Return slice.",
+        description: "Write a function called `poem_slice` that takes a line of text, a start index, and an end index. Return the substring defined by those indices.",
         starterCode: `def poem_slice(line: str, start: int, end: int) -> str:
     # Your code here
 pass`,
@@ -1253,7 +1253,7 @@ return line[start:end]`,
         id: "083",
         number: 83,
         title: "Check Upper",
-        description: "Create `check_upper(word: str) -> bool`. Return True if word is all uppercase.",
+        description: "Write a function called `check_upper` that takes a word. Return True if the word is entirely uppercase, and False otherwise.",
         starterCode: `def check_upper(word: str) -> bool:
     # Your code here
 pass`,
@@ -1268,7 +1268,7 @@ return word.isupper()`,
         id: "084",
         number: 84,
         title: "Postcode Prefix",
-        description: "Create `postcode_prefix(postcode: str) -> str`. Return first 2 characters in uppercase.",
+        description: "Write a function called `postcode_prefix` that accepts a postcode string. It should return the first two characters of the postcode in uppercase.",
         starterCode: `def postcode_prefix(postcode: str) -> str:
     # Your code here
 pass`,
@@ -1282,7 +1282,7 @@ return postcode[: 2].upper()`,
         id: "085",
         number: 85,
         title: "Vowel Count",
-        description: "Create `vowel_count(word: str) -> int`. Count vowels (aeiou), case insensitive.",
+        description: "Write a function called `vowel_count` that takes a word. It should count and return the number of vowels (a, e, i, o, u) in the word, regardless of case.",
         starterCode: `def vowel_count(word: str) -> int:
     # Your code here
 pass`,
@@ -1301,7 +1301,7 @@ return count`,
         id: "086",
         number: 86,
         title: "Password Match",
-        description: "Create `password_match(p1: str, p2: str) -> str`. If match: 'Match'. Else: 'No match'.",
+        description: "Write a function called `check_password` that takes a password attempt. If the password is 'secret', return 'Access granted'. Otherwise, return 'Try again'.",
         starterCode: `def password_match(p1: str, p2: str) -> str:
     # Your code here
 pass`,
@@ -1317,7 +1317,7 @@ return "No match"`,
         id: "087",
         number: 87,
         title: "Reverse String",
-        description: "Create `reverse_string(word: str) -> str`. Return word in reverse.",
+        description: "Write a function called `reverse_string` that takes a word. It should return the word reversed.",
         starterCode: `def reverse_string(word: str) -> str:
     # Your code here
 pass`,
@@ -1334,7 +1334,7 @@ const array_challenges = [
         id: "088",
         number: 88,
         title: "Array Reverse",
-        description: "Create `array_reverse(nums: list) -> list`. Sort and then reverse the list.",
+        description: "Write a function called `array_reverse` that takes a list of 5 integers. It should sort the list in ascending order, then reverse it (so it is descending), and return the result.",
         starterCode: `def array_reverse(nums: list) -> list:
     # Your code here
 pass`,
@@ -1350,7 +1350,7 @@ return nums`,
         id: "089",
         number: 89,
         title: "Array Random",
-        description: "Create `array_random(nums: list) -> list`. Actually book says 'print on separate lines'. Adapted: `array_get_items(nums)`. Return valid list.",
+        description: "Write a function called `array_get_items` that takes a list of integers. Functionally, it should simply return the list (to simulate displaying the items).",
         starterCode: `def array_get_items(nums: list) -> list:
     # Your code here
 pass`,
@@ -1362,7 +1362,7 @@ return nums`, // Trivial, but matches "display items"
         id: "090",
         number: 90,
         title: "Array Filter",
-        description: "Create `array_filter_10(nums: list) -> list`. Return list of numbers < 10.",
+        description: "Write a function called `array_filter_10` that takes a list of numbers. It should return a new list containing only the numbers that are less than 10.",
         starterCode: `def array_filter_10(nums: list) -> list:
     # Your code here
 pass`,
@@ -1380,7 +1380,7 @@ return output`,
         id: "091",
         number: 91,
         title: "Array Count Target",
-        description: "Create `array_count_target(nums: list, target: int) -> int`. Count occurrences.",
+        description: "Write a function called `array_count_target` that takes a list of numbers and a target number. It should return the number of times the target appears in the list.",
         starterCode: `def array_count_target(nums: list, target: int) -> int:
     # Your code here
 pass`,
@@ -1394,7 +1394,7 @@ return nums.count(target)`,
         id: "092",
         number: 92,
         title: "Array Merge",
-        description: "Create `array_merge(arr1: list, arr2: list) -> list`. Join arrays and sort.",
+        description: "Write a function called `array_merge` that takes two lists. It should combine them into one list, sort it alphabetically/numerically, and return the result.",
         starterCode: `def array_merge(arr1: list, arr2: list) -> list:
     # Your code here
 pass`,
@@ -1410,7 +1410,7 @@ return full`,
         id: "093",
         number: 93,
         title: "Array Remove Value",
-        description: "Create `array_remove_val(nums: list, val: int) -> list`. Remove val from list.",
+        description: "Write a function called `array_remove_val` that takes a list and a value. If the value exists in the list, remove it. Return the modified list.",
         starterCode: `def array_remove_val(nums: list, val: int) -> list:
     # Your code here
 pass`,
@@ -1426,7 +1426,7 @@ return nums`,
         id: "094",
         number: 94,
         title: "Array Indices",
-        description: "Create `array_indices_select(nums: list, indices: list) -> list`. Return items at indices.",
+        description: "Write a function called `array_indices_select` that takes a list of numbers and a list of indices. It should return a new list containing the numbers found at those specific indices.",
         starterCode: `def array_indices_select(nums: list, indices: list) -> list:
     # Your code here
 pass`,
@@ -1444,7 +1444,7 @@ return output`,
         id: "095",
         number: 95,
         title: "Array Division",
-        description: "Create `array_div(nums: list, divisor: float) -> list`. Return list with each number divided by divisor (rounded 2dp).",
+        description: "Write a function called `array_div` that takes a list of numbers and a divisor. It should return a new list where each number has been divided by the divisor and rounded to 2 decimal places.",
         starterCode: `def array_div(nums: list, divisor: float) -> list:
     # Your code here
 pass`,
@@ -1465,7 +1465,7 @@ const dict_2d_challenges = [
         id: "096",
         number: 96,
         title: "Simple 2D List",
-        description: "Create `get_simple_grid() -> list`. Return the list `[[2, 5, 8], [3, 7, 4], [1, 6, 9], [4, 2, 0]]`.",
+        description: "Write a function called `get_simple_grid`. It should simply return the specific 2D list: `[[2, 5, 8], [3, 7, 4], [1, 6, 9], [4, 2, 0]]`.",
         starterCode: `def get_simple_grid() -> list:
     # Your code here
     pass`,
@@ -1479,7 +1479,7 @@ const dict_2d_challenges = [
         id: "097",
         number: 97,
         title: "Get 2D Item",
-        description: "Create `get_grid_item(grid: list, row: int, col: int) -> int`. Return item at row, col.",
+        description: "Write a function called `get_grid_item` that takes a 2D list (grid), a row index, and a column index. It should return the item located at that row and column.",
         starterCode: `def get_grid_item(grid: list, row: int, col: int) -> int:
     # Your code here
     pass`,
@@ -1493,7 +1493,7 @@ const dict_2d_challenges = [
         id: "098",
         number: 98,
         title: "Update 2D Item",
-        description: "Create `update_grid_item(grid: list, row: int, col: int, val: int) -> list`. Update item and return grid.",
+        description: "Write a function called `update_grid_item` that takes a 2D list, a row, a column, and a new value. It should update the item at that position and return the modified grid.",
         starterCode: `def update_grid_item(grid: list, row: int, col: int, val: int) -> list:
     # Your code here
     pass`,
@@ -1508,7 +1508,7 @@ const dict_2d_challenges = [
         id: "099",
         number: 99,
         title: "Get Row",
-        description: "Create `get_row(grid: list, row: int) -> list`. Return the row.",
+        description: "Write a function called `get_row` that takes a 2D list and a row index. It should return that entire row as a list.",
         starterCode: `def get_row(grid: list, row: int) -> list:
     # Your code here
     pass`,
@@ -1522,7 +1522,7 @@ const dict_2d_challenges = [
         id: "100",
         number: 100,
         title: "2D Dict Access",
-        description: "Create `get_sales(data: dict, name: str, region: str) -> int`. Data is `{name: {'N': 1, 'S': 2...}}`. Return val.",
+        description: "Write a function called `get_sales` that accept a dictionary of sales data, a name, and a region code (e.g., 'N', 'S'). It should return the sales number associated with that name and region.",
         starterCode: `def get_sales(data: dict, name: str, region: str) -> int:
     # Your code here
     pass`,
@@ -1536,7 +1536,7 @@ const dict_2d_challenges = [
         id: "101",
         number: 101,
         title: "2D Dict Update",
-        description: "Create `update_sales(data: dict, name: str, region: str, val: int) -> dict`. Update and return data.",
+        description: "Write a function called `update_sales` that takes a sales dictionary, a name, a region, and a new value. It should update the sales figure for that person and region, then return the dictionary.",
         starterCode: `def update_sales(data: dict, name: str, region: str, val: int) -> dict:
     # Your code here
     pass`,
@@ -1551,7 +1551,7 @@ const dict_2d_challenges = [
         id: "102",
         number: 102,
         title: "2D Dict Add",
-        description: "Create `add_person(data: dict, name: str, age: int, shoe: int) -> dict`. Add/Update `data[name] = {'Age': age, 'Shoe': shoe}`.",
+        description: "Write a function called `add_person` that accepts a dictionary, a name, an age, and a shoe size. It should add (or update) an entry for that name containing a dictionary with 'Age' and 'Shoe' keys, then return the dictionary.",
         starterCode: `def add_person(data: dict, name: str, age: int, shoe: int) -> dict:
     # Your code here
     pass`,
@@ -1566,7 +1566,7 @@ const dict_2d_challenges = [
         id: "103",
         number: 103, // Adapted significantly to function
         title: "2D Dict Print",
-        description: "Create `get_person_info(data: dict, name: str) -> str`. Return 'Age: [age], Shoe: [shoe]'.",
+        description: "Write a function called `get_person_info` that takes the data dictionary and a name. If the person exists, return a string like 'Age: [age], Shoe: [shoe]'. If not, return 'Not found'.",
         starterCode: `def get_person_info(data: dict, name: str) -> str:
     # Your code here
     pass`,
@@ -1586,7 +1586,7 @@ const subprogram_challenges = [
         id: "118",
         number: 118,
         title: "Ask Num Function",
-        description: "Create `ask_num() -> int`. Ask user? No, simply return an int. Adapted: `get_num()`. Return 7 (arbitrary). No, 'define a function ask_value that asks user for a number'. We pass input as arg. `ask_num(val: int) -> int`.",
+        description: "Write a function called `ask_num` that accepts a value. It should simply return that value (simulating asking the user for input and returning it).",
         starterCode: `def ask_num(val: int) -> int:
     # Your code here
     pass`,
@@ -1600,7 +1600,7 @@ const subprogram_challenges = [
         id: "120",
         number: 120,
         title: "Menu Math",
-        description: "Create `calc(choice: int, a: int, b: int) -> str`. 1: Add, 2: Sub. Return result string e.g. '5 + 2 = 7'.",
+        description: "Write a function called `calc` that takes a choice (1 or 2) and two numbers. If choice is 1, return a string showing sum: '[a] + [b] = [ans]'. If 2, return subtraction: '[a] - [b] = [ans]'. Otherwise return 'Invalid'.",
         starterCode: `def calc(choice: int, a: int, b: int) -> str:
     # Your code here
     pass`,
@@ -1618,7 +1618,7 @@ const subprogram_challenges = [
         id: "121",
         number: 121,
         title: "Name List Manager",
-        description: "Create `manage_names(names: list, choice: int, val: str, idx: int = 0) -> list`. 1: Add val, 2: Change val at idx, 3: Delete val, 4: View (return list).",
+        description: "Write a function called `manage_names` that takes a list of names, a menu choice (1-4), a value (for adding/removing), and an optional index. 1: Add name. 2: Change name at index. 3: Delete name. 4: Return list. Perform the action and return the list.",
         starterCode: `def manage_names(names: list, choice: int, val: str, idx: int = 0) -> list:
     # Your code here
     pass`,
