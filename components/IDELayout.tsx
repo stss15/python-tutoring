@@ -31,6 +31,7 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
     const isFinalAssessment = isLastChallenge && chapter.challenges.length > 5;
 
     // Update editor when challenge changes
+    // Update editor when challenge changes
     useEffect(() => {
         if (currentChallenge) {
             setEditorCode(currentChallenge.starterCode || '');
@@ -38,7 +39,7 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
             setShowSolution(false);
             clearOutput();
         }
-    }, [currentChallenge, clearOutput]);
+    }, [currentChallenge?.id, currentChallenge?.starterCode, clearOutput]);
 
     const handleRun = useCallback(() => {
         if (!editorCode.trim()) return;

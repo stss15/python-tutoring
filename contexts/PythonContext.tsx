@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
+import React, { createContext, useContext, useEffect, useState, useRef, useCallback, useMemo } from 'react';
 
 // Define Pyodide types roughly
 interface PyodideInterface {
@@ -130,7 +130,7 @@ export const PythonProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         loadEngine();
     }, []);
 
-    const runCode = async (code: string, testCases?: TestCase[]) => {
+    const runCode = useCallback(async (code: string, testCases?: TestCase[]) => {
         if (!pyodide) return;
         setIsRunning(true);
         setTestResults(null); // Clear previous results
@@ -188,27 +188,27 @@ __run_tests()
         } finally {
             setIsRunning(false);
         }
-    };
+    }, [pyodide]);
 
-    const clearOutput = () => {
+    const clearOutput = useCallback(() => {
         setOutput([]);
         outputBuffer.current = [];
         setTestResults(null);
-    };
+    }, []);
+
+    const contextValue = React.useMemo(() => ({
+        isLoading,
+        isReady,
+        loadingMessage,
+        runCode,
+        output,
+        clearOutput,
+        isRunning,
+        testResults
+    }), [isLoading, isReady, loadingMessage, runCode, output, clearOutput, isRunning, testResults]);
 
     return (
-        <PythonContext.Provider
-            value={{
-                isLoading,
-                isReady,
-                loadingMessage,
-                runCode,
-                output,
-                clearOutput,
-                isRunning,
-                testResults
-            }}
-        >
+        <PythonContext.Provider value={contextValue}>
             {children}
         </PythonContext.Provider>
     );
