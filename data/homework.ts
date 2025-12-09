@@ -1,7 +1,7 @@
 import { Homework } from "../types";
 
 export const homeworkByChapter: Record<string, Homework[]> = {
-  first_functions: [
+  "01_basics": [
     {
       title: "Personal Introduction Generator",
       brief: "Create a program to generate personalized introduction cards using helper functions.",
@@ -13,20 +13,7 @@ export const homeworkByChapter: Record<string, Homework[]> = {
       ],
     },
   ],
-  working_with_numbers: [
-    {
-      title: "Restaurant Bill Calculator",
-      brief: "Create a bill splitting system with tax and tip calculations.",
-      bullets: [
-        "Implement `calculate_subtotal(items)` to sum a list of prices.",
-        "Implement `apply_tax(amount, tax_rate)` to add tax (default 8.25%).",
-        "Implement `calculate_tip(amount, tip_percent)` to calculate the tip amount.",
-        "Implement `split_bill(total, num_people)` to divide the total evenly.",
-        "Implement `generate_receipt(items, tax_rate, tip_percent, num_people)` to return the final breakdown."
-      ],
-    },
-  ],
-  making_decisions: [
+  "02_if_statements": [
     {
       title: "Smart Ticket Pricing System",
       brief: "Design a movie ticket pricing system with age and time-based discounts.",
@@ -38,7 +25,7 @@ export const homeworkByChapter: Record<string, Homework[]> = {
       ],
     },
   ],
-  text_basics: [
+  "03_strings": [
     {
       title: "Username & Email Validator",
       brief: "Build a system to validate and format user registration data.",
@@ -51,7 +38,20 @@ export const homeworkByChapter: Record<string, Homework[]> = {
       ],
     },
   ],
-  for_loops: [
+  "04_maths": [
+    {
+      title: "Restaurant Bill Calculator",
+      brief: "Create a bill splitting system with tax and tip calculations.",
+      bullets: [
+        "Implement `calculate_subtotal(items)` to sum a list of prices.",
+        "Implement `apply_tax(amount, tax_rate)` to add tax (default 8.25%).",
+        "Implement `calculate_tip(amount, tip_percent)` to calculate the tip amount.",
+        "Implement `split_bill(total, num_people)` to divide the total evenly.",
+        "Implement `generate_receipt(items, tax_rate, tip_percent, num_people)` to return the final breakdown."
+      ],
+    },
+  ],
+  "05_for_loops": [
     {
       title: "Math Quiz Generator",
       brief: "Create a multiplication practice program that tracks user performance.",
@@ -64,7 +64,7 @@ export const homeworkByChapter: Record<string, Homework[]> = {
       ],
     },
   ],
-  while_loops: [
+  "06_while_loops": [
     {
       title: "Number Guessing Game",
       brief: "Build a guessing game with hints and attempt tracking.",
@@ -76,7 +76,19 @@ export const homeworkByChapter: Record<string, Homework[]> = {
       ],
     },
   ],
-  lists_basics: [
+  "07_random": [
+    {
+      title: "Dice Roller Simulator",
+      brief: "Create a dice rolling tool for board games.",
+      bullets: [
+        "Implement `roll_die(sides)` to return a random number 1-sides.",
+        "Implement `roll_multiple(num_dice, sides)` to return a list of rolls.",
+        "Implement `get_roll_stats(rolls)` to return sum and average.",
+        "Implement `check_critical_success(roll, sides)` to return True if max value rolled."
+      ],
+    },
+  ],
+  "08_lists_dicts": [
     {
       title: "Playlist Manager",
       brief: "Create a music playlist manager with search and analysis features.",
@@ -88,21 +100,6 @@ export const homeworkByChapter: Record<string, Homework[]> = {
         "Implement `search_songs(playlist, keyword)` to find matches."
       ],
     },
-  ],
-  lists_transformation: [
-    {
-      title: "Grade Book Processor",
-      brief: "Build a system to transform and analyze student grades.",
-      bullets: [
-        "Implement `curve_scores(scores, amount)` to adjust grades (capped at 100).",
-        "Implement `drop_lowest(scores)` to remove the minimum value.",
-        "Implement `calculate_letter_grades(scores)` to convert numbers to letters.",
-        "Implement `filter_passing(students)` to return students with scores >= 60.",
-        "Implement `grade_distribution(scores)` to count each letter grade."
-      ],
-    },
-  ],
-  dictionaries: [
     {
       title: "Word Frequency Analyzer",
       brief: "Create a tool to analyze word patterns in text.",
@@ -115,7 +112,7 @@ export const homeworkByChapter: Record<string, Homework[]> = {
       ],
     },
   ],
-  string_mastery: [
+  "09_more_strings": [
     {
       title: "Text Transformation Toolkit",
       brief: "Build a collection of utilities for cleaning and formatting text.",
@@ -128,7 +125,20 @@ export const homeworkByChapter: Record<string, Homework[]> = {
       ],
     },
   ],
-  combining_structures: [
+  "10_arrays": [
+    {
+      title: "Grade Book Processor",
+      brief: "Build a system to transform and analyze student grades.",
+      bullets: [
+        "Implement `curve_scores(scores, amount)` to adjust grades (capped at 100).",
+        "Implement `drop_lowest(scores)` to remove the minimum value.",
+        "Implement `calculate_letter_grades(scores)` to convert numbers to letters.",
+        "Implement `filter_passing(students)` to return students with scores >= 60.",
+        "Implement `grade_distribution(scores)` to count each letter grade."
+      ],
+    },
+  ],
+  "11_2d_lists_dicts": [
     {
       title: "Student Management System",
       brief: "Design a system to manage student records, grades, and rosters.",
@@ -141,7 +151,7 @@ export const homeworkByChapter: Record<string, Homework[]> = {
       ],
     },
   ],
-  capstone: [
+  "12_subprograms": [
     {
       title: "Mini Shopping Cart",
       brief: "Build an e-commerce cart system with inventory and discounts.",
