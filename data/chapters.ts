@@ -181,7 +181,10 @@ const if_challenges = [
     return f"{num1} {num2}"`,
         testCases: [
             { input: "order_numbers(10, 5)", expected: "'5 10'" },
-            { input: "order_numbers(5, 10)", expected: "'5 10'" }
+            { input: "order_numbers(5, 10)", expected: "'5 10'" },
+            { input: "order_numbers(3, 3)", expected: "'3 3'" },
+            { input: "order_numbers(-5, 2)", expected: "'-5 2'" },
+            { input: "order_numbers(100, 1)", expected: "'1 100'" }
         ]
     },
     {
@@ -198,7 +201,10 @@ const if_challenges = [
     return "Thank you"`,
         testCases: [
             { input: "check_under_20(25)", expected: "'Too high'" },
-            { input: "check_under_20(10)", expected: "'Thank you'" }
+            { input: "check_under_20(10)", expected: "'Thank you'" },
+            { input: "check_under_20(20)", expected: "'Too high'" },
+            { input: "check_under_20(19)", expected: "'Thank you'" },
+            { input: "check_under_20(0)", expected: "'Thank you'" }
         ]
     },
     {
@@ -215,7 +221,10 @@ const if_challenges = [
     return "Incorrect answer"`,
         testCases: [
             { input: "check_range(15)", expected: "'Thank you'" },
-            { input: "check_range(21)", expected: "'Incorrect answer'" }
+            { input: "check_range(21)", expected: "'Incorrect answer'" },
+            { input: "check_range(10)", expected: "'Thank you'" },
+            { input: "check_range(20)", expected: "'Thank you'" },
+            { input: "check_range(9)", expected: "'Incorrect answer'" }
         ]
     },
     {
@@ -232,7 +241,10 @@ const if_challenges = [
     return f"I don't like {colour}, I prefer red"`,
         testCases: [
             { input: "check_colour('Red')", expected: "'I like red too'" },
-            { input: "check_colour('Blue')", expected: "'I don\\'t like Blue, I prefer red'" }
+            { input: "check_colour('RED')", expected: "'I like red too'" },
+            { input: "check_colour('red')", expected: "'I like red too'" },
+            { input: "check_colour('Blue')", expected: "'I don\\'t like Blue, I prefer red'" },
+            { input: "check_colour('green')", expected: "'I don\\'t like green, I prefer red'" }
         ]
     },
     {
@@ -252,7 +264,9 @@ const if_challenges = [
         testCases: [
             { input: "check_weather('yes', 'No')", expected: "'Take an umbrella'" },
             { input: "check_weather('Yes', 'YES')", expected: "'It is too windy for an umbrella'" },
-            { input: "check_weather('no', 'yes')", expected: "'Enjoy your day'" }
+            { input: "check_weather('no', 'yes')", expected: "'Enjoy your day'" },
+            { input: "check_weather('NO', 'no')", expected: "'Enjoy your day'" },
+            { input: "check_weather('yes', 'no')", expected: "'Take an umbrella'" }
         ]
     },
     {
@@ -273,7 +287,10 @@ const if_challenges = [
     return "You can go Trick-or-Treating"`,
         testCases: [
             { input: "check_age(18)", expected: "'You can vote'" },
-            { input: "check_age(15)", expected: "'You can go Trick-or-Treating'" }
+            { input: "check_age(15)", expected: "'You can go Trick-or-Treating'" },
+            { input: "check_age(17)", expected: "'You can learn to drive'" },
+            { input: "check_age(16)", expected: "'You can buy a lottery ticket'" },
+            { input: "check_age(25)", expected: "'You can vote'" }
         ]
     },
     {
@@ -293,7 +310,9 @@ const if_challenges = [
         testCases: [
             { input: "check_number(5)", expected: "'Too low'" },
             { input: "check_number(15)", expected: "'Correct'" },
-            { input: "check_number(25)", expected: "'Too high'" }
+            { input: "check_number(25)", expected: "'Too high'" },
+            { input: "check_number(10)", expected: "'Correct'" },
+            { input: "check_number(20)", expected: "'Correct'" }
         ]
     },
     {
@@ -314,7 +333,58 @@ const if_challenges = [
     return "Error message"`,
         testCases: [
             { input: "check_selection(1)", expected: "'Thank you'" },
-            { input: "check_selection(5)", expected: "'Error message'" }
+            { input: "check_selection(2)", expected: "'Well done'" },
+            { input: "check_selection(3)", expected: "'Correct'" },
+            { input: "check_selection(5)", expected: "'Error message'" },
+            { input: "check_selection(0)", expected: "'Error message'" }
+        ]
+    },
+    {
+        id: "020",
+        number: 20,
+        title: "Grade Calculator",
+        description: "Write a function called `get_grade` that takes a score (0-100). Return 'A' for 90+, 'B' for 80-89, 'C' for 70-79, 'D' for 60-69, and 'F' for below 60.",
+        starterCode: `def get_grade(score: int) -> str:
+    # Your code here
+    pass`,
+        solutionCode: `def get_grade(score: int) -> str:
+    if score >= 90:
+        return "A"
+    if score >= 80:
+        return "B"
+    if score >= 70:
+        return "C"
+    if score >= 60:
+        return "D"
+    return "F"`,
+        testCases: [
+            { input: "get_grade(95)", expected: "'A'" },
+            { input: "get_grade(85)", expected: "'B'" },
+            { input: "get_grade(75)", expected: "'C'" },
+            { input: "get_grade(65)", expected: "'D'" },
+            { input: "get_grade(55)", expected: "'F'" }
+        ]
+    },
+    {
+        id: "021",
+        number: 21,
+        title: "Password Strength",
+        description: "Write a function called `check_password` that takes a password string. Return 'Weak' if it has fewer than 6 characters, 'Medium' if 6-9 characters, and 'Strong' if 10 or more characters.",
+        starterCode: `def check_password(password: str) -> str:
+    # Your code here
+    pass`,
+        solutionCode: `def check_password(password: str) -> str:
+    if len(password) < 6:
+        return "Weak"
+    if len(password) < 10:
+        return "Medium"
+    return "Strong"`,
+        testCases: [
+            { input: "check_password('abc')", expected: "'Weak'" },
+            { input: "check_password('abcdef')", expected: "'Medium'" },
+            { input: "check_password('abcdefghij')", expected: "'Strong'" },
+            { input: "check_password('12345')", expected: "'Weak'" },
+            { input: "check_password('password1')", expected: "'Medium'" }
         ]
     }
 ];

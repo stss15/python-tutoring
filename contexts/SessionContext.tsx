@@ -43,6 +43,8 @@ interface SessionData {
         chapterId: string;
         challengeIndex: number;
     };
+    playgroundMode?: boolean;
+    playgroundCode?: string;
 }
 
 interface SessionContextType {
@@ -74,6 +76,12 @@ interface SessionContextType {
     sessionUnlockedChapters: Record<string, boolean>;
     unlockChapter: (chapterId: string) => void;
     lockChapter: (chapterId: string) => void;
+
+    // Playground mode
+    playgroundMode: boolean;
+    playgroundCode: string;
+    setPlaygroundMode: (enabled: boolean) => void;
+    syncPlaygroundCode: (code: string) => void;
 }
 
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
@@ -139,6 +147,8 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [studentOutput, setStudentOutput] = useState<string[]>([]);
     const [activeChallenge, setActiveChallengeState] = useState<{ chapterId: string; challengeIndex: number } | null>(null);
     const [sessionUnlockedChapters, setSessionUnlockedChapters] = useState<Record<string, boolean>>({});
+    const [playgroundMode, setPlaygroundModeState] = useState(false);
+    const [playgroundCode, setPlaygroundCodeState] = useState('');
 
     const pollIntervalRef = useRef<number | null>(null);
     const isInSession = sessionCode !== null;
@@ -163,6 +173,12 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
                     }
                     if (data.activeChallenge) {
                         setActiveChallengeState(data.activeChallenge);
+                    }
+                    if (data.playgroundMode !== undefined) {
+                        setPlaygroundModeState(data.playgroundMode);
+                    }
+                    if (data.playgroundCode !== undefined) {
+                        setPlaygroundCodeState(data.playgroundCode);
                     }
                 } else {
                     // Session was deleted
@@ -189,6 +205,12 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 }
                 if (data.activeChallenge) {
                     setActiveChallengeState(data.activeChallenge);
+                }
+                if (data.playgroundMode !== undefined) {
+                    setPlaygroundModeState(data.playgroundMode);
+                }
+                if (data.playgroundCode !== undefined) {
+                    setPlaygroundCodeState(data.playgroundCode);
                 }
             } else if (!isTeacher) {
                 // Session was deleted by teacher
@@ -438,6 +460,38 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     }, [sessionCode, isTeacher]);
 
+    // Set playground mode (teacher only)
+    const setPlaygroundMode = useCallback((enabled: boolean) => {
+        if (!sessionCode || !isTeacher) return;
+
+        if (db) {
+            set(ref(db, `sessions/${sessionCode}/playgroundMode`), enabled).catch(console.error);
+        } else {
+            const session = getLocalSession(sessionCode);
+            if (session) {
+                session.playgroundMode = enabled;
+                saveLocalSession(sessionCode, session);
+                setPlaygroundModeState(enabled);
+            }
+        }
+    }, [sessionCode, isTeacher]);
+
+    // Sync playground code
+    const syncPlaygroundCode = useCallback((code: string) => {
+        if (!sessionCode) return;
+
+        if (db) {
+            set(ref(db, `sessions/${sessionCode}/playgroundCode`), code).catch(console.error);
+        } else {
+            const session = getLocalSession(sessionCode);
+            if (session) {
+                session.playgroundCode = code;
+                saveLocalSession(sessionCode, session);
+                setPlaygroundCodeState(code);
+            }
+        }
+    }, [sessionCode]);
+
     const contextValue: SessionContextType = {
         sessionCode,
         isInSession,
@@ -455,7 +509,11 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
         studentOutput,
         sessionUnlockedChapters,
         unlockChapter,
-        lockChapter
+        lockChapter,
+        playgroundMode,
+        playgroundCode,
+        setPlaygroundMode,
+        syncPlaygroundCode
     };
 
     return (

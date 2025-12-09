@@ -26,9 +26,20 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
 }) => {
     const currentChallenge = chapter.challenges[currentChallengeIndex];
     const { runCode, isRunning, clearOutput, output } = usePython();
-    const { isInSession, isTeacher, sessionCode, participantId, syncOutput } = useSession();
+    const {
+        isInSession,
+        isTeacher,
+        sessionCode,
+        participantId,
+        syncOutput,
+        playgroundMode,
+        playgroundCode,
+        setPlaygroundMode,
+        syncPlaygroundCode
+    } = useSession();
 
     const [editorCode, setEditorCode] = useState(currentChallenge?.starterCode || '');
+    const [savedChallengeCode, setSavedChallengeCode] = useState(''); // Store code when switching to playground
     const [showHint, setShowHint] = useState(false);
     const [showSolution, setShowSolution] = useState(false);
 
@@ -100,8 +111,13 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
         // Get code from editor directly for most accurate state
         const code = editorRef.current?.getValue() || editorCode;
         if (!code.trim()) return;
-        runCode(code, currentChallenge.testCases);
-    }, [editorCode, runCode, currentChallenge]);
+        // In playground mode, run without test cases
+        if (playgroundMode) {
+            runCode(code);
+        } else {
+            runCode(code, currentChallenge?.testCases);
+        }
+    }, [editorCode, runCode, currentChallenge, playgroundMode]);
 
     // Keyboard shortcut for running code
     useEffect(() => {
@@ -132,7 +148,35 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
     // Track local editor changes (for non-collaborative mode sync)
     const handleEditorChange = useCallback((value: string | undefined) => {
         setEditorCode(value || '');
-    }, []);
+        // Sync playground code if in playground mode
+        if (playgroundMode && isInSession) {
+            syncPlaygroundCode(value || '');
+        }
+    }, [playgroundMode, isInSession, syncPlaygroundCode]);
+
+    // Toggle playground mode
+    const handleTogglePlayground = useCallback(() => {
+        if (playgroundMode) {
+            // Switching back to challenge mode - restore saved code
+            if (savedChallengeCode && editorRef.current) {
+                editorRef.current.setValue(savedChallengeCode);
+                setEditorCode(savedChallengeCode);
+            }
+            setPlaygroundMode(false);
+        } else {
+            // Switching to playground mode - save current code
+            const currentCode = editorRef.current?.getValue() || editorCode;
+            setSavedChallengeCode(currentCode);
+            // Load playground code or start fresh
+            const pgCode = playgroundCode || '# Playground - experiment freely!\n\n';
+            if (editorRef.current) {
+                editorRef.current.setValue(pgCode);
+            }
+            setEditorCode(pgCode);
+            setPlaygroundMode(true);
+        }
+        clearOutput();
+    }, [playgroundMode, savedChallengeCode, editorCode, playgroundCode, setPlaygroundMode, clearOutput]);
 
     // Collaborator count for display
     const collaboratorCount = collaborators.size;
@@ -323,8 +367,8 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                         {/* Collaboration Status */}
                         {isInSession && (
                             <div className={`flex items-center gap-2 px-3 py-1.5 rounded-md border ${isConnected
-                                    ? 'bg-emerald-600/20 border-emerald-500/30'
-                                    : 'bg-yellow-600/20 border-yellow-500/30'
+                                ? 'bg-emerald-600/20 border-emerald-500/30'
+                                : 'bg-yellow-600/20 border-yellow-500/30'
                                 }`}>
                                 <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-emerald-400 animate-pulse' : 'bg-yellow-400'}`} />
                                 <span className={`text-xs font-medium ${isConnected ? 'text-emerald-400' : 'text-yellow-400'}`}>
@@ -333,6 +377,20 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                                         : '⏳ Connecting...'}
                                 </span>
                             </div>
+                        )}
+
+                        {/* Playground Toggle - Teacher only in session */}
+                        {isInSession && isTeacher && (
+                            <button
+                                onClick={handleTogglePlayground}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${playgroundMode
+                                    ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/50'
+                                    : 'bg-[#3c3c3c] text-slate-400 hover:bg-[#4c4c4c] hover:text-white'
+                                    }`}
+                                title={playgroundMode ? 'Return to Challenge' : 'Enter Playground Mode'}
+                            >
+                                {playgroundMode ? '📝 Challenges' : '🧪 Playground'}
+                            </button>
                         )}
 
                         <span className="text-xs text-slate-500">
