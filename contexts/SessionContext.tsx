@@ -39,6 +39,10 @@ interface SessionData {
     unlockedChapters: Record<string, boolean>;
     studentCode?: StudentCode;
     studentOutput?: string[];
+    activeChallenge?: {
+        chapterId: string;
+        challengeIndex: number;
+    };
 }
 
 interface SessionContextType {
@@ -57,6 +61,10 @@ interface SessionContextType {
     // Code sync (for student)
     syncCode: (code: string, chapterId: string, challengeIndex: number) => void;
     syncOutput: (output: string[]) => void;
+
+    // Navigation sync (teacher -> student)
+    activeChallenge: { chapterId: string; challengeIndex: number } | null;
+    setActiveChallenge: (chapterId: string, challengeIndex: number) => void;
 
     // Code watching (for teacher)
     studentCode: StudentCode | null;
@@ -129,6 +137,7 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [participants, setParticipants] = useState<Record<string, Participant>>({});
     const [studentCode, setStudentCode] = useState<StudentCode | null>(null);
     const [studentOutput, setStudentOutput] = useState<string[]>([]);
+    const [activeChallenge, setActiveChallengeState] = useState<{ chapterId: string; challengeIndex: number } | null>(null);
     const [sessionUnlockedChapters, setSessionUnlockedChapters] = useState<Record<string, boolean>>({});
 
     const pollIntervalRef = useRef<number | null>(null);
@@ -151,6 +160,9 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
                     }
                     if (isTeacher && data.studentOutput) {
                         setStudentOutput(data.studentOutput);
+                    }
+                    if (data.activeChallenge) {
+                        setActiveChallengeState(data.activeChallenge);
                     }
                 } else {
                     // Session was deleted
@@ -175,12 +187,16 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 if (isTeacher && data.studentOutput) {
                     setStudentOutput(data.studentOutput);
                 }
+                if (data.activeChallenge) {
+                    setActiveChallengeState(data.activeChallenge);
+                }
             } else if (!isTeacher) {
                 // Session was deleted by teacher
                 console.log('[Session] Session ended by teacher');
                 setSessionCode(null);
                 setParticipants({});
                 setSessionUnlockedChapters({});
+                setActiveChallengeState(null);
             }
         };
 
@@ -368,6 +384,24 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     }, [sessionCode, isTeacher]);
 
+    // Set active challenge (teacher only)
+    const setActiveChallenge = useCallback((chapterId: string, challengeIndex: number) => {
+        if (!sessionCode || !isTeacher) return;
+
+        const data = { chapterId, challengeIndex };
+
+        if (db) {
+            set(ref(db, `sessions/${sessionCode}/activeChallenge`), data).catch(console.error);
+        } else {
+            const session = getLocalSession(sessionCode);
+            if (session) {
+                session.activeChallenge = data;
+                saveLocalSession(sessionCode, session);
+                setActiveChallengeState(data);
+            }
+        }
+    }, [sessionCode, isTeacher]);
+
     // Unlock a chapter (teacher only)
     const unlockChapter = useCallback((chapterId: string) => {
         if (!sessionCode || !isTeacher) return;
@@ -415,6 +449,8 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
         leaveSession,
         syncCode,
         syncOutput,
+        activeChallenge,
+        setActiveChallenge,
         studentCode,
         studentOutput,
         sessionUnlockedChapters,

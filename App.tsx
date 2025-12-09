@@ -41,7 +41,9 @@ const AppContent: React.FC = () => {
     joinSession,
     leaveSession,
     unlockChapter,
-    lockChapter
+    lockChapter,
+    activeChallenge,
+    setActiveChallenge
   } = useSession();
 
   const [currentChapterId, setCurrentChapterId] = useState(chapters[0].id);
@@ -64,9 +66,28 @@ const AppContent: React.FC = () => {
   const isCurrentLocked = useMemo(() => !unlockedMap[currentChapter.id], [unlockedMap, currentChapter.id]);
 
   // Reset challenge index when chapter changes
+  // useEffect(() => {
+  //   setCurrentChallengeIndex(0);
+  // }, [currentChapterId]);
+
+  // Sync: Teacher -> Session
   useEffect(() => {
-    setCurrentChallengeIndex(0);
-  }, [currentChapterId]);
+    if (isInSession && isTeacher) {
+      setActiveChallenge(currentChapterId, currentChallengeIndex);
+    }
+  }, [currentChapterId, currentChallengeIndex, isInSession, isTeacher]);
+
+  // Sync: Session -> Student
+  useEffect(() => {
+    if (isInSession && !isTeacher && activeChallenge) {
+      // Only update if different to avoid loops/jitters
+      if (activeChallenge.chapterId !== currentChapterId || activeChallenge.challengeIndex !== currentChallengeIndex) {
+        // console.log("Syncing to teacher:", activeChallenge);
+        setCurrentChapterId(activeChallenge.chapterId);
+        setCurrentChallengeIndex(activeChallenge.challengeIndex);
+      }
+    }
+  }, [activeChallenge, isInSession, isTeacher]);
 
   // Handle unlock (session-scoped or local)
   const handleUnlock = (chapterId: string) => {
@@ -98,6 +119,7 @@ const AppContent: React.FC = () => {
       return;
     }
     setCurrentChapterId(chapterId);
+    setCurrentChallengeIndex(0);
   };
 
   // Secret admin activation via keyboard shortcut
