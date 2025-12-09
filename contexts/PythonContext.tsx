@@ -57,18 +57,10 @@ export const PythonProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const [output, setOutput] = useState<string[]>([]);
     const [isRunning, setIsRunning] = useState(false);
     const [testResults, setTestResults] = useState<TestResult[] | null>(null);
-    const outputBuffer = useRef<string[]>([]);
 
-    // Flush buffer to state periodically to avoid too many re-renders
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (outputBuffer.current.length > 0) {
-                setOutput(prev => [...prev, ...outputBuffer.current]);
-                outputBuffer.current = [];
-            }
-        }, 50);
-        return () => clearInterval(interval);
-    }, []);
+    // Ref to hold setOutput function for use in Pyodide callbacks
+    const setOutputRef = useRef(setOutput);
+    setOutputRef.current = setOutput;
 
     useEffect(() => {
         const loadEngine = async () => {
@@ -91,10 +83,7 @@ export const PythonProvider: React.FC<{ children: React.ReactNode }> = ({ childr
                     indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/'
                 });
 
-                // Line buffer for raw output
-                let lineBuffer = '';
-
-                // Setup standard output capture - use raw mode for immediate output
+                // Setup standard output capture
                 py.setStdout({
                     batched: (msg) => {
                         if (msg.startsWith('__TEST_RESULTS__:')) {
@@ -106,31 +95,22 @@ export const PythonProvider: React.FC<{ children: React.ReactNode }> = ({ childr
                                 console.error("Failed to parse test results", e);
                             }
                         } else {
-                            // Split on newlines and push each line
-                            const lines = msg.split('\n');
-                            lines.forEach((line, idx) => {
-                                if (idx < lines.length - 1 || line.length > 0) {
-                                    outputBuffer.current.push(line);
-                                }
-                            });
-                            // Force immediate state update
-                            setOutput(prev => [...prev, ...outputBuffer.current]);
-                            outputBuffer.current = [];
+                            // Use ref to always have fresh setOutput
+                            const lines = msg.split('\n').filter(line => line.length > 0);
+                            if (lines.length > 0) {
+                                setOutputRef.current(prev => [...prev, ...lines]);
+                            }
                         }
                     }
                 });
 
                 py.setStderr({
                     batched: (msg) => {
-                        outputBuffer.current.push(`Error: ${msg}`);
-                        setOutput(prev => [...prev, ...outputBuffer.current]);
-                        outputBuffer.current = [];
+                        setOutputRef.current(prev => [...prev, `Error: ${msg}`]);
                     }
                 });
 
                 setLoadingMessage('Loading standard libraries...');
-                // Optional: Preload common packages if needed later
-                // await py.loadPackage(['numpy']); 
 
                 setPyodide(py);
                 setIsReady(true);
@@ -199,21 +179,15 @@ __run_tests()
 
             await pyodide.runPythonAsync(finalCode);
         } catch (error: any) {
-            // Pyodide errors formated as strings
-            outputBuffer.current.push(error.toString());
+            // Pyodide errors formatted as strings
+            setOutput(prev => [...prev, error.toString()]);
         } finally {
-            // Explicit flush of output buffer to ensure print statements appear
-            if (outputBuffer.current.length > 0) {
-                setOutput(prev => [...prev, ...outputBuffer.current]);
-                outputBuffer.current = [];
-            }
             setIsRunning(false);
         }
     }, [pyodide]);
 
     const clearOutput = useCallback(() => {
         setOutput([]);
-        outputBuffer.current = [];
         setTestResults(null);
     }, []);
 
