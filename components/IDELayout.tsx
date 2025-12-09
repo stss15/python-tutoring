@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import Editor from '@monaco-editor/react';
+import Editor, { OnMount } from '@monaco-editor/react';
 import { ConsolePanel } from './ConsolePanel';
 import { usePython } from '../contexts/PythonContext';
 import { useSession } from '../contexts/SessionContext';
+import { useCollaborativeEditor } from '../hooks/useCollaborativeEditor';
 import { Chapter } from '../types';
+import type { editor } from 'monaco-editor';
 
 interface IDELayoutProps {
     chapter: Chapter;
@@ -24,55 +26,70 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
 }) => {
     const currentChallenge = chapter.challenges[currentChallengeIndex];
     const { runCode, isRunning, clearOutput, output } = usePython();
-    const { isInSession, isTeacher, syncCode, syncOutput, studentCode } = useSession();
+    const { isInSession, isTeacher, sessionCode, participantId, syncOutput } = useSession();
 
     const [editorCode, setEditorCode] = useState(currentChallenge?.starterCode || '');
     const [showHint, setShowHint] = useState(false);
     const [showSolution, setShowSolution] = useState(false);
 
-    // Debounce timer ref for code sync
-    const syncTimerRef = useRef<number | null>(null);
+    // Monaco editor and instance refs
+    const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+    const monacoRef = useRef<typeof import('monaco-editor') | null>(null);
+    const [editorReady, setEditorReady] = useState(false);
+
+    // Previous challenge ref to detect changes
+    const prevChallengeIdRef = useRef<string | null>(null);
 
     const isLastChallenge = currentChallengeIndex === chapter.challenges.length - 1;
     const isFinalAssessment = isLastChallenge && chapter.challenges.length > 5;
 
+    // Collaborative editing hook
+    const { isConnected, collaborators, setText } = useCollaborativeEditor({
+        sessionCode: isInSession ? sessionCode : null,
+        isTeacher,
+        participantId,
+        editorInstance: editorReady ? editorRef.current : null,
+        monacoInstance: editorReady ? monacoRef.current : null
+    });
+
+    // Handle editor mount
+    const handleEditorMount: OnMount = (editor, monaco) => {
+        editorRef.current = editor;
+        monacoRef.current = monaco;
+        setEditorReady(true);
+
+        // Set initial content
+        if (currentChallenge?.starterCode) {
+            editor.setValue(currentChallenge.starterCode);
+        }
+    };
+
     // Update editor when challenge changes
     useEffect(() => {
-        if (currentChallenge) {
-            setEditorCode(currentChallenge.starterCode || '');
+        if (currentChallenge && prevChallengeIdRef.current !== currentChallenge.id) {
+            prevChallengeIdRef.current = currentChallenge.id;
+            const starterCode = currentChallenge.starterCode || '';
+            setEditorCode(starterCode);
             setShowHint(false);
             setShowSolution(false);
             clearOutput();
-        }
-    }, [currentChallenge?.id, currentChallenge?.starterCode, clearOutput]);
 
-    // Spectator mode: show student code when teacher is in session
-    useEffect(() => {
-        if (isInSession && isTeacher && studentCode) {
-            // Only update if the student is on the same challenge
-            if (studentCode.chapterId === chapter.id && studentCode.challengeIndex === currentChallengeIndex) {
-                setEditorCode(studentCode.content);
+            // Update the shared document if in collaborative mode
+            if (isInSession && editorRef.current) {
+                // For collaborative mode, set the text in Yjs document
+                if (isConnected) {
+                    setText(starterCode);
+                } else {
+                    // Fallback for non-collaborative
+                    editorRef.current.setValue(starterCode);
+                }
+            } else if (editorRef.current) {
+                editorRef.current.setValue(starterCode);
             }
         }
-    }, [isInSession, isTeacher, studentCode, chapter.id, currentChallengeIndex]);
+    }, [currentChallenge?.id, currentChallenge?.starterCode, clearOutput, isInSession, isConnected, setText]);
 
-    // Sync code to Firebase when student is in session (debounced)
-    const handleCodeChange = useCallback((value: string | undefined) => {
-        const newCode = value || '';
-        setEditorCode(newCode);
-
-        // Only sync if in session (teacher or student)
-        if (isInSession) {
-            if (syncTimerRef.current) {
-                clearTimeout(syncTimerRef.current);
-            }
-            syncTimerRef.current = window.setTimeout(() => {
-                syncCode(newCode, chapter.id, currentChallengeIndex);
-            }, 500) as unknown as number;
-        }
-    }, [isInSession, syncCode, chapter.id, currentChallengeIndex]);
-
-    // Sync output when it changes (student only)
+    // Sync output when it changes
     useEffect(() => {
         if (isInSession && !isTeacher && output.length > 0) {
             syncOutput(output);
@@ -80,8 +97,10 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
     }, [isInSession, isTeacher, output, syncOutput]);
 
     const handleRun = useCallback(() => {
-        if (!editorCode.trim()) return;
-        runCode(editorCode, currentChallenge.testCases);
+        // Get code from editor directly for most accurate state
+        const code = editorRef.current?.getValue() || editorCode;
+        if (!code.trim()) return;
+        runCode(code, currentChallenge.testCases);
     }, [editorCode, runCode, currentChallenge]);
 
     // Keyboard shortcut for running code
@@ -98,13 +117,25 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
 
     const resetCode = () => {
         if (currentChallenge) {
-            setEditorCode(currentChallenge.starterCode || '');
+            const starterCode = currentChallenge.starterCode || '';
+            setEditorCode(starterCode);
             clearOutput();
+
+            if (isConnected) {
+                setText(starterCode);
+            } else if (editorRef.current) {
+                editorRef.current.setValue(starterCode);
+            }
         }
     };
 
-    // Determine if editor should be read-only (teacher spectating)
-    const isSpectating = isInSession && isTeacher;
+    // Track local editor changes (for non-collaborative mode sync)
+    const handleEditorChange = useCallback((value: string | undefined) => {
+        setEditorCode(value || '');
+    }, []);
+
+    // Collaborator count for display
+    const collaboratorCount = collaborators.size;
 
     return (
         <div className="flex h-full w-full bg-[#1e1e1e] overflow-hidden">
@@ -289,13 +320,23 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                     </div>
 
                     <div className="flex items-center gap-3">
-                        {isSpectating && (
-                            <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-600/20 border border-purple-500/30 rounded-md">
-                                <span className="text-purple-400 text-xs font-medium">🤝 Collaborating</span>
+                        {/* Collaboration Status */}
+                        {isInSession && (
+                            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-md border ${isConnected
+                                    ? 'bg-emerald-600/20 border-emerald-500/30'
+                                    : 'bg-yellow-600/20 border-yellow-500/30'
+                                }`}>
+                                <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-emerald-400 animate-pulse' : 'bg-yellow-400'}`} />
+                                <span className={`text-xs font-medium ${isConnected ? 'text-emerald-400' : 'text-yellow-400'}`}>
+                                    {isConnected
+                                        ? `🤝 Live Collab ${collaboratorCount > 0 ? `(${collaboratorCount + 1})` : ''}`
+                                        : '⏳ Connecting...'}
+                                </span>
                             </div>
                         )}
+
                         <span className="text-xs text-slate-500">
-                            {isRunning ? 'Executing...' : isInSession ? 'Live Session' : 'Ready'}
+                            {isRunning ? 'Executing...' : isInSession ? 'Collaborative' : 'Ready'}
                         </span>
                         <button
                             onClick={handleRun}
@@ -325,8 +366,9 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                     <Editor
                         height="100%"
                         defaultLanguage="python"
-                        value={editorCode}
-                        onChange={handleCodeChange}
+                        defaultValue={currentChallenge?.starterCode || ''}
+                        onChange={handleEditorChange}
+                        onMount={handleEditorMount}
                         theme="vs-dark"
                         options={{
                             minimap: { enabled: false },
