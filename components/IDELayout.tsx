@@ -54,8 +54,6 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
 
     const [editorCode, setEditorCode] = useState(getInitialCode());
     const [savedChallengeCode, setSavedChallengeCode] = useState('');
-    const [showHint, setShowHint] = useState(false);
-    const [showSolution, setShowSolution] = useState(false);
 
     // Monaco editor and instance refs
     const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
@@ -102,8 +100,6 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
             prevChallengeIdRef.current = currentId;
             const newCode = getInitialCode();
             setEditorCode(newCode);
-            setShowHint(false);
-            setShowSolution(false);
             clearOutput();
 
             // Update the shared document if in collaborative mode
@@ -292,46 +288,6 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                         {currentChallenge?.description}
                     </p>
                 </div>
-
-                {/* Expandable Hint */}
-                {currentChallenge?.hint && (
-                    <div className="mt-5">
-                        <button
-                            onClick={() => setShowHint(!showHint)}
-                            className="flex items-center gap-2 text-amber-400 hover:text-amber-300 text-sm font-medium transition-colors"
-                        >
-                            <span className="text-lg">{showHint ? '💡' : '🤔'}</span>
-                            <span>{showHint ? 'Hide Hint' : 'Need a hint?'}</span>
-                        </button>
-                        {showHint && (
-                            <div className="mt-3 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg animate-fade-in">
-                                <p className="text-amber-200/90 text-sm leading-relaxed">
-                                    {currentChallenge.hint}
-                                </p>
-                            </div>
-                        )}
-                    </div>
-                )}
-
-                {/* Show Solution Toggle */}
-                {currentChallenge?.solutionCode && (
-                    <div className="mt-4">
-                        <button
-                            onClick={() => setShowSolution(!showSolution)}
-                            className="flex items-center gap-2 text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors"
-                        >
-                            <span className="text-lg">{showSolution ? '🔒' : '🔓'}</span>
-                            <span>{showSolution ? 'Hide Solution' : 'Reveal Solution'}</span>
-                        </button>
-                        {showSolution && (
-                            <div className="mt-3 p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg animate-fade-in">
-                                <pre className="text-purple-200/90 text-xs font-mono overflow-x-auto whitespace-pre-wrap">
-                                    {currentChallenge.solutionCode}
-                                </pre>
-                            </div>
-                        )}
-                    </div>
-                )}
             </div>
         );
     };

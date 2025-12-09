@@ -129,19 +129,20 @@ export const PythonProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const runCode = useCallback(async (code: string, testCases?: TestCase[]) => {
         if (!pyodide) return;
         setIsRunning(true);
-        setTestResults(null); // Clear previous results
+        setTestResults(null); // Clear previous test results
+        setOutput([]); // Clear previous terminal output
 
         try {
             // Small delay to ensure UI updates show "Running..."
             await new Promise(r => setTimeout(r, 10));
 
-            let finalCode = code;
+            // STEP 1: Run user code first (this shows output in terminal)
+            await pyodide.runPythonAsync(code);
 
-            // Inject Test Runner if cases exist
+            // STEP 2: Run test cases separately (completely silently)
             if (testCases && testCases.length > 0) {
                 const testRunnerScript = `
 import json
-import traceback
 import sys
 import io
 
@@ -149,47 +150,41 @@ def __run_tests():
     test_cases = ${JSON.stringify(testCases)}
     results = []
     
-    # Capture original stdout
+    # Completely suppress stdout for all test evaluation
     original_stdout = sys.stdout
+    sys.stdout = io.StringIO()
     
-    for case in test_cases:
-        try:
-            expected = eval(case['expected'])
-            
-            # Suppress stdout during test case evaluation
-            sys.stdout = io.StringIO()
+    try:
+        for case in test_cases:
             try:
+                expected = eval(case['expected'])
                 actual = eval(case['input'])
-            finally:
-                # Restore stdout
-                sys.stdout = original_stdout
-
-            passed = actual == expected
-            results.append({
-                "input": case['input'],
-                "expected": str(expected),
-                "actual": str(actual),
-                "passed": passed
-            })
-        except Exception as e:
-            # Make sure stdout is restored on error
-            sys.stdout = original_stdout
-            results.append({
-                "input": case['input'],
-                "expected": case['expected'],
-                "actual": "Error",
-                "passed": False,
-                "error": str(e)
-            })
+                
+                passed = actual == expected
+                results.append({
+                    "input": case['input'],
+                    "expected": str(expected),
+                    "actual": str(actual),
+                    "passed": passed
+                })
+            except Exception as e:
+                results.append({
+                    "input": case['input'],
+                    "expected": case['expected'],
+                    "actual": "Error",
+                    "passed": False,
+                    "error": str(e)
+                })
+    finally:
+        # Restore stdout
+        sys.stdout = original_stdout
 
     print("__TEST_RESULTS__:" + json.dumps(results))
 
 __run_tests()
 `;
-                finalCode = code + "\n" + testRunnerScript;
+                await pyodide.runPythonAsync(testRunnerScript);
             }
-
-            await pyodide.runPythonAsync(finalCode);
         } catch (error: any) {
             // Parse Pyodide error for friendly display
             const errorStr = error.toString();
