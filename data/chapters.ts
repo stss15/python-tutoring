@@ -391,8 +391,8 @@ const if_challenges = [
 
 const string_challenges = [
     {
-        id: "020",
-        number: 20,
+        id: "022",
+        number: 22,
         title: "Name Length",
         description: "Write a function called `name_length` that takes a name as a string. It should return the number of characters in the name.",
         starterCode: `def name_length(name: str) -> int:
@@ -401,12 +401,15 @@ const string_challenges = [
         solutionCode: `def name_length(name: str) -> int:
     return len(name)`,
         testCases: [
-            { input: "name_length('Bob')", expected: "3" }
+            { input: "name_length('Bob')", expected: "3" },
+            { input: "name_length('Alice')", expected: "5" },
+            { input: "name_length('')", expected: "0" },
+            { input: "name_length('Python Programming')", expected: "18" }
         ]
     },
     {
-        id: "021",
-        number: 21,
+        id: "023",
+        number: 23,
         title: "Join Names",
         description: "Write a function called `join_names` that accepts a first name and a last name. It should return them combined with the total length of the full name (including the space), like '[First] [Last] [Length]'.",
         starterCode: `def join_names(first: str, last: str) -> str:
@@ -416,12 +419,15 @@ const string_challenges = [
     full = f"{first} {last}"
     return f"{full} {len(full)}"`,
         testCases: [
-            { input: "join_names('Bob', 'Smith')", expected: "'Bob Smith 9'" }
+            { input: "join_names('Bob', 'Smith')", expected: "'Bob Smith 9'" },
+            { input: "join_names('Ann', 'Lee')", expected: "'Ann Lee 7'" },
+            { input: "join_names('Christopher', 'Williams')", expected: "'Christopher Williams 20'" },
+            { input: "join_names('A', 'B')", expected: "'A B 3'" }
         ]
     },
     {
-        id: "022",
-        number: 22,
+        id: "024",
+        number: 24,
         title: "Title Case Names",
         description: "Write a function called `format_name_title` that takes a first name and a last name in lower case. It should return them combined in title case (capitalized first letters), separated by a space.",
         starterCode: `def format_name_title(first: str, last: str) -> str:
@@ -430,26 +436,32 @@ const string_challenges = [
         solutionCode: `def format_name_title(first: str, last: str) -> str:
     return f"{first.title()} {last.title()}"`,
         testCases: [
-            { input: "format_name_title('bob', 'smith')", expected: "'Bob Smith'" }
+            { input: "format_name_title('bob', 'smith')", expected: "'Bob Smith'" },
+            { input: "format_name_title('ALICE', 'JONES')", expected: "'Alice Jones'" },
+            { input: "format_name_title('jOhN', 'dOe')", expected: "'John Doe'" },
+            { input: "format_name_title('mary', 'jane')", expected: "'Mary Jane'" }
         ]
     },
     {
-        id: "023",
-        number: 23,
-        title: "Nursery Rhyme Segment",
-        description: "Write a function called `rhyme_part` that takes a line of a nursery rhyme, a start index, and an end index. It should return the part of the string starting at the start index and ending before the end index.",
+        id: "025",
+        number: 25,
+        title: "String Slice",
+        description: "Write a function called `rhyme_part` that takes a line of text, a start index, and an end index. It should return the part of the string starting at the start index and ending before the end index.",
         starterCode: `def rhyme_part(line: str, start: int, end: int) -> str:
     # Your code here
     pass`,
         solutionCode: `def rhyme_part(line: str, start: int, end: int) -> str:
     return line[start:end]`,
         testCases: [
-            { input: "rhyme_part('Mary had a little lamb', 0, 4)", expected: "'Mary'" }
+            { input: "rhyme_part('Mary had a little lamb', 0, 4)", expected: "'Mary'" },
+            { input: "rhyme_part('Hello World', 6, 11)", expected: "'World'" },
+            { input: "rhyme_part('Python', 0, 2)", expected: "'Py'" },
+            { input: "rhyme_part('abcdef', 2, 5)", expected: "'cde'" }
         ]
     },
     {
-        id: "024",
-        number: 24,
+        id: "026",
+        number: 26,
         title: "Upper Case",
         description: "Write a function called `make_upper` that takes a word. It should return the word converted entirely to uppercase.",
         starterCode: `def make_upper(word: str) -> str:
@@ -458,12 +470,32 @@ const string_challenges = [
         solutionCode: `def make_upper(word: str) -> str:
     return word.upper()`,
         testCases: [
-            { input: "make_upper('hello')", expected: "'HELLO'" }
+            { input: "make_upper('hello')", expected: "'HELLO'" },
+            { input: "make_upper('Python')", expected: "'PYTHON'" },
+            { input: "make_upper('ABC')", expected: "'ABC'" },
+            { input: "make_upper('MixedCase')", expected: "'MIXEDCASE'" }
         ]
     },
     {
-        id: "025",
-        number: 25,
+        id: "027",
+        number: 27,
+        title: "Lower Case",
+        description: "Write a function called `make_lower` that takes a word. It should return the word converted entirely to lowercase.",
+        starterCode: `def make_lower(word: str) -> str:
+    # Your code here
+    pass`,
+        solutionCode: `def make_lower(word: str) -> str:
+    return word.lower()`,
+        testCases: [
+            { input: "make_lower('HELLO')", expected: "'hello'" },
+            { input: "make_lower('Python')", expected: "'python'" },
+            { input: "make_lower('abc')", expected: "'abc'" },
+            { input: "make_lower('MixedCase')", expected: "'mixedcase'" }
+        ]
+    },
+    {
+        id: "028",
+        number: 28,
         title: "Name Formatting",
         description: "Write a function called `format_name_conditional` that takes a first name and a last name. If the first name has fewer than 5 characters, join them together and return the result in uppercase. If the first name is 5 characters or longer, return just the first name in lowercase.",
         starterCode: `def format_name_conditional(first: str, last: str) -> str:
@@ -475,12 +507,14 @@ const string_challenges = [
     return first.lower()`,
         testCases: [
             { input: "format_name_conditional('Bob', 'Smith')", expected: "'BOBSMITH'" },
-            { input: "format_name_conditional('Steven', 'Stewart')", expected: "'steven'" }
+            { input: "format_name_conditional('Steven', 'Stewart')", expected: "'steven'" },
+            { input: "format_name_conditional('Amy', 'Wong')", expected: "'AMYWONG'" },
+            { input: "format_name_conditional('James', 'Bond')", expected: "'james'" }
         ]
     },
     {
-        id: "026",
-        number: 26,
+        id: "029",
+        number: 29,
         title: "Pig Latin",
         description: "Write a function called `pig_latin` that takes a word. If it begins with a vowel (a, e, i, o, u), add 'way' to the end. If it begins with a consonant, move the first letter to the end and add 'ay'.",
         starterCode: `def pig_latin(word: str) -> str:
@@ -494,7 +528,48 @@ const string_challenges = [
     return word[1:] + word[0] + "ay"`,
         testCases: [
             { input: "pig_latin('apple')", expected: "'appleway'" },
-            { input: "pig_latin('chip')", expected: "'hipcay'" }
+            { input: "pig_latin('chip')", expected: "'hipcay'" },
+            { input: "pig_latin('orange')", expected: "'orangeway'" },
+            { input: "pig_latin('hello')", expected: "'ellohay'" }
+        ]
+    },
+    {
+        id: "030",
+        number: 30,
+        title: "Reverse String",
+        description: "Write a function called `reverse_string` that takes a string and returns it reversed.",
+        starterCode: `def reverse_string(text: str) -> str:
+    # Your code here
+    pass`,
+        solutionCode: `def reverse_string(text: str) -> str:
+    return text[::-1]`,
+        testCases: [
+            { input: "reverse_string('hello')", expected: "'olleh'" },
+            { input: "reverse_string('Python')", expected: "'nohtyP'" },
+            { input: "reverse_string('a')", expected: "'a'" },
+            { input: "reverse_string('12345')", expected: "'54321'" }
+        ]
+    },
+    {
+        id: "031",
+        number: 31,
+        title: "Count Vowels",
+        description: "Write a function called `count_vowels` that takes a string and returns the count of vowels (a, e, i, o, u) in it. Count both uppercase and lowercase vowels.",
+        starterCode: `def count_vowels(text: str) -> int:
+    # Your code here
+    pass`,
+        solutionCode: `def count_vowels(text: str) -> int:
+    vowels = "aeiouAEIOU"
+    count = 0
+    for char in text:
+        if char in vowels:
+            count += 1
+    return count`,
+        testCases: [
+            { input: "count_vowels('hello')", expected: "2" },
+            { input: "count_vowels('Python')", expected: "1" },
+            { input: "count_vowels('AEIOU')", expected: "5" },
+            { input: "count_vowels('xyz')", expected: "0" }
         ]
     }
 ];
