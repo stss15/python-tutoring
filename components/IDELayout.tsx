@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Editor from '@monaco-editor/react';
 import { ConsolePanel } from './ConsolePanel';
 import { usePython } from '../contexts/PythonContext';
+import { useSession } from '../contexts/SessionContext';
 import { Chapter } from '../types';
 
 interface IDELayoutProps {
@@ -22,15 +23,19 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
     isLocked
 }) => {
     const currentChallenge = chapter.challenges[currentChallengeIndex];
-    const { runCode, isRunning, clearOutput } = usePython();
+    const { runCode, isRunning, clearOutput, output } = usePython();
+    const { isInSession, isTeacher, syncCode, syncOutput, studentCode } = useSession();
+
     const [editorCode, setEditorCode] = useState(currentChallenge?.starterCode || '');
     const [showHint, setShowHint] = useState(false);
     const [showSolution, setShowSolution] = useState(false);
 
+    // Debounce timer ref for code sync
+    const syncTimerRef = useRef<number | null>(null);
+
     const isLastChallenge = currentChallengeIndex === chapter.challenges.length - 1;
     const isFinalAssessment = isLastChallenge && chapter.challenges.length > 5;
 
-    // Update editor when challenge changes
     // Update editor when challenge changes
     useEffect(() => {
         if (currentChallenge) {
@@ -41,9 +46,41 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
         }
     }, [currentChallenge?.id, currentChallenge?.starterCode, clearOutput]);
 
+    // Spectator mode: show student code when teacher is in session
+    useEffect(() => {
+        if (isInSession && isTeacher && studentCode) {
+            // Only update if the student is on the same challenge
+            if (studentCode.chapterId === chapter.id && studentCode.challengeIndex === currentChallengeIndex) {
+                setEditorCode(studentCode.content);
+            }
+        }
+    }, [isInSession, isTeacher, studentCode, chapter.id, currentChallengeIndex]);
+
+    // Sync code to Firebase when student is in session (debounced)
+    const handleCodeChange = useCallback((value: string | undefined) => {
+        const newCode = value || '';
+        setEditorCode(newCode);
+
+        // Only sync if student (not teacher) and in session
+        if (isInSession && !isTeacher) {
+            if (syncTimerRef.current) {
+                clearTimeout(syncTimerRef.current);
+            }
+            syncTimerRef.current = window.setTimeout(() => {
+                syncCode(newCode, chapter.id, currentChallengeIndex);
+            }, 500) as unknown as number;
+        }
+    }, [isInSession, isTeacher, syncCode, chapter.id, currentChallengeIndex]);
+
+    // Sync output when it changes (student only)
+    useEffect(() => {
+        if (isInSession && !isTeacher && output.length > 0) {
+            syncOutput(output);
+        }
+    }, [isInSession, isTeacher, output, syncOutput]);
+
     const handleRun = useCallback(() => {
         if (!editorCode.trim()) return;
-        // Pass test cases if they exist
         runCode(editorCode, currentChallenge.testCases);
     }, [editorCode, runCode, currentChallenge]);
 
@@ -65,6 +102,9 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
             clearOutput();
         }
     };
+
+    // Determine if editor should be read-only (teacher spectating)
+    const isSpectating = isInSession && isTeacher;
 
     return (
         <div className="flex h-full w-full bg-[#1e1e1e] overflow-hidden">
@@ -249,8 +289,13 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                     </div>
 
                     <div className="flex items-center gap-3">
+                        {isSpectating && (
+                            <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-600/20 border border-purple-500/30 rounded-md">
+                                <span className="text-purple-400 text-xs font-medium">👁️ Watching Student</span>
+                            </div>
+                        )}
                         <span className="text-xs text-slate-500">
-                            {isRunning ? 'Executing...' : 'Ready'}
+                            {isRunning ? 'Executing...' : isSpectating ? 'Read-Only' : 'Ready'}
                         </span>
                         <button
                             onClick={handleRun}
@@ -281,7 +326,7 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                         height="100%"
                         defaultLanguage="python"
                         value={editorCode}
-                        onChange={(value) => setEditorCode(value || '')}
+                        onChange={handleCodeChange}
                         theme="vs-dark"
                         options={{
                             minimap: { enabled: false },
@@ -301,6 +346,7 @@ export const IDELayout: React.FC<IDELayoutProps> = ({
                                 bracketPairs: true,
                                 indentation: true,
                             },
+                            readOnly: isSpectating,
                         }}
                     />
                 </div>

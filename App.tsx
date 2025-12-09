@@ -2,23 +2,26 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { ActivityBar } from './components/ActivityBar';
 import { IDELayout } from './components/IDELayout';
 import { TeacherPanel } from './components/TeacherPanel';
+import { SessionModal } from './components/SessionModal';
+import { SessionBar } from './components/SessionBar';
 import { chapters } from './data/chapters';
 import { LoadingScreen } from './components/LoadingScreen';
-import { ref, onValue, set } from 'firebase/database';
-import { db } from './lib/firebase';
 import { PythonProvider } from './contexts/PythonContext';
+import { SessionProvider, useSession } from './contexts/SessionContext';
 
-const TUTOR_PASSWORD = 'py123';
-const ADMIN_PASSWORD = 'teachermode';
 const STORAGE_KEY = 'python_tutoring_unlocked_chapters';
+
+// Default unlocked chapters (first 3)
+const getDefaultUnlocks = (): Record<string, boolean> => {
+  return chapters.reduce((acc, c, i) => ({ ...acc, [c.id]: i < 3 }), {});
+};
 
 const loadUnlockedChapters = (): Record<string, boolean> => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) return JSON.parse(stored);
   } catch (e) { console.error(e); }
-  // Default: unlock first 3 chapters for initial progression
-  return chapters.reduce((acc, c, i) => ({ ...acc, [c.id]: i < 3 }), {});
+  return getDefaultUnlocks();
 };
 
 const saveUnlockedChapters = (map: Record<string, boolean>) => {
@@ -28,12 +31,34 @@ const saveUnlockedChapters = (map: Record<string, boolean>) => {
 };
 
 const AppContent: React.FC = () => {
+  const {
+    isInSession,
+    isTeacher,
+    sessionCode,
+    participants,
+    sessionUnlockedChapters,
+    createSession,
+    joinSession,
+    leaveSession,
+    unlockChapter,
+    lockChapter
+  } = useSession();
+
   const [currentChapterId, setCurrentChapterId] = useState(chapters[0].id);
   const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
   const [showIntro, setShowIntro] = useState(true);
-  const [unlockedMap, setUnlockedMap] = useState<Record<string, boolean>>(loadUnlockedChapters);
+  const [showSessionModal, setShowSessionModal] = useState(false);
+  const [localUnlockedMap, setLocalUnlockedMap] = useState<Record<string, boolean>>(loadUnlockedChapters);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showTeacherPanel, setShowTeacherPanel] = useState(false);
+
+  // Use session unlocks in session mode, else local unlocks
+  const unlockedMap = useMemo(() => {
+    if (isInSession) {
+      return sessionUnlockedChapters;
+    }
+    return localUnlockedMap;
+  }, [isInSession, sessionUnlockedChapters, localUnlockedMap]);
 
   const currentChapter = chapters.find(c => c.id === currentChapterId) || chapters[0];
   const isCurrentLocked = useMemo(() => !unlockedMap[currentChapter.id], [unlockedMap, currentChapter.id]);
@@ -43,42 +68,36 @@ const AppContent: React.FC = () => {
     setCurrentChallengeIndex(0);
   }, [currentChapterId]);
 
-  // Firebase Sync
-  useEffect(() => {
-    if (!db) return;
-    const unsubscribe = onValue(ref(db, 'classrooms/default/unlockedChapters'), (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        setUnlockedMap(prev => {
-          const newMap = { ...prev, ...data };
-          saveUnlockedChapters(newMap);
-          return newMap;
-        });
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
-  // Admin unlock function (for passing to child components)
+  // Handle unlock (session-scoped or local)
   const handleUnlock = (chapterId: string) => {
-    const newMap = { ...unlockedMap, [chapterId]: true };
-    if (isAdmin && db) {
-      set(ref(db, `classrooms/default/unlockedChapters/${chapterId}`), true)
-        .catch(err => console.error(err));
+    if (isInSession && isTeacher) {
+      unlockChapter(chapterId);
+    } else {
+      const newMap = { ...localUnlockedMap, [chapterId]: true };
+      setLocalUnlockedMap(newMap);
+      saveUnlockedChapters(newMap);
     }
-    setUnlockedMap(newMap);
-    saveUnlockedChapters(newMap);
   };
 
-  // Admin lock function
+  // Handle lock (session-scoped or local)
   const handleLock = (chapterId: string) => {
-    const newMap = { ...unlockedMap, [chapterId]: false };
-    if (isAdmin && db) {
-      set(ref(db, `classrooms/default/unlockedChapters/${chapterId}`), false)
-        .catch(err => console.error(err));
+    if (isInSession && isTeacher) {
+      lockChapter(chapterId);
+    } else {
+      const newMap = { ...localUnlockedMap, [chapterId]: false };
+      setLocalUnlockedMap(newMap);
+      saveUnlockedChapters(newMap);
     }
-    setUnlockedMap(newMap);
-    saveUnlockedChapters(newMap);
+  };
+
+  // Handle chapter selection with lock enforcement
+  const handleSelectChapter = (chapterId: string) => {
+    const isLocked = !unlockedMap[chapterId];
+    if (isLocked && !isAdmin) {
+      // Show a brief visual feedback (could enhance with toast)
+      return;
+    }
+    setCurrentChapterId(chapterId);
   };
 
   // Secret admin activation via keyboard shortcut
@@ -89,7 +108,7 @@ const AppContent: React.FC = () => {
         setIsAdmin(prev => {
           const newVal = !prev;
           if (newVal) {
-            setShowTeacherPanel(true); // Auto-open panel when activating
+            setShowTeacherPanel(true);
           } else {
             setShowTeacherPanel(false);
           }
@@ -101,40 +120,106 @@ const AppContent: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // After intro, show session modal
+  const handleIntroFinish = () => {
+    setShowIntro(false);
+    setShowSessionModal(true);
+  };
+
+  // Handle solo mode selection
+  const handleSoloMode = () => {
+    setShowSessionModal(false);
+  };
+
+  // Handle session join
+  const handleJoinSession = async (code: string): Promise<boolean> => {
+    const success = await joinSession(code);
+    if (success) {
+      setShowSessionModal(false);
+    }
+    return success;
+  };
+
+  // Handle session creation (teacher)
+  const handleCreateSession = async (): Promise<string> => {
+    const code = await createSession();
+    // Don't close modal yet - show the code first
+    return code;
+  };
+
+  // Handle leaving session
+  const handleLeaveSession = async () => {
+    await leaveSession();
+    // Return to solo mode with local unlocks
+    setLocalUnlockedMap(loadUnlockedChapters());
+  };
+
   if (showIntro) {
-    return <LoadingScreen studentName="Python Learner" onFinish={() => setShowIntro(false)} />;
+    return <LoadingScreen studentName="Python Learner" onFinish={handleIntroFinish} />;
+  }
+
+  if (showSessionModal) {
+    return (
+      <SessionModal
+        onSoloMode={handleSoloMode}
+        onJoinSession={handleJoinSession}
+        onCreateSession={handleCreateSession}
+        isTeacherMode={isAdmin}
+      />
+    );
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#1e1e1e]">
-      <ActivityBar
-        chapters={chapters}
-        currentChapterId={currentChapterId}
-        onSelectChapter={setCurrentChapterId}
-        unlockedMap={unlockedMap}
-      />
-      <main className="flex-1 h-full overflow-hidden relative">
-        {isAdmin && (
-          <div className="absolute top-0 left-0 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold text-center py-1.5 z-50 shadow-lg flex items-center justify-center gap-4">
-            <span>🎓 TEACHER MODE ACTIVE</span>
-            <button
-              onClick={() => setShowTeacherPanel(true)}
-              className="px-3 py-1 bg-white/20 hover:bg-white/30 rounded-md transition-colors"
-            >
-              Open Control Panel
-            </button>
-            <span className="text-white/70">(Ctrl+Shift+T to toggle)</span>
-          </div>
-        )}
-        <IDELayout
-          chapter={currentChapter}
-          currentChallengeIndex={currentChallengeIndex}
-          onNextChallenge={() => setCurrentChallengeIndex(i => Math.min(i + 1, currentChapter.challenges.length - 1))}
-          onPrevChallenge={() => setCurrentChallengeIndex(i => Math.max(i - 1, 0))}
-          onSelectChallenge={setCurrentChallengeIndex}
-          isLocked={isCurrentLocked}
+    <div className="flex flex-col h-screen overflow-hidden bg-[#1e1e1e]">
+      {/* Session Bar */}
+      {isInSession && sessionCode && (
+        <SessionBar
+          sessionCode={sessionCode}
+          isTeacher={isTeacher}
+          participantCount={Object.keys(participants).length}
+          onLeave={handleLeaveSession}
         />
-      </main>
+      )}
+
+      {/* Teacher Mode Banner (when not in session) */}
+      {isAdmin && !isInSession && (
+        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold text-center py-1.5 shadow-lg flex items-center justify-center gap-4">
+          <span>🎓 TEACHER MODE</span>
+          <button
+            onClick={() => setShowSessionModal(true)}
+            className="px-3 py-1 bg-white/20 hover:bg-white/30 rounded-md transition-colors"
+          >
+            Start Session
+          </button>
+          <button
+            onClick={() => setShowTeacherPanel(true)}
+            className="px-3 py-1 bg-white/20 hover:bg-white/30 rounded-md transition-colors"
+          >
+            Control Panel
+          </button>
+          <span className="text-white/70">(Ctrl+Shift+T to toggle)</span>
+        </div>
+      )}
+
+      <div className="flex flex-1 overflow-hidden">
+        <ActivityBar
+          chapters={chapters}
+          currentChapterId={currentChapterId}
+          onSelectChapter={handleSelectChapter}
+          unlockedMap={unlockedMap}
+          enforceLocksForStudent={!isAdmin}
+        />
+        <main className="flex-1 h-full overflow-hidden relative">
+          <IDELayout
+            chapter={currentChapter}
+            currentChallengeIndex={currentChallengeIndex}
+            onNextChallenge={() => setCurrentChallengeIndex(i => Math.min(i + 1, currentChapter.challenges.length - 1))}
+            onPrevChallenge={() => setCurrentChallengeIndex(i => Math.max(i - 1, 0))}
+            onSelectChallenge={setCurrentChallengeIndex}
+            isLocked={isCurrentLocked}
+          />
+        </main>
+      </div>
 
       {/* Teacher Control Panel Modal */}
       {isAdmin && showTeacherPanel && (
@@ -152,9 +237,10 @@ const AppContent: React.FC = () => {
 
 export default function App() {
   return (
-    <PythonProvider>
-      <AppContent />
-    </PythonProvider>
+    <SessionProvider>
+      <PythonProvider>
+        <AppContent />
+      </PythonProvider>
+    </SessionProvider>
   );
 }
-

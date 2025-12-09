@@ -32,15 +32,14 @@ message = greet("Alex") # message = "Hello, Alex!"`,
             {
                 id: "001",
                 number: 1,
-                title: "🎮 Player Health Bar",
-                description: "You're developing a roguelike dungeon crawler where combat is central to gameplay. When a monster attacks, the player's health decreases based on the damage dealt. Create a function `calculate_health` that takes the player's `current_health` (an integer representing hit points) and the `damage` received from an attack, then returns the remaining health after the hit. For example, if a warrior with 100 HP takes 25 damage from a goblin's attack, they should have 75 HP remaining. Make sure your function handles cases where damage might be 0 (a missed attack) or equal to the current health (a knockout blow).",
-                hint: "Subtract the damage from the current health and return the result. No need to worry about negative health for now!",
+                title: "Health Calculator",
+                description: "Create a function `calculate_health` that takes `current_health` and `damage`. Return the remaining health.",
+                hint: "Subtract damage from current_health.",
                 starterCode: `def calculate_health(current_health: int, damage: int) -> int:
-    # A brave warrior faces a goblin...
-    # current_health: 100, damage: 25 -> returns 75 HP remaining
+    # Your code here
     pass`,
                 solutionCode: `def calculate_health(current_health: int, damage: int) -> int:
-    """Calculate remaining health after taking damage."""
+    """Calculate remaining health."""
     return current_health - damage`,
                 testCases: [
                     { input: "calculate_health(100, 25)", expected: "75" },
@@ -53,15 +52,14 @@ message = greet("Alex") # message = "Hello, Alex!"`,
             {
                 id: "002",
                 number: 2,
-                title: "⭐ XP Multiplier",
-                description: "It's Double XP Weekend in your online RPG! The game developers have announced a special event where all experience points earned are doubled for 48 hours. Create a function `double_xp` that takes the `base_xp` a player earned from defeating monsters or completing quests, and returns the boosted amount they should receive during the event. For instance, if a player defeats a dragon worth 50 XP during the event, they should receive 100 XP instead. This function will be used by the game's reward system to calculate final XP payouts.",
-                hint: "Multiply the base XP by 2 to get the doubled amount.",
+                title: "Double XP",
+                description: "Create a function `double_xp` that takes `base_xp` and returns it multiplied by 2.",
+                hint: "Return base_xp * 2.",
                 starterCode: `def double_xp(base_xp: int) -> int:
-    # Double XP Weekend is live!
-    # Defeated a dragon worth 50 XP -> 100 XP with the bonus!
+    # Your code here
     pass`,
                 solutionCode: `def double_xp(base_xp: int) -> int:
-    """Double the XP for special events."""
+    """Double the XP."""
     return base_xp * 2`,
                 testCases: [
                     { input: "double_xp(50)", expected: "100" },
@@ -74,15 +72,14 @@ message = greet("Alex") # message = "Hello, Alex!"`,
             {
                 id: "003",
                 number: 3,
-                title: "👋 Welcome Message",
-                description: "You're building a friendly chatbot for a university's online learning platform. When students log in, they should be greeted with a personalized welcome message to make the experience feel warm and inviting. Create a function `welcome_user` that takes a `username` string and returns the message `Welcome back, {username}!` with their name inserted. For example, when Sarah logs in, she should see \"Welcome back, Sarah!\" displayed on her dashboard. The greeting should work for any username, including those with special characters or numbers.",
-                hint: "Use an f-string: f\"Welcome back, {username}!\" to insert the variable into the text.",
+                title: "Welcome Message",
+                description: "Create a function `welcome_user` that takes a `username` (string) and returns the message \"Welcome back, {username}!\".",
+                hint: "Use an f-string: f\"Welcome back, {username}!\"",
                 starterCode: `def welcome_user(username: str) -> str:
-    # Sarah logs into the learning platform...
-    # welcome_user("Sarah") -> "Welcome back, Sarah!"
+    # Your code here
     pass`,
                 solutionCode: `def welcome_user(username: str) -> str:
-    """Return a welcome message for the user."""
+    """Return a welcome message."""
     return f"Welcome back, {username}!"`,
                 testCases: [
                     { input: "welcome_user('Sarah')", expected: "'Welcome back, Sarah!'" },
@@ -95,15 +92,14 @@ message = greet("Alex") # message = "Hello, Alex!"`,
             {
                 id: "004",
                 number: 4,
-                title: "🧪 Lab Experiment Score",
-                description: "In a neuroscience research lab, you're studying mouse behavior in a maze. Each experiment consists of three trials, and you need to calculate the total performance score to determine if the mouse has learned the task. Create a function `total_trials` that takes three parameters (`trial1`, `trial2`, and `trial3`) representing the scores from each trial, and returns their combined sum. For example, if a mouse scored 85, 90, and 88 points across the three trials, the total would be 263 points. This aggregated score will be used to classify the mouse's learning progress.",
-                hint: "Simply add all three trial scores together: trial1 + trial2 + trial3",
+                title: "Total Score",
+                description: "Create a function `total_trials` that takes three scores (`trial1`, `trial2`, `trial3`) and returns their sum.",
+                hint: "Add all three numbers: trial1 + trial2 + trial3",
                 starterCode: `def total_trials(trial1: int, trial2: int, trial3: int) -> int:
-    # Mouse #42 completed the maze three times today
-    # Scores: 85, 90, 88 -> Total performance: 263 points
+    # Your code here
     pass`,
                 solutionCode: `def total_trials(trial1: int, trial2: int, trial3: int) -> int:
-    """Sum up the scores from three experiment trials."""
+    """Sum three numbers."""
     return trial1 + trial2 + trial3`,
                 testCases: [
                     { input: "total_trials(85, 90, 88)", expected: "263" },
@@ -116,15 +112,14 @@ message = greet("Alex") # message = "Hello, Alex!"`,
             {
                 id: "005",
                 number: 5,
-                title: "📊 Research Paper Citation",
-                description: "Academic journals require author names to be formatted in a specific way for bibliographies and citations. The standard format is \"Last, First\" (surname followed by a comma and the given name). Create a function `format_author` that takes two parameters, `first_name` and `last_name`, and returns them formatted as `Last, First`. For instance, the pioneering computer scientist Ada Lovelace would appear as \"Lovelace, Ada\" in a reference list. Your function will be used by a citation management system to automatically format author names in research papers.",
-                hint: "Use an f-string to combine the names: f\"{last_name}, {first_name}\"",
+                title: "Format Name",
+                description: "Create a function `format_author` that takes `first_name` and `last_name` and returns them as \"Last, First\".",
+                hint: "Use an f-string: f\"{last_name}, {first_name}\"",
                 starterCode: `def format_author(first_name: str, last_name: str) -> str:
-    # Formatting for the journal bibliography...
-    # format_author("Ada", "Lovelace") -> "Lovelace, Ada"
+    # Your code here
     pass`,
                 solutionCode: `def format_author(first_name: str, last_name: str) -> str:
-    """Format author name for academic citation."""
+    """Format name as Last, First."""
     return f"{last_name}, {first_name}"`,
                 testCases: [
                     { input: "format_author('Ada', 'Lovelace')", expected: "'Lovelace, Ada'" },
@@ -137,15 +132,14 @@ message = greet("Alex") # message = "Hello, Alex!"`,
             {
                 id: "006",
                 number: 6,
-                title: "🖼️ Image Resolution",
-                description: "A neuroscience imaging lab needs to calculate storage requirements for brain scan images. Each microscopy image consists of a grid of pixels, and knowing the total pixel count helps estimate file sizes and processing time. Create a function `total_pixels` that takes `width` and `height` parameters (both in pixels) and returns the total number of pixels in the image. For example, a standard Full HD image that is 1920 pixels wide by 1080 pixels tall contains 2,073,600 individual pixels. This calculation is fundamental for image processing pipelines.",
-                hint: "Total pixels = width × height (multiply the two dimensions)",
+                title: "Total Pixels",
+                description: "Create a function `total_pixels` that takes `width` and `height` and returns the total number of pixels (width multiplied by height).",
+                hint: "Multiply width * height.",
                 starterCode: `def total_pixels(width: int, height: int) -> int:
-    # Brain scan image analysis requires knowing total pixels
-    # A 1920x1080 image has 2,073,600 pixels to process
+    # Your code here
     pass`,
                 solutionCode: `def total_pixels(width: int, height: int) -> int:
-    """Calculate total pixels in an image."""
+    """Calculate width * height."""
     return width * height`,
                 testCases: [
                     { input: "total_pixels(1920, 1080)", expected: "2073600" },
@@ -158,15 +152,14 @@ message = greet("Alex") # message = "Hello, Alex!"`,
             {
                 id: "007",
                 number: 7,
-                title: "🎵 Song Duration Average",
-                description: "You're building a music streaming app that needs to display statistics about users' listening habits. One useful metric is the average length of songs in a playlist. Create a function `average_duration` that takes two song durations (`song1` and `song2`, both in seconds) and returns the average duration as a floating-point number. For example, if one song is 180 seconds (3 minutes) and another is 240 seconds (4 minutes), the average would be 210.0 seconds (3.5 minutes). This average will be displayed on the playlist information panel.",
-                hint: "Add both durations together, then divide by 2 to get the average.",
+                title: "Average Duration",
+                description: "Create a function `average_duration` that takes `song1` and `song2` (seconds) and returns the average duration as a float.",
+                hint: "Add song1 + song2, then divide by 2.",
                 starterCode: `def average_duration(song1: int, song2: int) -> float:
-    # Playlist Statistics Calculator
-    # Songs of 180 and 240 seconds -> average of 210.0 seconds
+    # Your code here
     pass`,
                 solutionCode: `def average_duration(song1: int, song2: int) -> float:
-    """Calculate average duration of two songs."""
+    """Calculate average of two numbers."""
     return (song1 + song2) / 2`,
                 testCases: [
                     { input: "average_duration(180, 240)", expected: "210.0" },
@@ -179,57 +172,54 @@ message = greet("Alex") # message = "Hello, Alex!"`,
             {
                 id: "008",
                 number: 8,
-                title: "🧠 Neuron Connections",
-                description: "In computational neuroscience, researchers model how neurons can form complex networks. A simplified model suggests that if a neuron has `n` dendrites (input branches), it can potentially form n³ unique synaptic connection patterns with other neurons. Create a function `synaptic_patterns` that takes the number of `dendrites` and returns the cube of that number, representing the theoretical maximum patterns. For instance, a neuron with 4 dendrites could form 64 possible patterns (4³ = 4 × 4 × 4). This calculation helps estimate the computational complexity of neural circuits.",
-                hint: "Use the power operator: n ** 3 (or n * n * n)",
-                starterCode: `def synaptic_patterns(dendrites: int) -> int:
-    # Modeling neural network complexity
-    # 4 dendrites = 4³ = 64 possible synaptic patterns
+                title: "Cube Number",
+                description: "Create a function `cube` that takes a number `n` and returns `n` cubed (n to the power of 3).",
+                hint: "Use n ** 3 or n * n * n.",
+                starterCode: `def cube(n: int) -> int:
+    # Your code here
     pass`,
-                solutionCode: `def synaptic_patterns(dendrites: int) -> int:
-    """Calculate possible synaptic patterns (n cubed)."""
-    return dendrites ** 3`,
+                solutionCode: `def cube(n: int) -> int:
+    """Calculate n cubed."""
+    return n ** 3`,
                 testCases: [
-                    { input: "synaptic_patterns(4)", expected: "64" },
-                    { input: "synaptic_patterns(2)", expected: "8" },
-                    { input: "synaptic_patterns(10)", expected: "1000" },
-                    { input: "synaptic_patterns(1)", expected: "1" },
-                    { input: "synaptic_patterns(5)", expected: "125" }
+                    { input: "cube(4)", expected: "64" },
+                    { input: "cube(2)", expected: "8" },
+                    { input: "cube(10)", expected: "1000" },
+                    { input: "cube(1)", expected: "1" },
+                    { input: "cube(5)", expected: "125" }
                 ]
             },
             {
                 id: "009",
                 number: 9,
-                title: "📋 Experiment Log Entry",
-                description: "Every research lab maintains detailed logs of experiments for reproducibility and record-keeping. Your lab's digital logging system needs a function to generate standardized log entries. Create a function `log_entry` that takes a `researcher` name (string) and `day` number (integer), and returns a formatted string: `Day {day}: Experiment conducted by {researcher}`. For example, on day 5, Dr. Chen's entry would read \"Day 5: Experiment conducted by Dr. Chen\". These consistent entries help track who did what and when throughout long research studies.",
-                hint: "Use an f-string to combine both values: f\"Day {day}: Experiment conducted by {researcher}\"",
-                starterCode: `def log_entry(researcher: str, day: int) -> str:
-    # Lab Notebook Digital Entry System
-    # log_entry("Dr. Chen", 5) -> "Day 5: Experiment conducted by Dr. Chen"
+                title: "Log Entry",
+                description: "Create a function `log_entry` that takes a `name` and a `day` number. Return a message: \"Day {day}: Logged by {name}\".",
+                hint: "Use an f-string: f\"Day {day}: Logged by {name}\".",
+                starterCode: `def log_entry(name: str, day: int) -> str:
+    # Your code here
     pass`,
-                solutionCode: `def log_entry(researcher: str, day: int) -> str:
-    """Format a lab experiment log entry."""
-    return f"Day {day}: Experiment conducted by {researcher}"`,
+                solutionCode: `def log_entry(name: str, day: int) -> str:
+    """Format a log entry."""
+    return f"Day {day}: Logged by {name}"`,
                 testCases: [
-                    { input: "log_entry('Dr. Chen', 5)", expected: "'Day 5: Experiment conducted by Dr. Chen'" },
-                    { input: "log_entry('Sarah', 1)", expected: "'Day 1: Experiment conducted by Sarah'" },
-                    { input: "log_entry('Lab Team', 100)", expected: "'Day 100: Experiment conducted by Lab Team'" },
-                    { input: "log_entry('AI Assistant', 42)", expected: "'Day 42: Experiment conducted by AI Assistant'" },
-                    { input: "log_entry('Prof. Neural', 365)", expected: "'Day 365: Experiment conducted by Prof. Neural'" }
+                    { input: "log_entry('Chen', 5)", expected: "'Day 5: Logged by Chen'" },
+                    { input: "log_entry('Sarah', 1)", expected: "'Day 1: Logged by Sarah'" },
+                    { input: "log_entry('Team', 100)", expected: "'Day 100: Logged by Team'" },
+                    { input: "log_entry('AI', 42)", expected: "'Day 42: Logged by AI'" },
+                    { input: "log_entry('Prof', 365)", expected: "'Day 365: Logged by Prof'" }
                 ]
             },
             {
                 id: "010",
                 number: 10,
-                title: "📈 Data Accuracy Rate",
-                description: "In machine learning and data science, accuracy is a fundamental metric for evaluating model performance. You're building a dashboard to display how well your neural network classifier is performing on test data. Create a function `accuracy_rate` that takes `correct` (the number of correctly classified samples) and `total` (the total number of samples), and returns the accuracy as a percentage. For example, if the model correctly classified 45 out of 50 test images, the accuracy would be 90.0%. This metric will be prominently displayed on your experiment tracking dashboard.",
-                hint: "Percentage formula: (correct / total) × 100",
+                title: "Calculate Percentage",
+                description: "Create a function `accuracy_rate` that takes `correct` and `total` samples. Return the percentage (correct / total * 100).",
+                hint: "(correct / total) * 100.",
                 starterCode: `def accuracy_rate(correct: int, total: int) -> float:
-    # Model Evaluation Metrics Dashboard
-    # 45 correct out of 50 total = 90.0% accuracy
+    # Your code here
     pass`,
                 solutionCode: `def accuracy_rate(correct: int, total: int) -> float:
-    """Calculate accuracy as a percentage."""
+    """Calculate percentage."""
     return (correct / total) * 100`,
                 testCases: [
                     { input: "accuracy_rate(45, 50)", expected: "90.0" },
@@ -242,59 +232,23 @@ message = greet("Alex") # message = "Hello, Alex!"`,
             {
                 id: "011-assessment",
                 number: 11,
-                title: "🏆 Final Challenge: Brain Scan Analyzer",
-                description: "You've been hired by a neurology clinic to build their automated brain scan analysis system. The clinic uses functional MRI (fMRI) to measure neural activity in different brain regions, and they need software to process and report results quickly. Build THREE interconnected functions that work together: 1) `average_activity(region1: float, region2: float, region3: float) -> float` calculates the mean neural activity across three monitored brain regions (prefrontal cortex, hippocampus, and amygdala). 2) `activity_level(average: float) -> str` classifies the averaged activity as 'High' (75 or above), 'Normal' (40 to 74), or 'Low' (below 40). 3) `generate_scan_report(patient: str, r1: float, r2: float, r3: float) -> str` combines both functions to generate a complete patient report in the format: '{patient}: Average Activity {avg:.1f}, Level: {level}'. For Patient A with readings of 80, 75, and 85, the report should read: 'Patient A: Average Activity 80.0, Level: High'.",
-                hint: "Build incrementally! First get average_activity working, then activity_level, finally combine them in generate_scan_report. Each function builds on the previous.",
-                starterCode: `def average_activity(region1: float, region2: float, region3: float) -> float:
-    # FUNCTION 1: Calculate mean neural activity
-    # Regions: prefrontal cortex, hippocampus, amygdala
-    pass
-
-def activity_level(average: float) -> str:
-    # FUNCTION 2: Classify as "High" (>=75), "Normal" (40-74), or "Low" (<40)
-    pass
-
-def generate_scan_report(patient: str, r1: float, r2: float, r3: float) -> str:
-    # FUNCTION 3: Generate complete patient report
-    # Format: "{patient}: Average Activity {avg:.1f}, Level: {level}"
-    pass
-
-# Test your analysis system!
-print(average_activity(80, 75, 85))  # Expected: 80.0
-print(activity_level(80))             # Expected: High
-print(generate_scan_report("Patient A", 80, 75, 85))  # Full report`,
-                solutionCode: `def average_activity(region1: float, region2: float, region3: float) -> float:
-    """Calculate average neural activity across three brain regions."""
-    return (region1 + region2 + region3) / 3
-
-def activity_level(average: float) -> str:
-    """Classify activity level based on average."""
-    if average >= 75:
-        return "High"
-    if average >= 40:
-        return "Normal"
-    return "Low"
-
-def generate_scan_report(patient: str, r1: float, r2: float, r3: float) -> str:
-    """Generate a complete brain scan analysis report."""
-    avg = average_activity(r1, r2, r3)
-    level = activity_level(avg)
-    return f"{patient}: Average Activity {avg:.1f}, Level: {level}"
-
-# Test
-print(average_activity(80, 75, 85))
-print(activity_level(80))
-print(generate_scan_report("Patient A", 80, 75, 85))`,
+                title: "Unit Conversion Report",
+                description: "Create a function `convert_and_report` that takes `km` (distance) and `celsius` (temperature). Convert them to miles (km * 0.621) and Fahrenheit ((c * 9/5) + 32). Return a string: 'Distance: X miles | Temp: Y F'. Round values to 1 decimal place.",
+                hint: "Perform conversions. Use `round()`. Return combined string.",
+                starterCode: `def convert_and_report(km: float, celsius: float) -> str:
+    # Your code here
+    pass`,
+                solutionCode: `def convert_and_report(km: float, celsius: float) -> str:
+    """Convert units and return report."""
+    miles = round(km * 0.621, 1)
+    fahrenheit = round((celsius * 9/5) + 32, 1)
+    return f"Distance: {miles} miles | Temp: {fahrenheit} F"`,
                 testCases: [
-                    { input: "average_activity(80, 75, 85)", expected: "80.0" },
-                    { input: "average_activity(30, 30, 30)", expected: "30.0" },
-                    { input: "activity_level(80)", expected: "'High'" },
-                    { input: "activity_level(50)", expected: "'Normal'" },
-                    { input: "activity_level(30)", expected: "'Low'" },
-                    { input: "activity_level(75)", expected: "'High'" },
-                    { input: "activity_level(40)", expected: "'Normal'" },
-                    { input: "generate_scan_report('Patient A', 80, 75, 85)", expected: "'Patient A: Average Activity 80.0, Level: High'" },
-                    { input: "generate_scan_report('Subject 1', 60, 50, 40)", expected: "'Subject 1: Average Activity 50.0, Level: Normal'" }
+                    { input: "convert_and_report(100, 0)", expected: "'Distance: 62.1 miles | Temp: 32.0 F'" },
+                    { input: "convert_and_report(10, 100)", expected: "'Distance: 6.2 miles | Temp: 212.0 F'" },
+                    { input: "convert_and_report(5, 20)", expected: "'Distance: 3.1 miles | Temp: 68.0 F'" },
+                    { input: "convert_and_report(0, -40)", expected: "'Distance: 0.0 miles | Temp: -40.0 F'" },
+                    { input: "convert_and_report(42.195, 25)", expected: "'Distance: 26.2 miles | Temp: 77.0 F'" }
                 ]
             },
         ],
@@ -330,12 +284,11 @@ print(get_remainder(17, 5))      # 2`,
             {
                 id: "011",
                 number: 1,
-                title: "🌡️ Lab Temperature Conversion",
-                description: "Your neuroscience lab stores brain tissue samples in freezers at extremely low temperatures. The freezer displays temperature in Celsius, but your American collaborators need the readings in Fahrenheit for their reports. Create a function `celsius_to_fahrenheit` that takes a temperature in Celsius and converts it to Fahrenheit using the formula: (celsius × 9/5) + 32. For example, human body temperature of 37°C converts to 98.6°F, and the freezing point of water at 0°C becomes 32°F. Test your function with extreme lab temperatures like -80°C (ultra-cold storage).",
-                hint: "Follow the formula step by step: first multiply by 9, then divide by 5, finally add 32.",
+                title: "Temp Converter",
+                description: "Create a function `celsius_to_fahrenheit` that converts Celsius to Fahrenheit using the formula: (celsius * 9/5) + 32.",
+                hint: "Multiply by 9, divide by 5, then add 32.",
                 starterCode: `def celsius_to_fahrenheit(celsius: float) -> float:
-    # Lab freezer temperature conversion
-    # Example: Brain tissue at -80°C = ? Fahrenheit
+    # Your code here
     pass`,
                 solutionCode: `def celsius_to_fahrenheit(celsius: float) -> float:
     """Convert Celsius to Fahrenheit."""
@@ -351,12 +304,11 @@ print(get_remainder(17, 5))      # 2`,
             {
                 id: "012",
                 number: 2,
-                title: "🧊 Cryogenic Storage Check",
-                description: "When your international research partners send temperature data in Fahrenheit, you need to convert it back to Celsius for your lab records and equipment settings. Create a function `fahrenheit_to_celsius` that performs the reverse conversion using the formula: (fahrenheit - 32) × 5/9. For instance, room temperature of 68°F converts to 20°C, and the boiling point of water at 212°F becomes 100°C. Notice that -40° is the same in both scales — a fun mathematical quirk!",
-                hint: "Order matters! First subtract 32 from the Fahrenheit value, then multiply the result by 5/9.",
+                title: "Reverse Converter",
+                description: "Create a function `fahrenheit_to_celsius` that converts Fahrenheit to Celsius using formula: (fahrenheit - 32) * 5/9.",
+                hint: "Subtract 32 first, then multiply by 5/9.",
                 starterCode: `def fahrenheit_to_celsius(fahrenheit: float) -> float:
-    # Converting partner lab readings to Celsius
-    # Room temperature 68°F = ? Celsius for our equipment
+    # Your code here
     pass`,
                 solutionCode: `def fahrenheit_to_celsius(fahrenheit: float) -> float:
     """Convert Fahrenheit to Celsius."""
@@ -372,12 +324,11 @@ print(get_remainder(17, 5))      # 2`,
             {
                 id: "013",
                 number: 3,
-                title: "🍕 Pizza Party Split",
-                description: "Your research lab is celebrating a successful experiment with a pizza party! The total bill has arrived, and everyone wants to split it fairly. Create a function `split_bill` that takes the `total` bill amount and the `num_people` splitting it, then returns each person's share rounded to 2 decimal places (since we're dealing with money). For example, if four hungry researchers need to split a $47.50 pizza bill, each person should pay $11.88 (rounded from $11.875). Handle any bill amount and group size.",
-                hint: "Divide the total by the number of people, then use round(result, 2) to get exactly 2 decimal places.",
+                title: "Split Bill",
+                description: "Create a function `split_bill` that takes `total` and `num_people`. Return each person's share rounded to 2 decimal places.",
+                hint: "Divide total by num_people. Use round(result, 2).",
                 starterCode: `def split_bill(total: float, num_people: int) -> float:
-    # Pizza party time! Let's split the bill fairly.
-    # $47.50 total, 4 people -> $11.88 each (rounded)
+    # Your code here
     pass`,
                 solutionCode: `def split_bill(total: float, num_people: int) -> float:
     """Split a bill evenly among people."""
@@ -393,12 +344,11 @@ print(get_remainder(17, 5))      # 2`,
             {
                 id: "014",
                 number: 4,
-                title: "🎁 Generosity Calculator",
-                description: "After a great dinner with your thesis advisor, you want to leave an appropriate tip for the excellent service. Create a function `calculate_tip` that takes the `bill` amount and a `tip_percent` (as a whole number like 15, 18, or 20), and returns the tip amount rounded to 2 decimal places. The tip is calculated as: bill × (percentage / 100). For example, an $85 bill with a 20% tip should return $17.00, while an $85.50 bill at 20% calculates to exactly $17.10.",
-                hint: "Convert the percentage to a decimal by dividing by 100, multiply by the bill, then round to 2 places.",
+                title: "Tip Calculator",
+                description: "Create a function `calculate_tip` that takes `bill` and `tip_percent`. Return the tip amount rounded to 2 decimal places.",
+                hint: "Tip = bill * (percent / 100). Round result to 2 decimals.",
                 starterCode: `def calculate_tip(bill: float, tip_percent: int) -> float:
-    # Great service deserves a great tip!
-    # $85.50 bill at 20% tip -> tip amount to leave
+    # Your code here
     pass`,
                 solutionCode: `def calculate_tip(bill: float, tip_percent: int) -> float:
     """Calculate tip amount from bill and percentage."""
@@ -414,12 +364,11 @@ print(get_remainder(17, 5))      # 2`,
             {
                 id: "015",
                 number: 5,
-                title: "🐁 Lab Mouse Weight Tracker",
-                description: "Your neuroscience lab collaborates with researchers in the United States who use imperial units. When sharing data about lab mice weights, you need to convert from the metric system (grams) to imperial (ounces). Create a function `grams_to_ounces` that takes a weight in grams and converts it to ounces using the factor: 1 gram = 0.03527 ounces. Round the result to 2 decimal places for consistency in reports. A typical lab mouse weighing 25 grams would be approximately 0.88 ounces.",
-                hint: "Multiply the gram value by 0.03527, then round to 2 decimal places using round(result, 2).",
+                title: "Unit Converter",
+                description: "Create a function `grams_to_ounces` that converts grams to ounces (1 gram = 0.03527 oz). Round to 2 decimal places.",
+                hint: "Multiply grams by 0.03527. Round to 2 decimals.",
                 starterCode: `def grams_to_ounces(grams: float) -> float:
-    # International collaboration requires unit conversion!
-    # Mouse #42 weighs 25g -> ? ounces for the US report
+    # Your code here
     pass`,
                 solutionCode: `def grams_to_ounces(grams: float) -> float:
     """Convert grams to ounces."""
@@ -435,12 +384,11 @@ print(get_remainder(17, 5))      # 2`,
             {
                 id: "016",
                 number: 6,
-                title: "⏱️ Experiment Duration",
-                description: "In laboratory protocols, experiment durations are often specified in minutes for clarity, but your data logging software records everything in seconds. Create a function `minutes_to_seconds` that converts a duration from minutes to seconds. This simple but essential conversion is used constantly in automated lab systems. For example, a 90-minute behavioral experiment needs to be logged as 5,400 seconds in the system.",
-                hint: "There are 60 seconds in every minute, so multiply the minutes by 60.",
+                title: "Time Converter",
+                description: "Create a function `minutes_to_seconds` that takes `minutes` and returns the number of seconds.",
+                hint: "Multiply minutes by 60.",
                 starterCode: `def minutes_to_seconds(minutes: int) -> int:
-    # Protocol: Incubate for 90 minutes
-    # Data logger needs: ? seconds
+    # Your code here
     pass`,
                 solutionCode: `def minutes_to_seconds(minutes: int) -> int:
     """Convert minutes to seconds."""
@@ -456,16 +404,15 @@ print(get_remainder(17, 5))      # 2`,
             {
                 id: "017",
                 number: 7,
-                title: "📦 Sample Distribution",
-                description: "You have cell culture samples that need to be distributed evenly across petri dishes, but the numbers don't always divide perfectly. Before distributing, you need to know how many samples will be left over and need special handling. Create a function `remaining_samples` that takes the `total_samples` available and the `num_dishes` you're distributing into, then returns how many samples remain after an even distribution. For example, distributing 17 samples across 5 dishes puts 3 in each, with 2 left over.",
-                hint: "The modulo operator (%) gives you the remainder after division: total_samples % num_dishes",
-                starterCode: `def remaining_samples(total_samples: int, num_dishes: int) -> int:
-    # Distributing cell cultures evenly...
-    # 17 samples into 5 dishes -> how many samples left over?
+                title: "Leftovers",
+                description: "Create a function `remaining_samples` that takes `total` and `num_dishes`. Return how many samples are left over after even distribution.",
+                hint: "Use the modulo operator: total % num_dishes.",
+                starterCode: `def remaining_samples(total: int, num_dishes: int) -> int:
+    # Your code here
     pass`,
-                solutionCode: `def remaining_samples(total_samples: int, num_dishes: int) -> int:
-    """Return leftover samples after even distribution."""
-    return total_samples % num_dishes`,
+                solutionCode: `def remaining_samples(total: int, num_dishes: int) -> int:
+    """Return leftover samples."""
+    return total % num_dishes`,
                 testCases: [
                     { input: "remaining_samples(17, 5)", expected: "2" },
                     { input: "remaining_samples(20, 5)", expected: "0" },
@@ -477,16 +424,15 @@ print(get_remainder(17, 5))      # 2`,
             {
                 id: "018",
                 number: 8,
-                title: "🧫 Samples Per Dish",
-                description: "Now that you know how many leftovers there will be, you need to determine how many complete samples go into each petri dish. Create a function `samples_per_dish` that takes `total_samples` and `num_dishes`, returning how many whole samples each dish receives (ignoring any remainder). This uses integer division, which discards the fractional part. If distributing 17 samples across 5 dishes, each dish gets exactly 3 samples (not 3.4).",
-                hint: "Use floor division (//) which divides and rounds down: total_samples // num_dishes",
-                starterCode: `def samples_per_dish(total_samples: int, num_dishes: int) -> int:
-    # Planning the distribution...
-    # 17 samples into 5 dishes -> ? complete samples per dish
+                title: "Samples Per Dish",
+                description: "Create a function `samples_per_dish` that takes `total` and `num_dishes`. Return how many full samples fit in each dish (integer division).",
+                hint: "Use floor division: total // num_dishes.",
+                starterCode: `def samples_per_dish(total: int, num_dishes: int) -> int:
+    # Your code here
     pass`,
-                solutionCode: `def samples_per_dish(total_samples: int, num_dishes: int) -> int:
-    """Return whole samples per dish using integer division."""
-    return total_samples // num_dishes`,
+                solutionCode: `def samples_per_dish(total: int, num_dishes: int) -> int:
+    """Return whole samples per dish."""
+    return total // num_dishes`,
                 testCases: [
                     { input: "samples_per_dish(17, 5)", expected: "3" },
                     { input: "samples_per_dish(20, 5)", expected: "4" },
@@ -498,12 +444,11 @@ print(get_remainder(17, 5))      # 2`,
             {
                 id: "019",
                 number: 9,
-                title: "🔬 Coverage Area Calculator",
-                description: "Your microscope objective lens has a circular field of view, and you need to calculate how much area of the tissue sample it can capture in a single image. Create a function `circular_area` that takes the `radius` of the viewing area (in millimeters) and returns the total area in square millimeters. Use the formula: Area = π × radius², with π = 3.14159. Round your answer to 2 decimal places. For example, an objective with a 5mm radius viewing field covers approximately 78.54 mm².",
-                hint: "Use π = 3.14159 and the power operator (**) for squaring: pi * radius ** 2, then round.",
+                title: "Circle Area",
+                description: "Create a function `circular_area` that takes a `radius` and returns the area (pi * r^2). Use pi = 3.14159. Round to 2 decimal places.",
+                hint: "Area = 3.14159 * (radius ** 2). Round carefully.",
                 starterCode: `def circular_area(radius: float) -> float:
-    # Microscope field of view calculation
-    # Objective with 5mm radius -> ? mm² viewing area
+    # Your code here
     pass`,
                 solutionCode: `def circular_area(radius: float) -> float:
     """Calculate area of a circle."""
@@ -520,15 +465,14 @@ print(get_remainder(17, 5))      # 2`,
             {
                 id: "020",
                 number: 10,
-                title: "🏆 Final Challenge: Grant Budget Growth",
-                description: "Research grants often include provisions for annual budget increases to account for inflation and rising costs. Your PI wants to project how a grant's purchasing power will grow over time with compound growth. Create a function `grant_growth` that calculates the final amount using the compound interest formula: principal × (1 + rate)^years, rounded to 2 decimal places. The `principal` is the initial grant amount, `rate` is the annual growth rate as a decimal (e.g., 0.05 for 5%), and `years` is the number of years. For example, a $100,000 grant with 5% annual growth over 5 years becomes $127,628.16.",
-                hint: "Use the ** operator for exponentiation: principal * (1 + rate) ** years, then round to 2 decimals.",
+                title: "Compound Interest",
+                description: "Create a function `grant_growth` that calculates compound interest: principal * (1 + rate)^years. Round the result to 2 decimal places. `rate` is a decimal (e.g. 0.05).",
+                hint: "Equation: principal * (1 + rate) ** years.",
                 starterCode: `def grant_growth(principal: float, rate: float, years: int) -> float:
-    # Project multi-year grant budget growth
-    # $100,000 at 5% for 5 years -> final budget amount?
+    # Your code here
     pass`,
                 solutionCode: `def grant_growth(principal: float, rate: float, years: int) -> float:
-    """Calculate compound growth of a grant."""
+    """Calculate compound growth."""
     return round(principal * (1 + rate) ** years, 2)`,
                 testCases: [
                     { input: "grant_growth(100000, 0.05, 5)", expected: "127628.16" },
@@ -575,15 +519,14 @@ def is_adult(age: int) -> bool:
             {
                 id: "021",
                 number: 1,
-                title: "🧠 Neural Signal Detector",
-                description: "In electrophysiology experiments, neurons communicate through electrical signals that can be recorded using microelectrodes. However, the recordings always contain some baseline noise. A positive signal value indicates a genuine neural 'spike' (neuron firing), while zero or negative values represent noise or the neuron at rest. Create a function `signal_detected` that takes a `strength` parameter (a float representing millivolts) and returns `True` if the signal strength is greater than 0, indicating a real neural firing event.",
-                hint: "Use the greater-than (>) comparison operator to check if strength exceeds zero.",
+                title: "Check Positive",
+                description: "Create a function `signal_detected` that takes `strength` and returns True if it is greater than 0.",
+                hint: "Return strength > 0.",
                 starterCode: `def signal_detected(strength: float) -> bool:
-    # Electrode recording analysis
-    # Positive signal = neuron fired, zero or negative = baseline noise
+    # Your code here
     pass`,
                 solutionCode: `def signal_detected(strength: float) -> bool:
-    """Check if neural signal is above noise threshold."""
+    """Check if positive."""
     return strength > 0`,
                 testCases: [
                     { input: "signal_detected(0.5)", expected: "True" },
@@ -596,15 +539,14 @@ def is_adult(age: int) -> bool:
             {
                 id: "022",
                 number: 2,
-                title: "🎮 Even/Odd Level Selector",
-                description: "You're designing a dungeon crawler game where boss battles appear on specific levels to maintain player engagement. The game design document specifies that all even-numbered levels (2, 4, 6, 8...) should feature a boss encounter, while odd-numbered levels are regular exploration zones. Create a function `has_boss` that takes a `level` number (integer) and returns `True` if that level has a boss fight (is even), or `False` for regular levels. This function will be used by the level generator to spawn appropriate enemies.",
-                hint: "A number is even if it divides by 2 with no remainder: level % 2 == 0",
+                title: "Is Even",
+                description: "Create a function `has_boss` that returns True if `level` is even. Use the modulo operator.",
+                hint: "Even means level % 2 == 0.",
                 starterCode: `def has_boss(level: int) -> bool:
-    # Game Design: Boss fights on even-numbered levels
-    # Level 4 = boss, Level 5 = no boss
+    # Your code here
     pass`,
                 solutionCode: `def has_boss(level: int) -> bool:
-    """Check if level has a boss (even levels)."""
+    """Check if level is even."""
     return level % 2 == 0`,
                 testCases: [
                     { input: "has_boss(4)", expected: "True" },
@@ -617,15 +559,14 @@ def is_adult(age: int) -> bool:
             {
                 id: "023",
                 number: 3,
-                title: "📊 Data Magnitude",
-                description: "When analyzing signal data, scientists often need to know the magnitude (absolute value) of measurements regardless of whether they're positive or negative. For example, a neural signal of -50 millivolts and +50 millivolts have the same magnitude. Create a function `magnitude` that takes a number `n` and returns its absolute value WITHOUT using Python's built-in `abs()` function. You'll need to use conditional logic: if the number is negative, make it positive; otherwise, return it unchanged.",
-                hint: "Multiplying a negative number by -1 makes it positive: if n < 0, return -n",
+                title: "Absolute Value",
+                description: "Create a function `magnitude` that returns the absolute value of `n` without using abs(). If n is negative, return -n.",
+                hint: "If n < 0, return -n. Else return n.",
                 starterCode: `def magnitude(n: float) -> float:
-    # Calculate distance from zero (always positive)
-    # magnitude(-50) -> 50, magnitude(30) -> 30
+    # Your code here
     pass`,
                 solutionCode: `def magnitude(n: float) -> float:
-    """Return absolute value without using abs()."""
+    """Return absolute value manually."""
     if n < 0:
         return -n
     return n`,
@@ -640,15 +581,14 @@ def is_adult(age: int) -> bool:
             {
                 id: "024",
                 number: 4,
-                title: "🏆 High Score Checker",
-                description: "Your arcade game needs to display the winner of a two-player match on the scoreboard. The game tracks each player's score throughout the session, and at the end, the player with the higher score is crowned champion. Create a function `higher_score` that takes two parameters (`score_a` for Player 1 and `score_b` for Player 2) and returns whichever score is greater. If both players tie, returning either score is acceptable since they're equal.",
-                hint: "Compare the two scores with an if statement. Return score_a if it's bigger, otherwise return score_b.",
+                title: "Higher Score",
+                description: "Create a function `higher_score` that takes `score_a` and `score_b`. Return the higher score.",
+                hint: "If score_a > score_b, return score_a. Else return score_b.",
                 starterCode: `def higher_score(score_a: int, score_b: int) -> int:
-    # Arcade Championship Winner Determination
-    # Player A: 15,000 pts vs Player B: 12,500 pts -> Winner is 15,000
+    # Your code here
     pass`,
                 solutionCode: `def higher_score(score_a: int, score_b: int) -> int:
-    """Return the higher of two scores."""
+    """Return the higher score."""
     if score_a > score_b:
         return score_a
     return score_b`,
@@ -663,15 +603,14 @@ def is_adult(age: int) -> bool:
             {
                 id: "025",
                 number: 5,
-                title: "🧪 Best Trial Result",
-                description: "In behavioral neuroscience experiments, researchers often run the same test multiple times to account for variability. Your experiment measures reaction times across three trials, and you need to report the best (fastest) result. Create a function `best_of_three` that takes three trial measurements (`trial1`, `trial2`, `trial3` as floats) and returns the highest value among them. This requires comparing multiple values systematically — you can track the 'current best' and update it as you check each trial.",
-                hint: "Start by assuming trial1 is the best. Then check if trial2 is better, then check if trial3 is better.",
+                title: "Best of Three",
+                description: "Create a function `best_of_three` that takes three trial results and returns the highest value.",
+                hint: "Use `if` statements to find the maximum.",
                 starterCode: `def best_of_three(trial1: float, trial2: float, trial3: float) -> float:
-    # Behavioral experiment: Find the best performance
-    # Trials: 85.2, 90.1, 88.7 -> Best result is 90.1
+    # Your code here
     pass`,
                 solutionCode: `def best_of_three(trial1: float, trial2: float, trial3: float) -> float:
-    """Return the highest of three trial results."""
+    """Return the highest of three."""
     best = trial1
     if trial2 > best:
         best = trial2
@@ -689,15 +628,14 @@ def is_adult(age: int) -> bool:
             {
                 id: "026",
                 number: 6,
-                title: "🔬 Experiment Rating",
-                description: "Your research lab uses a standardized rating system to classify experimental outcomes for grant reports and publications. Results are scored on a 0-100 scale and classified into categories: 'Excellent' (90 or above), 'Good' (75-89), 'Acceptable' (60-74), and 'Poor' (below 60). Create a function `result_rating` that takes a `score` (integer) and returns the appropriate category as a string. Use the 'early return' pattern: check from highest threshold downward, returning as soon as you find a match.",
-                hint: "Check score >= 90 first and return 'Excellent'. If not, check >= 75 and return 'Good', and so on.",
+                title: "Grade Converter",
+                description: "Create a function `result_rating` that returns 'Excellent' (>=90), 'Good' (>=75), 'Acceptable' (>=60), or 'Poor' (<60).",
+                hint: "Check scores from highest to lowest: >= 90, then >= 75, etc.",
                 starterCode: `def result_rating(score: int) -> str:
-    # Lab Report Classification System
-    # Score 95 -> "Excellent", Score 68 -> "Acceptable"
+    # Your code here
     pass`,
                 solutionCode: `def result_rating(score: int) -> str:
-    """Convert score to quality rating."""
+    """Convert score to rating."""
     if score >= 90:
         return "Excellent"
     if score >= 75:
@@ -716,16 +654,14 @@ def is_adult(age: int) -> bool:
             {
                 id: "027",
                 number: 7,
-                title: "🎯 Lab Protocol Checker",
-                description: "Your lab has specific protocols for sample handling based on batch sizes. The quality assurance system classifies batches as follows: 'Optimal' if the sample count is divisible by BOTH 3 and 5 (like 15, 30), 'Valid' if divisible only by 3, 'Calibration Needed' if divisible only by 5, and 'Standard' for all other counts. Create a function `protocol_status` that takes a `sample_count` integer and returns the appropriate status string. Important: check the 'both' condition first before checking individual divisibility!",
-                hint: "Test the most specific case first: sample_count % 3 == 0 AND sample_count % 5 == 0 for 'Optimal'",
+                title: "Divisibility Check",
+                description: "Create a function `protocol_status`. If `count` is divisible by 3 and 5: 'Optimal'. By 3 only: 'Valid'. By 5 only: 'Calibration Needed'. Otherwise: 'Standard'.",
+                hint: "Check 'count % 3 == 0 and count % 5 == 0' first.",
                 starterCode: `def protocol_status(sample_count: int) -> str:
-    # Quality Assurance Protocol Classification
-    # 15 samples -> "Optimal" (divisible by both 3 and 5)
-    # 9 samples -> "Valid" (divisible by 3 only)
+    # Your code here
     pass`,
                 solutionCode: `def protocol_status(sample_count: int) -> str:
-    """Determine lab protocol status based on sample count."""
+    """Determine status based on divisibility."""
     if sample_count % 3 == 0 and sample_count % 5 == 0:
         return "Optimal"
     if sample_count % 3 == 0:
@@ -744,15 +680,14 @@ def is_adult(age: int) -> bool:
             {
                 id: "028",
                 number: 8,
-                title: "🎫 Conference Registration Fee",
-                description: "The International Neuroscience Conference uses tiered pricing based on attendee type to make the event accessible while covering costs. The registration system needs to automatically calculate fees: Students pay $50 (discounted to encourage early-career attendance), Academics pay $150, Industry professionals pay $300 (covering additional networking events), and any other category defaults to $200 for general admission. Create a function `registration_fee` that takes an `attendee_type` string and returns the appropriate fee as an integer.",
-                hint: "Compare attendee_type with each known type using == and return the matching fee.",
+                title: "Registration Fee",
+                description: "Create `registration_fee(type)`. 'student': 50, 'academic': 150, 'industry': 300. Any other type: 200.",
+                hint: "Use if/elif/else to check the type string.",
                 starterCode: `def registration_fee(attendee_type: str) -> int:
-    # Conference Registration System
-    # 'student' -> $50, 'academic' -> $150, 'industry' -> $300
+    # Your code here
     pass`,
                 solutionCode: `def registration_fee(attendee_type: str) -> int:
-    """Return conference registration fee based on attendee type."""
+    """Return registration fee."""
     if attendee_type == "student":
         return 50
     if attendee_type == "academic":
@@ -771,15 +706,14 @@ def is_adult(age: int) -> bool:
             {
                 id: "029",
                 number: 9,
-                title: "📈 Normal Range Checker",
-                description: "Medical diagnostic systems need to determine if a patient's test results fall within the healthy reference range. A measurement is considered 'normal' if it falls between the low and high threshold values (inclusive of both boundaries). Create a function `is_normal` that takes three parameters: `value` (the patient's measurement), `low` (the lower bound of normal), and `high` (the upper bound). Return `True` if the value is within range, `False` otherwise. Python supports elegant chained comparisons for this!",
-                hint: "Python allows chained comparisons: low <= value <= high evaluates both conditions at once.",
+                title: "In Range",
+                description: "Create a function `is_normal` that returns True if `value` is between `low` and `high` (inclusive).",
+                hint: "Use chained comparison: low <= value <= high.",
                 starterCode: `def is_normal(value: float, low: float, high: float) -> bool:
-    # Diagnostic Range Checker
-    # Blood pressure 120 in range 90-140 -> True (normal)
+    # Your code here
     pass`,
                 solutionCode: `def is_normal(value: float, low: float, high: float) -> bool:
-    """Check if value is within the normal range (inclusive)."""
+    """Check if value is within range."""
     return low <= value <= high`,
                 testCases: [
                     { input: "is_normal(5, 1, 10)", expected: "True" },
@@ -792,25 +726,23 @@ def is_adult(age: int) -> bool:
             {
                 id: "030",
                 number: 10,
-                title: "🏆 Final Challenge: Smart Dosage Calculator",
-                description: "Hospitals need precise medication dosage calculations that account for patient factors. Build a smart dosage calculator that computes the appropriate medication amount based on patient weight and age. The base formula is 5mg per kilogram of body weight. However, patients under 12 years old OR over 65 years old require a 25% dose reduction due to metabolic differences. Additionally, if the patient weighs less than 10kg, the system should return 'Consult specialist' instead of calculating — these cases require individual assessment. Create a function `calculate_dosage` that returns either the dose formatted as '{dose}mg' (rounded to 1 decimal) or 'Consult specialist'.",
-                hint: "Handle the special case (under 10kg) first. Calculate base dose (weight × 5). Apply reduction if age conditions met. Format with f-string.",
+                title: "Smart Dosage",
+                description: "Create `calculate_dosage(weight, age)`. If weight < 10, return 'Consult specialist'. Otherwise base dose is weight * 5. If age < 12 or > 65, reduce base dose by 25%. Return formatted string 'Xmg' (1 decimal).",
+                hint: "Handle weight < 10 first. Then calc base. Then check age modifiers. Finally return f-string.",
                 starterCode: `def calculate_dosage(weight_kg: float, age: int) -> str:
-    # Hospital Medication Dosing System
-    # Returns formatted dose like "350.0mg" or "Consult specialist"
-    # Base: 5mg/kg, reduced 25% for age < 12 or > 65
+    # Your code here
     pass`,
                 solutionCode: `def calculate_dosage(weight_kg: float, age: int) -> str:
-    """Calculate medication dosage with age adjustment."""
+    """Calculate dosage with age adjustment."""
     if weight_kg < 10:
         return "Consult specialist"
     
-    base_dose = weight_kg * 5  # 5mg per kg
+    dose = weight_kg * 5
     
     if age < 12 or age > 65:
-        base_dose = base_dose * 0.75  # 25% reduction
+        dose = dose * 0.75
     
-    return f"{round(base_dose, 1)}mg"`,
+    return f"{round(dose, 1)}mg"`,
                 testCases: [
                     { input: "calculate_dosage(70, 30)", expected: "'350.0mg'" },
                     { input: "calculate_dosage(70, 10)", expected: "'262.5mg'" },
@@ -857,15 +789,14 @@ def get_initials(full_name: str) -> str:
             {
                 id: "033",
                 number: 1,
-                title: "📢 Alert Message",
-                description: "Your lab's monitoring system needs to distinguish critical alerts from normal messages. When an urgent situation arises — like equipment malfunction or temperature fluctuation in sample storage — the alert message must stand out visually. The convention is to display warnings in ALL CAPITAL LETTERS for maximum visibility. Create a function `alert_message` that takes any `message` string and returns it completely converted to uppercase. This ensures operators can immediately identify and respond to critical notifications.",
-                hint: "Python strings have a built-in .upper() method that converts all characters to uppercase.",
+                title: "Uppercase Converter",
+                description: "Create a function `alert_message` that takes a `message` string and returns it in all uppercase letters.",
+                hint: "Use `message.upper()`.",
                 starterCode: `def alert_message(message: str) -> str:
-    # Lab Alert System: Convert to urgent format
-    # "warning" -> "WARNING" for critical visibility
+    # Your code here
     pass`,
                 solutionCode: `def alert_message(message: str) -> str:
-    """Convert message to uppercase for alerts."""
+    """Convert message to uppercase."""
     return message.upper()`,
                 testCases: [
                     { input: "alert_message('warning')", expected: "'WARNING'" },
@@ -878,12 +809,11 @@ def get_initials(full_name: str) -> str:
             {
                 id: "034",
                 number: 2,
-                title: "🔐 Normalize Username",
-                description: "Your research collaboration platform stores usernames in a standardized format for consistency. When users sign up, they might type 'DrNeural', 'DRNEURAL', or 'drneural' — but the system should treat these as the same username. The database convention is to store everything in lowercase to avoid duplicates and simplify searches. Create a function `normalize_username` that takes any `username` string and returns it converted entirely to lowercase.",
-                hint: "Use the .lower() method to convert all characters to lowercase.",
+                title: "Lowercase Converter",
+                description: "Create a function `normalize_username` that takes a `username` string and returns it in all lowercase letters.",
+                hint: "Use `username.lower()`.",
                 starterCode: `def normalize_username(username: str) -> str:
-    # Database Normalization: Store usernames in lowercase
-    # 'DrNeural' and 'DRNEURAL' become 'drneural'
+    # Your code here
     pass`,
                 solutionCode: `def normalize_username(username: str) -> str:
     """Convert username to lowercase."""
@@ -899,12 +829,11 @@ def get_initials(full_name: str) -> str:
             {
                 id: "035",
                 number: 3,
-                title: "📏 Password Length Checker",
-                description: "Security best practices require passwords to meet minimum length requirements. Your authentication system needs to validate that users create passwords of acceptable length before the account is created. The first step is measuring the password's character count. Create a function `password_length` that takes a `password` string and returns its length as an integer. This will later be used to enforce minimum requirements (typically 8+ characters) and maximum limits.",
-                hint: "The built-in len() function returns the number of characters in a string.",
+                title: "String Length",
+                description: "Create a function `password_length` that returns the number of characters in a `password` string.",
+                hint: "Use `len(password)`.",
                 starterCode: `def password_length(password: str) -> int:
-    # Security Validation: Check password character count
-    # 'secret123' has 9 characters
+    # Your code here
     pass`,
                 solutionCode: `def password_length(password: str) -> int:
     """Return the length of a password."""
@@ -920,12 +849,11 @@ def get_initials(full_name: str) -> str:
             {
                 id: "036",
                 number: 4,
-                title: "🔑 Get First Initial",
-                description: "Your company's ID badge system displays employees' first initials as part of their personalized badge design. When printing badges, the system needs to extract just the first letter from each person's name. Create a function `first_initial` that takes a `name` string and returns only the first character. Remember that strings in Python are sequences, and you can access individual characters by their position (index), starting from 0 for the first character.",
-                hint: "Use square bracket indexing: name[0] accesses the character at position 0 (the first character).",
+                title: "First Letter",
+                description: "Create a function `first_initial` that returns the first character of `name`.",
+                hint: "Access index 0: `name[0]`.",
                 starterCode: `def first_initial(name: str) -> str:
-    # ID Badge Generator: Extract first letter
-    # 'Alice' -> 'A' for the badge display
+    # Your code here
     pass`,
                 solutionCode: `def first_initial(name: str) -> str:
     """Return the first character of a name."""
@@ -941,12 +869,11 @@ def get_initials(full_name: str) -> str:
             {
                 id: "037",
                 number: 5,
-                title: "🏷️ File Extension Checker",
-                description: "Your file management system needs to quickly identify file types by examining their extensions. While a complete solution would parse the extension properly, a simple first step is accessing the last character of a filename. Create a function `last_character` that takes a `text` string and returns its final character. Python makes this easy with negative indexing — position -1 always refers to the last item in any sequence, regardless of length.",
-                hint: "Use negative indexing: text[-1] accesses the last character without needing to know the string length.",
+                title: "Last Letter",
+                description: "Create a function `last_character` that returns the last character of `text`.",
+                hint: "Use negative indexing: `text[-1]`.",
                 starterCode: `def last_character(text: str) -> str:
-    # File System Helper: Get the final character
-    # Useful for quick file type identification
+    # Your code here
     pass`,
                 solutionCode: `def last_character(text: str) -> str:
     """Return the last character of text."""
@@ -962,12 +889,11 @@ def get_initials(full_name: str) -> str:
             {
                 id: "038",
                 number: 6,
-                title: "🔍 Keyword Search",
-                description: "Your literature review tool needs to scan research paper abstracts for specific keywords to help researchers find relevant publications. The search should check whether a given keyword appears anywhere within the abstract text. Create a function `contains_keyword` that takes a `text` string (the abstract) and a `keyword` string to search for, returning `True` if the keyword is found anywhere in the text, and `False` otherwise. Note: this search is case-sensitive, so 'Neural' won't match 'neural'.",
-                hint: "Python's 'in' operator checks for substring presence: 'hello' in 'hello world' returns True",
+                title: "Contains Keyword",
+                description: "Create a function `contains_keyword` that takes `text` and `keyword`. Return True if the keyword is found inside the text.",
+                hint: "Use the `in` operator: `keyword in text`.",
                 starterCode: `def contains_keyword(text: str, keyword: str) -> bool:
-    # Literature Search Tool
-    # Check if a specific keyword appears in the text
+    # Your code here
     pass`,
                 solutionCode: `def contains_keyword(text: str, keyword: str) -> bool:
     """Check if keyword is in text."""
@@ -983,12 +909,11 @@ def get_initials(full_name: str) -> str:
             {
                 id: "039",
                 number: 7,
-                title: "🧹 Clean User Input",
-                description: "When users type data into web forms, they often accidentally add extra spaces at the beginning or end, and inconsistent capitalization can cause database issues. Your data sanitization function needs to clean up this input before storing it. Create a function `clean_input` that takes a `text` string, removes any leading or trailing whitespace, and converts everything to lowercase. This two-step normalization (strip then lowercase) ensures consistent data storage.",
-                hint: "Chain string methods together: text.strip().lower() applies both operations in sequence.",
+                title: "Clean Input",
+                description: "Create a function `clean_input` that strips whitespace from `text` and converts it to lowercase.",
+                hint: "Use `.strip()` then `.lower()`.",
                 starterCode: `def clean_input(text: str) -> str:
-    # Form Data Sanitization
-    # '  HELLO  ' becomes 'hello' (trimmed and lowercase)
+    # Your code here
     pass`,
                 solutionCode: `def clean_input(text: str) -> str:
     """Strip whitespace and convert to lowercase."""
@@ -1004,12 +929,11 @@ def get_initials(full_name: str) -> str:
             {
                 id: "040",
                 number: 8,
-                title: "🧬 DNA Sequence Repeater",
-                description: "In molecular biology, PCR (Polymerase Chain Reaction) is a technique that amplifies DNA by repeatedly copying a target sequence. Your lab simulation software needs to model this amplification process. Create a function `amplify_sequence` that takes a DNA `sequence` string and a `cycles` count (integer), returning the sequence repeated that many times. For example, running 3 PCR cycles on 'ATG' would theoretically produce 'ATGATGATG'. If cycles is 0, return an empty string (no amplification).",
-                hint: "Python allows string repetition with multiplication: 'ATG' * 3 produces 'ATGATGATG'",
+                title: "Repeat String",
+                description: "Create a function `amplify_sequence` that repeats a `sequence` string `cycles` times.",
+                hint: "Mulitply the string by the number: `sequence * cycles`.",
                 starterCode: `def amplify_sequence(sequence: str, cycles: int) -> str:
-    # PCR Amplification Simulator
-    # 'ATG' with 3 cycles -> 'ATGATGATG'
+    # Your code here
     pass`,
                 solutionCode: `def amplify_sequence(sequence: str, cycles: int) -> str:
     """Repeat a DNA sequence multiple times."""
@@ -1025,12 +949,11 @@ def get_initials(full_name: str) -> str:
             {
                 id: "041",
                 number: 9,
-                title: "📁 Filename Sanitizer",
-                description: "File systems have varying rules about valid characters in filenames, and spaces can cause issues in command-line tools and URLs. Your file management utility needs to convert user-friendly filenames to safe versions for storage. The convention is to replace all spaces with underscores, making 'brain scan 001' become 'brain_scan_001'. Create a function `sanitize_filename` that takes a `filename` string and returns a new string with all spaces replaced by underscores.",
-                hint: "Use the .replace(old, new) method: filename.replace(' ', '_') replaces all spaces with underscores.",
+                title: "Replace Spaces",
+                description: "Create a function `sanitize_filename` that replaces all spaces in `filename` with underscores.",
+                hint: "Use `filename.replace(' ', '_')`.",
                 starterCode: `def sanitize_filename(filename: str) -> str:
-    # File System Compatibility
-    # 'brain scan 001' -> 'brain_scan_001'
+    # Your code here
     pass`,
                 solutionCode: `def sanitize_filename(filename: str) -> str:
     """Replace spaces with underscores in filenames."""
@@ -1046,23 +969,23 @@ def get_initials(full_name: str) -> str:
             {
                 id: "042",
                 number: 10,
-                title: "🏆 Final Challenge: Lab Report Header",
-                description: "Research labs need standardized headers for experiment documentation to ensure consistency across all reports. The format your lab uses is: 'EXPERIMENT {id} | Researcher: {name} | Date: {date}' where the experiment ID is always displayed in uppercase for easy visual scanning. Create a function `report_header` that takes three parameters — `researcher` (name), `exp_id` (experiment identifier), and `date` (in YYYY-MM-DD format) — and returns the properly formatted header string. This combines string formatting, method chaining, and f-string interpolation.",
-                hint: "Use an f-string and apply .upper() to just the experiment ID: f\"EXPERIMENT {exp_id.upper()} | ...\"",
-                starterCode: `def report_header(researcher: str, exp_id: str, date: str) -> str:
-    # Lab Documentation System
-    # Format: "EXPERIMENT {id} | Researcher: {name} | Date: {date}"
-    # Note: Experiment ID should be uppercase
+                title: "Generate User ID",
+                description: "Create a function `generate_user_id` that takes `first_name`, `last_name`, and `year`. Return a string in the format 'FIRST_LAST_YEAR'. Ensure names are uppercase and spaces are stripped.",
+                hint: "Use `strip()`, `upper()`, and f-string formatting.",
+                starterCode: `def generate_user_id(first_name: str, last_name: str, year: int) -> str:
+    # Your code here
     pass`,
-                solutionCode: `def report_header(researcher: str, exp_id: str, date: str) -> str:
-    """Generate a formatted lab report header."""
-    return f"EXPERIMENT {exp_id.upper()} | Researcher: {researcher} | Date: {date}"`,
+                solutionCode: `def generate_user_id(first_name: str, last_name: str, year: int) -> str:
+    """Generate standardized user ID."""
+    first = first_name.strip().upper()
+    last = last_name.strip().upper()
+    return f"{first}_{last}_{year}"`,
                 testCases: [
-                    { input: "report_header('Dr. Chen', 'exp001', '2024-01-15')", expected: "'EXPERIMENT EXP001 | Researcher: Dr. Chen | Date: 2024-01-15'" },
-                    { input: "report_header('Sarah', 'neural42', '2024-03-20')", expected: "'EXPERIMENT NEURAL42 | Researcher: Sarah | Date: 2024-03-20'" },
-                    { input: "report_header('Lab Team', 'test1', '2024-12-01')", expected: "'EXPERIMENT TEST1 | Researcher: Lab Team | Date: 2024-12-01'" },
-                    { input: "report_header('Alice', 'abc', '2025-01-01')", expected: "'EXPERIMENT ABC | Researcher: Alice | Date: 2025-01-01'" },
-                    { input: "report_header('Bob', 'xyz99', '2024-06-15')", expected: "'EXPERIMENT XYZ99 | Researcher: Bob | Date: 2024-06-15'" }
+                    { input: "generate_user_id('John', 'Doe', 2024)", expected: "'JOHN_DOE_2024'" },
+                    { input: "generate_user_id('  Sarah ', 'Smith', 1999)", expected: "'SARAH_SMITH_1999'" },
+                    { input: "generate_user_id('alice', 'jones', 2000)", expected: "'ALICE_JONES_2000'" },
+                    { input: "generate_user_id('dr', 'who', 1963)", expected: "'DR_WHO_1963'" },
+                    { input: "generate_user_id(' Ai ', ' Bot ', 2050)", expected: "'AI_BOT_2050'" }
                 ]
             },
         ],
@@ -1101,12 +1024,11 @@ def count_char(text: str, target: str) -> int:
             {
                 id: "043",
                 number: 1,
-                title: "📊 Cumulative Score",
-                description: "In your gamified learning app, students earn daily points and need to see their cumulative total. The total score after n days is the sum of all daily points from day 1 through day n, where each day's points equal the day number (day 1 = 1 point, day 2 = 2 points, etc.). Create a function `total_score` that takes an integer `n` and returns the sum of all integers from 1 to n (inclusive). For example, after 5 days, the total is 1+2+3+4+5 = 15 points. This is your first use of the 'accumulator pattern' — start with 0 and add each value in a loop.",
-                hint: "Initialize a variable `total = 0`, loop through range(1, n+1), add each number to total, then return total.",
+                title: "Sum N",
+                description: "Create a function `total_score` that returns the sum of all integers from 1 to `n`.",
+                hint: "Loop from 1 to n+1 and add to a total.",
                 starterCode: `def total_score(n: int) -> int:
-    # Gamified Learning: Calculate cumulative points
-    # Day 5: total = 1+2+3+4+5 = 15 points earned
+    # Your code here
     pass`,
                 solutionCode: `def total_score(n: int) -> int:
     """Sum all integers from 1 to n."""
@@ -1125,12 +1047,11 @@ def count_char(text: str, target: str) -> int:
             {
                 id: "044",
                 number: 2,
-                title: "🧮 Permutation Calculator",
-                description: "In combinatorics, the factorial function calculates how many different ways you can arrange n items. It's written as n! and computed as n × (n-1) × (n-2) × ... × 1. For example, 5! = 5×4×3×2×1 = 120. This means 5 students can be arranged in 120 different lineups! Create a function `factorial` that takes an integer `n` and returns n factorial. Important edge case: by mathematical convention, 0! = 1 (there's exactly one way to arrange zero items: do nothing).",
-                hint: "Initialize result to 1 (not 0, since we're multiplying). Loop from 1 to n, multiplying result by each number.",
+                title: "Factorial",
+                description: "Create a function `factorial` that returns `n!`. If n is 0, return 1.",
+                hint: "Start with result = 1. Loop and multiply.",
                 starterCode: `def factorial(n: int) -> int:
-    # Combinatorics: How many arrangements of n items?
-    # 5! = 5×4×3×2×1 = 120 different orders
+    # Your code here
     pass`,
                 solutionCode: `def factorial(n: int) -> int:
     """Calculate n factorial."""
@@ -1151,12 +1072,11 @@ def count_char(text: str, target: str) -> int:
             {
                 id: "045",
                 number: 3,
-                title: "🧬 Base Pair Counter",
-                description: "DNA analysis often requires counting specific nucleotides in a genetic sequence. DNA consists of four bases: Adenine (A), Thymine (T), Guanine (G), and Cytosine (C). Researchers frequently need to know the frequency of a particular base in a strand. Create a function `count_base` that takes a DNA `sequence` string and a `base` character ('A', 'T', 'G', or 'C') and returns how many times that base appears in the sequence. For instance, 'ATGCATGC' contains 2 adenines (A).",
-                hint: "Loop through each character in the sequence string. If it matches the target base, increment your counter.",
+                title: "Count Char",
+                description: "Create a function `count_base` that counts the occurrences of `base` in `sequence`.",
+                hint: "Loop through sequence and check if char == base.",
                 starterCode: `def count_base(sequence: str, base: str) -> int:
-    # DNA Analysis: Count nucleotide frequency
-    # How many 'A' bases appear in 'ATGCATGC'? Answer: 2
+    # Your code here
     pass`,
                 solutionCode: `def count_base(sequence: str, base: str) -> int:
     """Count occurrences of base in DNA sequence."""
@@ -1176,12 +1096,11 @@ def count_char(text: str, target: str) -> int:
             {
                 id: "046",
                 number: 4,
-                title: "📝 Vowel Frequency",
-                description: "Natural language processing (NLP) algorithms often analyze text characteristics for pattern recognition. One basic metric is vowel frequency, which varies between languages and can help identify writing styles. Create a function `count_vowels` that takes a `text` string and returns the total count of vowels (a, e, i, o, u). The function should be case-insensitive, counting both 'A' and 'a' as vowels. The word 'neuroscience' contains 6 vowels (e, u, o, i, e, e).",
-                hint: "Create a string of all vowels 'aeiouAEIOU'. For each character in text, check if it's in the vowels string.",
+                title: "Count Vowels",
+                description: "Create a function `count_vowels` that counts vowels ('aeiou') in `text` (case-insensitive).",
+                hint: "Check if `char` in 'aeiouAEIOU'.",
                 starterCode: `def count_vowels(text: str) -> int:
-    # NLP Text Analysis: Count all vowels
-    # 'neuroscience' has 6 vowels (case insensitive)
+    # Your code here
     pass`,
                 solutionCode: `def count_vowels(text: str) -> int:
     """Count vowels in text (case insensitive)."""
@@ -1202,12 +1121,11 @@ def count_char(text: str, target: str) -> int:
             {
                 id: "047",
                 number: 5,
-                title: "📈 Exponential Growth",
-                description: "Understanding exponential growth is crucial in fields from population biology to compound interest calculations. Python provides the ** operator for exponentiation, but implementing it yourself deepens your understanding of loops. Create a function `exponential` that calculates base raised to the power of exponent (base^exponent) using only multiplication in a loop — NO ** operator allowed! For example, 2^10 = 1024 means multiplying 2 by itself 10 times.",
-                hint: "Initialize result to 1. Loop 'exponent' times, multiplying result by 'base' each iteration. Think: 2^3 = 1×2×2×2.",
+                title: "Power Loop",
+                description: "Create a function `exponential` that calculates `base`^`exponent` using a loop (no `**` operator).",
+                hint: "Initialize `result = 1` and multiply by `base` `exponent` times.",
                 starterCode: `def exponential(base: int, exponent: int) -> int:
-    # Calculate base^exponent WITHOUT using ** operator
-    # 2^10 = 1024 (multiply 2 by itself 10 times)
+    # Your code here
     pass`,
                 solutionCode: `def exponential(base: int, exponent: int) -> int:
     """Calculate base to the power of exponent using a loop."""
@@ -1226,12 +1144,11 @@ def count_char(text: str, target: str) -> int:
             {
                 id: "048",
                 number: 6,
-                title: "🔄 Sequence Reverser",
-                description: "In bioinformatics, DNA strands are often read in both directions for analysis. While Python offers the convenient [::-1] slice for reversing, understanding the manual process builds foundational skills. Create a function `reverse_sequence` that takes a `text` string and returns it reversed WITHOUT using slice notation [::-1]. The key insight: instead of appending to the end, prepend each new character to the beginning of your result string.",
-                hint: "Build a new string character by character: for each char, do result = char + result (prepend, not append).",
+                title: "Reverse Loop",
+                description: "Create a function `reverse_sequence` that returns the reversed string using a loop.",
+                hint: "Prepend chars: `result = char + result`.",
                 starterCode: `def reverse_sequence(text: str) -> str:
-    # Bioinformatics: Reverse without using [::-1]
-    # 'ATGC' becomes 'CGTA' (complement strand direction)
+    # Your code here
     pass`,
                 solutionCode: `def reverse_sequence(text: str) -> str:
     """Reverse a string using a loop."""
@@ -1250,12 +1167,11 @@ def count_char(text: str, target: str) -> int:
             {
                 id: "049",
                 number: 7,
-                title: "📉 Even Sample Sum",
-                description: "In experimental design, you sometimes need to analyze only even-numbered samples (e.g., samples taken at regular intervals). Your data analysis script needs to sum all even-numbered samples from 2 up to n. Create a function `sum_even_samples` that returns the sum of all even numbers from 2 to n (inclusive). For n=10, this means computing 2+4+6+8+10 = 30. Python's range function accepts a third 'step' parameter that makes this elegant.",
-                hint: "Use range(2, n+1, 2) to generate only even numbers: starts at 2, goes to n, steps by 2.",
+                title: "Sum Evens",
+                description: "Create a function `sum_even_samples` that sums even numbers from 2 to `n` (inclusive).",
+                hint: "Use `range(2, n + 1, 2)`.",
                 starterCode: `def sum_even_samples(n: int) -> int:
-    # Data Analysis: Sum even-numbered samples
-    # n=10: sum of 2+4+6+8+10 = 30
+    # Your code here
     pass`,
                 solutionCode: `def sum_even_samples(n: int) -> int:
     """Sum all even numbers from 2 to n."""
@@ -1274,12 +1190,11 @@ def count_char(text: str, target: str) -> int:
             {
                 id: "050",
                 number: 8,
-                title: "🔢 Digit Product",
-                description: "Digital signal processing and checksums often involve mathematical operations on individual digits of a number. Create a function `digit_product` that takes a positive integer `n` and returns the product of all its digits multiplied together. For example, 234 has digits 2, 3, and 4, so the product is 2×3×4 = 24. Note: if any digit is 0, the entire product becomes 0. Hint: convert the number to a string to iterate through each digit character.",
-                hint: "Convert n to string with str(n). Loop through each digit character, convert back to int with int(digit), and multiply.",
+                title: "Digit Product",
+                description: "Create a function `digit_product` that returns the product of all digits in `n`.",
+                hint: "Convert `n` to string, loop through digits, convert back to int and multiply.",
                 starterCode: `def digit_product(n: int) -> int:
-    # Digital Signal Processing: Multiply all digits
-    # 234 has digits 2×3×4 = 24
+    # Your code here
     pass`,
                 solutionCode: `def digit_product(n: int) -> int:
     """Multiply all digits of a number."""
@@ -1298,12 +1213,11 @@ def count_char(text: str, target: str) -> int:
             {
                 id: "051",
                 number: 9,
-                title: "📑 Word Counter",
-                description: "Text analysis tools need to count words for statistics, readability scoring, and document processing. Words in most documents are separated by spaces. Create a function `word_count` that takes a `sentence` string and returns the number of words it contains. The Python string method .split() divides a string by whitespace and returns a list of words — the length of this list is your word count. Handle edge cases: empty strings and strings containing only spaces should return 0.",
-                hint: "Use sentence.split() to get a list of words, then len() to count them. Handle empty/whitespace-only strings.",
+                title: "Word Count",
+                description: "Create a function `word_count` that returns the number of words in `sentence`.",
+                hint: "Use `sentence.split()`.",
                 starterCode: `def word_count(sentence: str) -> int:
-    # Text Analysis: Count words in a sentence
-    # 'neural network analysis' has 3 words
+    # Your code here
     pass`,
                 solutionCode: `def word_count(sentence: str) -> int:
     """Count words in a sentence."""
@@ -1321,24 +1235,26 @@ def count_char(text: str, target: str) -> int:
             {
                 id: "052",
                 number: 10,
-                title: "🏆 Final Challenge: Trial Summary Generator",
-                description: "Research labs need to generate formatted reports summarizing experiment progress. Your lab automation system should create a summary listing each completed trial. Create a function `trial_summary` that takes an integer `n` (the number of trials completed) and returns a formatted multi-line string. Each line should read 'Trial X: Complete' where X is the trial number. Lines are separated by the newline character '\\n'. For 3 trials, the output would be: 'Trial 1: Complete\\nTrial 2: Complete\\nTrial 3: Complete'. This combines loops with string building and the .join() method.",
-                hint: "Build a list of formatted strings in a loop, then join them with '\\n'.join(list). Or build incrementally with += and \\n.",
-                starterCode: `def trial_summary(n: int) -> str:
-    # Lab Automation: Generate experiment progress report
-    # Format: 'Trial 1: Complete\\nTrial 2: Complete\\n...'
+                title: "Pattern Generator",
+                description: "Create a function `pattern_generator` that returns a string containing `character` repeated `n` times, then `n-1` times, down to 1 time, separated by newlines.",
+                hint: "Loop range(n, 0, -1). Accumulate `character * i` + '\\n'. Strip trailing newline.",
+                starterCode: `def pattern_generator(character: str, n: int) -> str:
+    # Your code here
     pass`,
-                solutionCode: `def trial_summary(n: int) -> str:
-    """Generate trial completion summary."""
-    lines = []
-    for i in range(1, n + 1):
-        lines.append(f"Trial {i}: Complete")
-    return "\\n".join(lines)`,
+                solutionCode: `def pattern_generator(character: str, n: int) -> str:
+    """Generate a descending pattern."""
+    result = ""
+    for i in range(n, 0, -1):
+        result += (character * i)
+        if i > 1:
+            result += "\\n"
+    return result`,
                 testCases: [
-                    { input: "trial_summary(3)", expected: "'Trial 1: Complete\\nTrial 2: Complete\\nTrial 3: Complete'" },
-                    { input: "trial_summary(1)", expected: "'Trial 1: Complete'" },
-                    { input: "trial_summary(2)", expected: "'Trial 1: Complete\\nTrial 2: Complete'" },
-                    { input: "trial_summary(5)", expected: "'Trial 1: Complete\\nTrial 2: Complete\\nTrial 3: Complete\\nTrial 4: Complete\\nTrial 5: Complete'" }
+                    { input: "pattern_generator('*', 3)", expected: "'***\\n**\\n*'" },
+                    { input: "pattern_generator('#', 1)", expected: "'#'" },
+                    { input: "pattern_generator('A', 4)", expected: "'AAAA\\nAAA\\nAA\\nA'" },
+                    { input: "pattern_generator('!', 2)", expected: "'!!\\n!'" },
+                    { input: "pattern_generator('x', 5)", expected: "'xxxxx\\nxxxx\\nxxx\\nxx\\nx'" }
                 ]
             },
         ],
@@ -1384,12 +1300,11 @@ def collatz_steps(n: int) -> int:
             {
                 id: "053",
                 number: 1,
-                title: "📏 Sample ID Length",
-                description: "Your laboratory information management system (LIMS) needs to validate sample IDs based on their digit count. Different departments use IDs of different lengths, and routing samples correctly requires knowing how many digits are in the ID number. Create a function `digit_count` that takes a positive integer `n` and returns the count of its digits. The approach: repeatedly divide by 10 (removing the rightmost digit) until the number reaches 0, counting each division. Handle the edge case: 0 itself has 1 digit.",
-                hint: "Initialize count to 0. While n > 0: count += 1, n //= 10. Special case: return 1 if input is 0.",
+                title: "Count Digits",
+                description: "Create a function `digit_count` that returns the number of digits in `n`.",
+                hint: "While `n > 0`, divide `n` by 10 and increment count. If `n` is 0, count is 1.",
                 starterCode: `def digit_count(n: int) -> int:
-    # LIMS Validation: Count digits in sample ID
-    # 12345 has 5 digits, 7 has 1 digit, 0 has 1 digit
+    # Your code here
     pass`,
                 solutionCode: `def digit_count(n: int) -> int:
     """Count digits in a number."""
@@ -1412,12 +1327,11 @@ def collatz_steps(n: int) -> int:
             {
                 id: "054",
                 number: 2,
-                title: "🧮 Checksum Calculator",
-                description: "Data validation systems use checksums to verify integrity. One common technique is digit summing — adding all digits of a number together. Credit card numbers, ISBNs, and scientific instrument IDs all use variations of this. Create a function `digit_sum` that takes a positive integer `n` and returns the sum of all its digits. For example, 123 has digits 1+2+3 = 6. Use the modulo operator (n % 10) to extract the last digit, then integer division (n //= 10) to remove it.",
-                hint: "Use n % 10 to get the rightmost digit, add it to total, then n //= 10 to remove that digit. Repeat while n > 0.",
+                title: "Sum Digits",
+                description: "Create a function `digit_sum` that returns the sum of all digits in `n`.",
+                hint: "Use `n % 10` to get the last digit and `n //= 10` to remove it.",
                 starterCode: `def digit_sum(n: int) -> int:
-    # Checksum Validation: Sum all digits
-    # 123 -> 1+2+3 = 6
+    # Your code here
     pass`,
                 solutionCode: `def digit_sum(n: int) -> int:
     """Sum all digits of a number."""
@@ -1438,12 +1352,11 @@ def collatz_steps(n: int) -> int:
             {
                 id: "055",
                 number: 3,
-                title: "🔄 Data Reversal",
-                description: "Sometimes data is recorded in reverse order and needs to be corrected. Numerical sensor readings, for instance, might be captured backwards due to bit ordering. Create a function `reverse_number` that takes a positive integer and returns it with its digits reversed. For example, 1234 becomes 4321. The algorithm: extract the last digit with `n % 10`, build the new number by multiplying your result by 10 and adding the digit, then remove that digit with `n //= 10`. Note: 100 becomes 1 (leading zeros aren't preserved in integers).",
-                hint: "Build reversed number digit by digit: result = result * 10 + (n % 10), then n //= 10. Repeat until n is 0.",
+                title: "Reverse Number",
+                description: "Create a function `reverse_number` that returns `n` with its digits reversed.",
+                hint: "Multiply result by 10 and add the last digit of n.",
                 starterCode: `def reverse_number(n: int) -> int:
-    # Data Correction: Reverse digit order
-    # 1234 -> 4321, 100 -> 1
+    # Your code here
     pass`,
                 solutionCode: `def reverse_number(n: int) -> int:
     """Reverse the digits of a number."""
@@ -1463,12 +1376,11 @@ def collatz_steps(n: int) -> int:
             {
                 id: "056",
                 number: 4,
-                title: "🧬 Palindrome Detector",
-                description: "Palindromic sequences appear frequently in genetics (restriction enzyme sites) and data validation. A palindrome reads the same forwards and backwards. Create a function `is_palindrome` that takes a positive integer `n` and returns `True` if it's a numeric palindrome, `False` otherwise. For example, 12321 is a palindrome, but 12345 is not. Approach: save the original number, reverse it using the technique from the previous challenge, then compare the reversed version to the original.",
-                hint: "Store original value. Reverse the number using a while loop. Compare reversed == original.",
+                title: "Palindrome Number",
+                description: "Create a function `is_palindrome` that returns True if the integer `n` is a palindrome (reads same forwards and backwards).",
+                hint: "Compare `n` with its reversed version.",
                 starterCode: `def is_palindrome(n: int) -> bool:
-    # Pattern Detection: Is it the same forwards and backwards?
-    # 12321 -> True, 12345 -> False
+    # Your code here
     pass`,
                 solutionCode: `def is_palindrome(n: int) -> bool:
     """Check if number is a palindrome."""
@@ -1489,12 +1401,11 @@ def collatz_steps(n: int) -> int:
             {
                 id: "057",
                 number: 5,
-                title: "🔬 Common Divisor Finder",
-                description: "The Greatest Common Divisor (GCD) is essential for simplifying fractions, scheduling experiments at optimal intervals, and dividing samples into equal groups. Euclid's algorithm, developed over 2000 years ago, efficiently finds the GCD using repeated division. Create a function `find_gcd` that takes two positive integers `a` and `b` and returns their GCD. The algorithm: while b is not 0, set (a, b) = (b, a % b). When b becomes 0, a is the GCD. For example, GCD(48, 18) = 6.",
-                hint: "Euclid's algorithm: while b != 0, do (a, b) = (b, a % b). When loop ends, return a.",
+                title: "GCD",
+                description: "Create a function `find_gcd` that returns the Greatest Common Divisor of `a` and `b`.",
+                hint: "Use Euclid's algorithm: while b != 0, (a, b) = (b, a % b).",
                 starterCode: `def find_gcd(a: int, b: int) -> int:
-    # Number Theory: Find greatest common divisor
-    # GCD(48, 18) = 6 (largest number dividing both evenly)
+    # Your code here
     pass`,
                 solutionCode: `def find_gcd(a: int, b: int) -> int:
     """Find GCD using Euclid's algorithm."""
@@ -1512,12 +1423,11 @@ def collatz_steps(n: int) -> int:
             {
                 id: "058",
                 number: 6,
-                title: "🌀 Collatz Convergence",
-                description: "The Collatz Conjecture is one of mathematics' most famous unsolved problems. Starting with any positive integer, apply these rules repeatedly: if even, divide by 2; if odd, multiply by 3 and add 1. The conjecture states that every starting number eventually reaches 1. Create a function `collatz_steps` that takes an integer `n` and counts how many steps it takes to reach 1. For example, starting at 10: 10→5→16→8→4→2→1 takes 6 steps. No one has proven this always terminates, but it has for every number tested!",
-                hint: "While n != 1: if n is even, n = n // 2; else n = 3 * n + 1. Count each step.",
+                title: "Collatz Steps",
+                description: "Create a function `collatz_steps` that returns the number of steps to reach 1. (If even, divide by 2; if odd, 3n+1).",
+                hint: "While n != 1, update n and increment steps.",
                 starterCode: `def collatz_steps(n: int) -> int:
-    # Famous Unsolved Problem: Steps to reach 1
-    # 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1 (6 steps)
+    # Your code here
     pass`,
                 solutionCode: `def collatz_steps(n: int) -> int:
     """Count Collatz sequence steps to reach 1."""
@@ -1540,12 +1450,11 @@ def collatz_steps(n: int) -> int:
             {
                 id: "059",
                 number: 7,
-                title: "🔢 Prime Validator",
-                description: "Prime numbers are fundamental in cryptography, hashing algorithms, and optimal sample sizing for experiments. A prime number is greater than 1 and divisible only by 1 and itself. Create a function `is_prime` that takes an integer `n` and returns `True` if it's prime, `False` otherwise. Optimize by only checking divisors up to √n (if no divisor found by then, none exists). Also, check only odd numbers after handling 2 as a special case.",
-                hint: "Handle n < 2, n == 2, and even numbers first. Then check odd divisors from 3 to sqrt(n).",
+                title: "Is Prime",
+                description: "Create a function `is_prime` that returns True if `n` is a prime number (divisible only by 1 and itself).",
+                hint: "Check divisibility from 2 up to sqrt(n).",
                 starterCode: `def is_prime(n: int) -> bool:
-    # Cryptography Fundamental: Is this number prime?
-    # Only divisible by 1 and itself (17 = prime, 4 = not)
+    # Your code here
     pass`,
                 solutionCode: `def is_prime(n: int) -> bool:
     """Check if number is prime."""
@@ -1572,12 +1481,11 @@ def collatz_steps(n: int) -> int:
             {
                 id: "060",
                 number: 8,
-                title: "📈 Next Prime Finder",
-                description: "Hash tables often use prime numbers for their size to ensure even distribution. When you need a prime larger than a given value, you need a 'next prime' algorithm. Create a function `next_prime` that takes an integer `n` and returns the smallest prime number greater than n. Use your prime-checking logic inside a while loop that increments from n+1 until finding a prime. For example, after 10 the next prime is 11, after 13 the next prime is 17.",
-                hint: "Start at n+1. While candidate is not prime, increment candidate. Define a helper is_prime function or inline the logic.",
+                title: "Next Prime",
+                description: "Create a function `next_prime` that returns the smallest prime number greater than `n`.",
+                hint: "Start at n+1 and increment until you find a prime.",
                 starterCode: `def next_prime(n: int) -> int:
-    # Hash Table Design: Find next prime after n
-    # After 10 -> 11, After 13 -> 17
+    # Your code here
     pass`,
                 solutionCode: `def next_prime(n: int) -> int:
     """Find the next prime number after n."""
@@ -1604,12 +1512,11 @@ def collatz_steps(n: int) -> int:
             {
                 id: "061",
                 number: 9,
-                title: "🎯 Digital Root Reducer",
-                description: "The digital root (also called repeated digit sum) is used in numerology and as a checksum technique. You keep summing the digits of a number until only a single digit remains. For example, 9875 → 9+8+7+5 = 29 → 2+9 = 11 → 1+1 = 2. Create a function `digital_root` that takes a positive integer `n` and returns its single-digit result. This requires nested loops: the outer loop continues while n ≥ 10, and the inner loop sums the digits.",
-                hint: "While n >= 10: sum its digits (using another while or modulo arithmetic), then set n to that sum. Repeat until single digit.",
+                title: "Digital Root",
+                description: "Create a function `digital_root` that repeatedly sums the digits of `n` until a single digit remains.",
+                hint: "Use nested loops: while n >= 10, sum its digits.",
                 starterCode: `def digital_root(n: int) -> int:
-    # Checksum Technique: Reduce to single digit
-    # 9875 -> 29 -> 11 -> 2
+    # Your code here
     pass`,
                 solutionCode: `def digital_root(n: int) -> int:
     """Keep summing digits until single digit remains."""
@@ -1631,28 +1538,28 @@ def collatz_steps(n: int) -> int:
             {
                 id: "062",
                 number: 10,
-                title: "🏆 Final Challenge: Binary Decoder",
-                description: "Digital sensors and communication protocols often transmit data in binary format. Understanding binary-to-decimal conversion is fundamental to working with low-level data. Create a function `binary_to_decimal` that takes a binary string (e.g., '1011') and returns its decimal integer value (11). The rightmost digit represents 2⁰=1, the next is 2¹=2, then 2²=4, etc. Process from right to left: for each '1' digit, add 2^position to your result. '1011' = 1×1 + 1×2 + 0×4 + 1×8 = 11.",
-                hint: "Loop through reversed(binary). For each '1', add 2**power to result. Increment power each iteration.",
-                starterCode: `def binary_to_decimal(binary: str) -> int:
-    # Digital Communication: Decode binary signals
-    # '1011' = 8+0+2+1 = 11 in decimal
+                title: "Decimal to Binary",
+                description: "Create a function `to_binary` that converts a positive integer `n` to its binary string representation (without using `bin()`).",
+                hint: "While n > 0: `bit = n % 2`, `result = str(bit) + result`, `n //= 2`. Handle n=0 case.",
+                starterCode: `def to_binary(n: int) -> str:
+    # Your code here
     pass`,
-                solutionCode: `def binary_to_decimal(binary: str) -> int:
-    """Convert binary string to decimal integer."""
-    result = 0
-    power = 0
-    for digit in reversed(binary):
-        if digit == '1':
-            result += 2 ** power
-        power += 1
+                solutionCode: `def to_binary(n: int) -> str:
+    """Convert integer to binary string."""
+    if n == 0:
+        return "0"
+    result = ""
+    while n > 0:
+        bit = n % 2
+        result = str(bit) + result
+        n //= 2
     return result`,
                 testCases: [
-                    { input: "binary_to_decimal('1011')", expected: "11" },
-                    { input: "binary_to_decimal('1111')", expected: "15" },
-                    { input: "binary_to_decimal('10000')", expected: "16" },
-                    { input: "binary_to_decimal('0')", expected: "0" },
-                    { input: "binary_to_decimal('11111111')", expected: "255" }
+                    { input: "to_binary(10)", expected: "'1010'" },
+                    { input: "to_binary(0)", expected: "'0'" },
+                    { input: "to_binary(255)", expected: "'11111111'" },
+                    { input: "to_binary(1)", expected: "'1'" },
+                    { input: "to_binary(16)", expected: "'10000'" }
                 ]
             },
         ],
@@ -1693,12 +1600,11 @@ def find_max(numbers: list) -> int:
             {
                 id: "063",
                 number: 1,
-                title: "📊 Neural Recording Aggregator",
-                description: "Electrophysiology experiments generate lists of voltage readings from multiple neurons. To analyze overall brain activity, researchers need to sum these individual readings. Create a function `sum_list` that takes a list of numbers and returns their total sum. Implement this WITHOUT using Python's built-in `sum()` function — use a loop with an accumulator variable instead. For example, [1, 2, 3] should return 6. Understanding this pattern is fundamental to processing scientific data.",
-                hint: "Initialize total = 0. Loop through each number in the list, adding it to total. Return total.",
+                title: "Sum List",
+                description: "Create a function `sum_list` that returns the sum of all numbers in the list (without using `sum()`).",
+                hint: "Initialize `total = 0`. Loop and add each number.",
                 starterCode: `def sum_list(numbers: list) -> float:
-    # Neural Signal Processing: Sum all readings
-    # [1, 2, 3] -> 6 (don't use built-in sum())
+    # Your code here
     pass`,
                 solutionCode: `def sum_list(numbers: list) -> float:
     """Sum all numbers in a list."""
@@ -1717,12 +1623,11 @@ def find_max(numbers: list) -> int:
             {
                 id: "064",
                 number: 2,
-                title: "🧠 Experiment Average Calculator",
-                description: "Statistical analysis of experimental data often starts with calculating the mean (average) value. Your behavioral experiment recorded reaction times across multiple trials, and you need the average performance. Create a function `average` that takes a list of numbers and returns their arithmetic mean (sum divided by count). Handle the edge case: return 0 for an empty list to avoid division by zero errors.",
-                hint: "Calculate sum of all numbers, divide by len(numbers). Check for empty list first!",
+                title: "Average",
+                description: "Create a function `average` that returns the arithmetic mean of numbers in the list. Check for empty list.",
+                hint: "Sum divided by length. Return 0 if empty.",
                 starterCode: `def average(numbers: list) -> float:
-    # Statistical Analysis: Calculate mean value
-    # [1, 2, 3] -> 2.0 (sum/count = 6/3)
+    # Your code here
     pass`,
                 solutionCode: `def average(numbers: list) -> float:
     """Calculate average of numbers in a list."""
@@ -1743,12 +1648,11 @@ def find_max(numbers: list) -> int:
             {
                 id: "065",
                 number: 3,
-                title: "📈 Peak Detector",
-                description: "In signal processing, finding the maximum value (peak) is crucial for identifying significant events. Your neural recording data contains voltage spikes, and you need to find the highest spike amplitude. Create a function `find_max` that takes a list of numbers and returns the largest value. Implement this WITHOUT using Python's built-in `max()` function. Track the 'current maximum' as you iterate through the list.",
-                hint: "Assume first element is largest. Loop through rest, update largest if you find something bigger.",
+                title: "Find Max",
+                description: "Create a function `find_max` that returns the largest number in the list (without using `max()`).",
+                hint: "Initialize `largest` with first element, loop and update if larger found.",
                 starterCode: `def find_max(numbers: list) -> float:
-    # Signal Processing: Find peak value
-    # Don't use built-in max()
+    # Your code here
     pass`,
                 solutionCode: `def find_max(numbers: list) -> float:
     """Find the maximum value in a list."""
@@ -1770,12 +1674,11 @@ def find_max(numbers: list) -> int:
             {
                 id: "066",
                 number: 4,
-                title: "📉 Baseline Finder",
-                description: "The minimum value in experimental data often represents the baseline or resting state. Before analyzing spikes, researchers need to know this baseline level to measure relative changes. Create a function `find_min` that takes a list of numbers and returns the smallest value. Implement this WITHOUT using Python's built-in `min()` function. Similar to finding max, but track the 'current minimum' instead.",
-                hint: "Assume first element is smallest. Loop through rest, update smallest if you find something smaller.",
+                title: "Find Min",
+                description: "Create a function `find_min` that returns the smallest number in the list (without using `min()`).",
+                hint: "Initialize `smallest` with first element, loop and update if smaller found.",
                 starterCode: `def find_min(numbers: list) -> float:
-    # Baseline Detection: Find minimum value
-    # Don't use built-in min()
+    # Your code here
     pass`,
                 solutionCode: `def find_min(numbers: list) -> float:
     """Find the minimum value in a list."""
@@ -1797,12 +1700,11 @@ def find_max(numbers: list) -> int:
             {
                 id: "067",
                 number: 5,
-                title: "🔢 Nucleotide Frequency Counter",
-                description: "In genomics, counting the frequency of specific nucleotides or codons in a sequence is fundamental analysis. Your bioinformatics pipeline processes DNA sequences represented as lists of bases. Create a function `count_item` that takes a list and a target item, returning how many times that target appears in the list. This generalizes to counting any element type — strings, numbers, or any comparable object.",
-                hint: "Initialize count = 0. Loop through items, increment count when item matches target.",
+                title: "Count Occurrences",
+                description: "Create a function `count_item` that returns how many times `target` appears in `items`.",
+                hint: "Loop and increment counter when match found.",
                 starterCode: `def count_item(items: list, target) -> int:
-    # Frequency Analysis: Count occurrences
-    # [1, 2, 2, 3] with target 2 -> 2 occurrences
+    # Your code here
     pass`,
                 solutionCode: `def count_item(items: list, target) -> int:
     """Count occurrences of target in list."""
@@ -1822,12 +1724,11 @@ def find_max(numbers: list) -> int:
             {
                 id: "068",
                 number: 6,
-                title: "📋 Endpoint Extractor",
-                description: "Time series data analysis often focuses on the starting and ending values to measure overall change. Your experiment tracking system needs to quickly extract these boundary values. Create a function `first_and_last` that takes a list and returns a new list containing only the first and last elements. Handle edge cases: for a single-element list, return that element in a list; for an empty list, return an empty list.",
-                hint: "Use indexing: items[0] for first, items[-1] for last. Check list length for edge cases.",
+                title: "First and Last",
+                description: "Create a function `first_and_last` that returns a list containing only the first and last elements.",
+                hint: "Return `[items[0], items[-1]]`.",
                 starterCode: `def first_and_last(items: list) -> list:
-    # Time Series Analysis: Extract endpoints
-    # [1, 2, 3, 4] -> [1, 4]
+    # Your code here
     pass`,
                 solutionCode: `def first_and_last(items: list) -> list:
     """Return first and last elements of a list."""
@@ -1845,12 +1746,11 @@ def find_max(numbers: list) -> int:
             {
                 id: "069",
                 number: 7,
-                title: "🔄 Data Sequence Reverser",
-                description: "Sometimes data needs to be processed in reverse chronological order. DNA sequences are read in both directions, and time series may need reverse analysis. Create a function `reverse_list` that takes a list and returns a new list with elements in reverse order. Implement this WITHOUT using the built-in `.reverse()` method or `[::-1]` slicing. Build understanding by iterating from back to front.",
-                hint: "Create empty result list. Loop from len(items)-1 down to 0, appending each item to result.",
+                title: "Reverse List",
+                description: "Create a function `reverse_list` that returns a new list with elements in reverse order (without using `.reverse()` or `[::-1]`).",
+                hint: "Iterate backwards from `len(items)-1` to 0.",
                 starterCode: `def reverse_list(items: list) -> list:
-    # Sequence Analysis: Reverse order manually
-    # [1, 2, 3] -> [3, 2, 1] (no [::-1] or .reverse())
+    # Your code here
     pass`,
                 solutionCode: `def reverse_list(items: list) -> list:
     """Reverse a list without built-in methods."""
@@ -1869,12 +1769,11 @@ def find_max(numbers: list) -> int:
             {
                 id: "070",
                 number: 8,
-                title: "🔍 Element Presence Check",
-                description: "Before processing data, you often need to verify that a specific value exists in your dataset. This membership check is fundamental to data validation and search algorithms. Create a function `contains` that takes a list and a target item, returning `True` if the target exists in the list, `False` otherwise. Implement this WITHOUT using Python's `in` operator to understand the underlying linear search algorithm.",
-                hint: "Loop through items. If any matches target, return True immediately. If loop completes without finding, return False.",
+                title: "Contains",
+                description: "Create a function `contains` that returns True if `target` is in `items` (without using `in`).",
+                hint: "Loop and return True if match found.",
                 starterCode: `def contains(items: list, target) -> bool:
-    # Search Algorithm: Is target in list?
-    # Implement without using 'in' operator
+    # Your code here
     pass`,
                 solutionCode: `def contains(items: list, target) -> bool:
     """Check if target is in list without using 'in'."""
@@ -1893,12 +1792,11 @@ def find_max(numbers: list) -> int:
             {
                 id: "071",
                 number: 9,
-                title: "📍 Index Locator",
-                description: "Beyond knowing if an element exists, you often need to know WHERE it is. Locating the position of an element enables targeted data manipulation. Create a function `find_index` that takes a list and a target value, returning the index of the first occurrence. If the target is not found, return -1 (a common convention for 'not found'). This implements a linear search with position tracking.",
-                hint: "Use range(len(items)) to get indices. If items[i] matches target, return i. After loop, return -1.",
+                title: "Find Index",
+                description: "Create a function `find_index` that returns the index of the first occurrence of `target` (or -1 if not found).",
+                hint: "Use `range(len(items))`.",
                 starterCode: `def find_index(items: list, target) -> int:
-    # Location Query: Find position of target
-    # Return -1 if not found (standard convention)
+    # Your code here
     pass`,
                 solutionCode: `def find_index(items: list, target) -> int:
     """Find index of first occurrence of target."""
@@ -1917,12 +1815,11 @@ def find_max(numbers: list) -> int:
             {
                 id: "072",
                 number: 10,
-                title: "🏆 Final Challenge: Positive Validation",
-                description: "Data quality checks often require verifying that ALL values meet certain criteria. In physiology experiments, negative readings might indicate sensor errors. Create a function `all_positive` that takes a list of numbers and returns `True` if EVERY number is positive (greater than 0), and `False` if any number is zero or negative. An empty list should return `True` (vacuously true — there are no non-positive numbers). This implements the 'all' quantifier logic.",
-                hint: "Loop through numbers. If any num <= 0, return False immediately. If loop completes, return True.",
+                title: "All Positive",
+                description: "Create a function `all_positive` that returns True if all numbers in the list are positive (> 0). Empty list returns True.",
+                hint: "If list is empty, return True. Return False if any number is <= 0.",
                 starterCode: `def all_positive(numbers: list) -> bool:
-    # Data Quality Check: All values must be positive
-    # [1, 2, 3] -> True, [1, -2, 3] -> False
+    # Your code here
     pass`,
                 solutionCode: `def all_positive(numbers: list) -> bool:
     """Check if all numbers are positive."""
@@ -1974,12 +1871,11 @@ def double_all(numbers: list) -> list:
             {
                 id: "073",
                 number: 1,
-                title: "✅ Signal Filter: Positive Values",
-                description: "In neural signal processing, negative voltage readings often indicate noise or artifacts that should be excluded from analysis. Your preprocessing pipeline needs to filter these out. Create a function `filter_positive` that takes a list of numbers and returns a NEW list containing only the positive values (greater than 0). This is your first 'filter pattern': create an empty result list, loop through the original, and append only items meeting your condition.",
-                hint: "Create empty result list. For each num, if num > 0, append to result. Return result.",
+                title: "Filter Positive",
+                description: "Create a function `filter_positive` that returns a new list containing only the positive numbers (greater than 0) from the input list.",
+                hint: "Create result list. Loop through numbers, if num > 0, append to result.",
                 starterCode: `def filter_positive(numbers: list) -> list:
-    # Signal Processing: Extract only positive readings
-    # [1, -1, 2, -2] -> [1, 2]
+    # Your code here
     pass`,
                 solutionCode: `def filter_positive(numbers: list) -> list:
     """Filter to only positive numbers."""
@@ -1999,12 +1895,11 @@ def double_all(numbers: list) -> list:
             {
                 id: "074",
                 number: 2,
-                title: "🔢 Even Sample Selector",
-                description: "In experimental designs, you might want to analyze only even-numbered trial results or every second data point. This downsampling technique is common in signal processing. Create a function `filter_even` that takes a list of integers and returns a NEW list containing only the even numbers. Use the modulo operator: a number is even if number % 2 equals 0.",
-                hint: "For each num, check if num % 2 == 0. If true, append to result list.",
+                title: "Filter Even",
+                description: "Create a function `filter_even` that returns a new list containing only the even numbers from the input list.",
+                hint: "If `num % 2 == 0`, append to result.",
                 starterCode: `def filter_even(numbers: list) -> list:
-    # Downsampling: Keep only even values
-    # [1, 2, 3, 4] -> [2, 4]
+    # Your code here
     pass`,
                 solutionCode: `def filter_even(numbers: list) -> list:
     """Filter to only even numbers."""
@@ -2024,12 +1919,11 @@ def double_all(numbers: list) -> list:
             {
                 id: "075",
                 number: 3,
-                title: "×² Signal Amplifier",
-                description: "In audio and signal processing, amplification doubles the signal strength. Your audio engineering software needs to apply a 2x gain to all samples. Create a function `double_all` that takes a list of numbers and returns a NEW list where each number is multiplied by 2. This is the 'map pattern': create an empty result, loop through original, and append a TRANSFORMED version of each item.",
-                hint: "Create empty result. For each num, append num * 2 to result.",
+                title: "Double All",
+                description: "Create a function `double_all` that returns a new list where each number from the input list is multiplied by 2.",
+                hint: "Loop through numbers, append `num * 2` to result.",
                 starterCode: `def double_all(numbers: list) -> list:
-    # Signal Amplification: Double each value
-    # [1, 2, 3] -> [2, 4, 6]
+    # Your code here
     pass`,
                 solutionCode: `def double_all(numbers: list) -> list:
     """Double each number in the list."""
@@ -2048,12 +1942,11 @@ def double_all(numbers: list) -> list:
             {
                 id: "076",
                 number: 4,
-                title: "📊 Variance Preparation",
-                description: "Calculating statistical variance requires squaring each deviation from the mean. Your statistics library needs a helper function that squares all values. Create a function `square_all` that takes a list of numbers and returns a NEW list where each number is raised to the power of 2. Note that squaring negative numbers produces positive results: (-2)² = 4.",
-                hint: "For each num, append num ** 2 (or num * num) to result list.",
+                title: "Square All",
+                description: "Create a function `square_all` that returns a new list where each number from the input list is squared.",
+                hint: "Append `num ** 2` to result.",
                 starterCode: `def square_all(numbers: list) -> list:
-    # Statistics Helper: Square each value
-    # [2, 3, 4] -> [4, 9, 16]
+    # Your code here
     pass`,
                 solutionCode: `def square_all(numbers: list) -> list:
     """Square each number in the list."""
@@ -2072,12 +1965,11 @@ def double_all(numbers: list) -> list:
             {
                 id: "077",
                 number: 5,
-                title: "📝 Significant Word Filter",
-                description: "In natural language processing, short words like 'a', 'an', 'the' are often filtered out as 'stop words' to focus on meaningful content. Your text analysis pipeline needs to keep only words meeting a minimum length threshold. Create a function `filter_long_words` that takes a list of strings and a `min_length` integer, returning only strings whose length is greater than or equal to `min_length`.",
-                hint: "For each word, check if len(word) >= min_length. If true, append to result.",
+                title: "Filter Long Words",
+                description: "Create a function `filter_long_words` that returns a list of words from the input that are at least `min_length` characters long.",
+                hint: "If `len(word) >= min_length`, keep it.",
                 starterCode: `def filter_long_words(words: list, min_length: int) -> list:
-    # NLP Preprocessing: Remove short words
-    # ['a', 'big', 'word'] with min_length 3 -> ['big', 'word']
+    # Your code here
     pass`,
                 solutionCode: `def filter_long_words(words: list, min_length: int) -> list:
     """Filter words by minimum length."""
@@ -2097,12 +1989,11 @@ def double_all(numbers: list) -> list:
             {
                 id: "078",
                 number: 6,
-                title: "🧬 Unique Identifier Extractor",
-                description: "Databases require unique identifiers, and duplicate entries can corrupt data integrity. Your data cleaning pipeline needs to remove duplicate values while preserving the original order of first occurrences. Create a function `remove_duplicates` that takes a list and returns a NEW list containing only unique items in their original order. For [1, 2, 2, 3, 1], the output should be [1, 2, 3].",
-                hint: "Track 'seen' items in a separate list. Only append to result if item hasn't been seen before.",
+                title: "Remove Duplicates",
+                description: "Create a function `remove_duplicates` that returns a new list with duplicate items removed, while preserving the original order.",
+                hint: "Use a `seen` list. If item not in seen, append to seen and result.",
                 starterCode: `def remove_duplicates(items: list) -> list:
-    # Data Cleaning: Keep only unique entries
-    # [1, 2, 2, 3, 1] -> [1, 2, 3] (preserving order)
+    # Your code here
     pass`,
                 solutionCode: `def remove_duplicates(items: list) -> list:
     """Remove duplicates while preserving order."""
@@ -2124,12 +2015,11 @@ def double_all(numbers: list) -> list:
             {
                 id: "079",
                 number: 7,
-                title: "📢 Case Normalizer",
-                description: "Text comparison often requires case normalization so that 'PYTHON', 'Python', and 'python' are treated identically. Your search engine preprocessor needs to convert all text to uppercase for consistent indexing. Create a function `uppercase_all` that takes a list of strings and returns a NEW list where every string has been converted to uppercase using the .upper() method.",
-                hint: "For each word, append word.upper() to result list.",
+                title: "Uppercase All",
+                description: "Create a function `uppercase_all` that returns a new list with all strings converted to uppercase.",
+                hint: "Append `word.upper()` to result.",
                 starterCode: `def uppercase_all(words: list) -> list:
-    # Text Normalization: Convert all to uppercase
-    # ['hello', 'world'] -> ['HELLO', 'WORLD']
+    # Your code here
     pass`,
                 solutionCode: `def uppercase_all(words: list) -> list:
     """Convert all strings to uppercase."""
@@ -2148,12 +2038,11 @@ def double_all(numbers: list) -> list:
             {
                 id: "080",
                 number: 8,
-                title: "📏 Word Length Analyzer",
-                description: "Text complexity analysis examines word length distributions. Academic papers tend to use longer words than casual writing. Your readability analyzer needs to extract the length of each word for statistical analysis. Create a function `get_lengths` that takes a list of strings and returns a NEW list containing the length of each corresponding string.",
-                hint: "For each word, append len(word) to result list.",
+                title: "Get Lengths",
+                description: "Create a function `get_lengths` that returns a new list containing the length of each string in the input list.",
+                hint: "Append `len(word)` to result.",
                 starterCode: `def get_lengths(words: list) -> list:
-    # Readability Analysis: Get length of each word
-    # ['a', 'bb', 'ccc'] -> [1, 2, 3]
+    # Your code here
     pass`,
                 solutionCode: `def get_lengths(words: list) -> list:
     """Get length of each string in list."""
@@ -2172,12 +2061,11 @@ def double_all(numbers: list) -> list:
             {
                 id: "081",
                 number: 9,
-                title: "🔀 Alternating Sampler",
-                description: "In audio processing, downsampling reduces file size by keeping only every Nth sample. A simple version keeps elements at even indices (0, 2, 4, ...) and discards odd-indexed elements. Create a function `filter_by_index` that takes a list and returns a NEW list containing only elements whose index is even. Use range with a step of 2 to efficiently iterate through even indices.",
-                hint: "Use range(0, len(items), 2) to iterate through even indices: 0, 2, 4, etc.",
+                title: "Filter by Index",
+                description: "Create a function `filter_by_index` that returns a new list containing only elements at even indices (0, 2, 4...).",
+                hint: "Use `range(0, len(items), 2)`.",
                 starterCode: `def filter_by_index(items: list) -> list:
-    # Audio Downsampling: Keep every other element
-    # [0, 1, 2, 3, 4] -> [0, 2, 4] (indices 0, 2, 4)
+    # Your code here
     pass`,
                 solutionCode: `def filter_by_index(items: list) -> list:
     """Return elements at even indices."""
@@ -2196,12 +2084,11 @@ def double_all(numbers: list) -> list:
             {
                 id: "082",
                 number: 10,
-                title: "🏆 Final Challenge: Cumulative Sum Tracker",
-                description: "Financial applications track cumulative totals to show running balances. Stock portfolios display cumulative returns, and bank statements show running balances. Create a function `running_sum` that takes a list of numbers and returns a NEW list where each element is the cumulative sum up to that point. For [1, 2, 3], the output is [1, 3, 6] (first element stays 1, second is 1+2=3, third is 1+2+3=6). Track a running total and append it after each addition.",
-                hint: "Initialize total = 0. For each num: total += num, then append total to result.",
+                title: "Running Sum",
+                description: "Create a function `running_sum` that returns a new list where each element is the cumulative sum of numbers up to that point.",
+                hint: "Maintain a `total` variable. For each number, add to `total` and append `total` to result.",
                 starterCode: `def running_sum(numbers: list) -> list:
-    # Financial Tracking: Cumulative balance
-    # [1, 2, 3] -> [1, 3, 6] (running totals)
+    # Your code here
     pass`,
                 solutionCode: `def running_sum(numbers: list) -> list:
     """Calculate running sum of list."""
@@ -2258,12 +2145,11 @@ def get_values(data: dict, keys: list) -> list:
             {
                 id: "083",
                 number: 1,
-                title: "📊 Character Frequency Analyzer",
-                description: "Text analysis often starts with counting character frequencies — this helps identify language patterns, detect encryption, and analyze writing styles. Create a function `count_chars` that takes a string and returns a dictionary where each character is a key and its count is the value. For 'hello', you'd get {'h': 1, 'e': 1, 'l': 2, 'o': 1}. This is your first encounter with building a dictionary: check if the key exists before incrementing.",
-                hint: "If char in counts, increment counts[char]. Otherwise, set counts[char] = 1.",
+                title: "Count Characters",
+                description: "Create a function `count_chars` that returns a dictionary counting the frequency of each character in `text`.",
+                hint: "Loop through chars. If char in dict, increment count; otherwise set to 1.",
                 starterCode: `def count_chars(text: str) -> dict:
-    # Text Analysis: Count each character's frequency
-    # 'hello' -> {'h': 1, 'e': 1, 'l': 2, 'o': 1}
+    # Your code here
     pass`,
                 solutionCode: `def count_chars(text: str) -> dict:
     """Count character frequencies."""
@@ -2285,12 +2171,11 @@ def get_values(data: dict, keys: list) -> list:
             {
                 id: "084",
                 number: 2,
-                title: "📝 Word Frequency Counter",
-                description: "Natural language processing relies heavily on word frequency analysis to identify document topics and writing patterns. Create a function `count_words` that takes a sentence and returns a dictionary counting each word's occurrences. Convert to lowercase first to ensure 'Hello' and 'hello' are counted together. Use .split() to separate words. For 'Hello world hello', return {'hello': 2, 'world': 1}.",
-                hint: "First: sentence.lower().split(). Then count each word like you counted characters.",
+                title: "Count Words",
+                description: "Create a function `count_words` that returns a dictionary counting the frequency of each word in `sentence` (case-insensitive).",
+                hint: "Lowercase and split sentence. Count words.",
                 starterCode: `def count_words(sentence: str) -> dict:
-    # NLP Analysis: Count word frequencies
-    # 'Hello world hello' -> {'hello': 2, 'world': 1}
+    # Your code here
     pass`,
                 solutionCode: `def count_words(sentence: str) -> dict:
     """Count word frequencies in a sentence."""
@@ -2313,12 +2198,11 @@ def get_values(data: dict, keys: list) -> list:
             {
                 id: "085",
                 number: 3,
-                title: "🔄 Dictionary Inverter",
-                description: "Sometimes you need to look up data in the opposite direction — finding a key by its value. Inverting a dictionary swaps all keys and values. Create a function `invert_dict` that takes a dictionary and returns a NEW dictionary where each original value becomes a key and each original key becomes its value. For {'a': 1, 'b': 2}, return {1: 'a', 2: 'b'}. Note: this assumes values are unique.",
-                hint: "Loop through d.items(). For each (key, value) pair, set result[value] = key.",
+                title: "Invert Dictionary",
+                description: "Create a function `invert_dict` that returns a new dictionary where keys and values are swapped.",
+                hint: "Loop through `d.items()`, set `result[value] = key`.",
                 starterCode: `def invert_dict(d: dict) -> dict:
-    # Data Transformation: Swap keys and values
-    # {'a': 1, 'b': 2} -> {1: 'a', 2: 'b'}
+    # Your code here
     pass`,
                 solutionCode: `def invert_dict(d: dict) -> dict:
     """Swap keys and values in dictionary."""
@@ -2337,12 +2221,11 @@ def get_values(data: dict, keys: list) -> list:
             {
                 id: "086",
                 number: 4,
-                title: "🔗 Configuration Merger",
-                description: "Applications often merge configuration from multiple sources — default settings, user preferences, and command-line overrides. Later sources take precedence over earlier ones. Create a function `merge_dicts` that takes two dictionaries and returns a NEW dictionary containing all key-value pairs from both. If a key exists in both, use the value from the SECOND dictionary (it overwrites the first).",
-                hint: "Copy all from d1 first, then copy all from d2. d2 values will overwrite any conflicts.",
+                title: "Merge Dictionaries",
+                description: "Create a function `merge_dicts` that returns a new dictionary merging `d1` and `d2`, with `d2` values taking precedence.",
+                hint: "Copy `d1` then update with `d2`.",
                 starterCode: `def merge_dicts(d1: dict, d2: dict) -> dict:
-    # Configuration Management: Merge with precedence
-    # {'a': 1} + {'a': 2} -> {'a': 2} (second wins)
+    # Your code here
     pass`,
                 solutionCode: `def merge_dicts(d1: dict, d2: dict) -> dict:
     """Merge two dictionaries, second takes precedence."""
@@ -2363,12 +2246,11 @@ def get_values(data: dict, keys: list) -> list:
             {
                 id: "087",
                 number: 5,
-                title: "📊 Parallel List Zipper",
-                description: "Data often arrives in parallel lists — one list of column names and another of values. Combining them into a dictionary creates a structured record. Create a function `dict_from_lists` that takes a list of keys and a list of values and returns a dictionary pairing them positionally. For keys ['name', 'age'] and values ['Alice', 30], return {'name': 'Alice', 'age': 30}. Assume both lists have equal length.",
-                hint: "Use range(len(keys)) to iterate through indices. Set result[keys[i]] = values[i].",
+                title: "Dict from Lists",
+                description: "Create a function `dict_from_lists` that returns a dictionary where keys come from `keys` list and values from `values` list.",
+                hint: "Loop by index, pair `keys[i]` with `values[i]`.",
                 starterCode: `def dict_from_lists(keys: list, values: list) -> dict:
-    # Data Engineering: Zip parallel lists
-    # ['a', 'b'] + [1, 2] -> {'a': 1, 'b': 2}
+    # Your code here
     pass`,
                 solutionCode: `def dict_from_lists(keys: list, values: list) -> dict:
     """Create dictionary from parallel lists."""
@@ -2387,12 +2269,11 @@ def get_values(data: dict, keys: list) -> list:
             {
                 id: "088",
                 number: 6,
-                title: "📉 Threshold Filter",
-                description: "Data analysis often requires filtering by numeric thresholds — keeping only values above a minimum or below a maximum. Create a function `filter_dict` that takes a dictionary with numeric values and a minimum threshold, returning a NEW dictionary containing only entries where the value is greater than or equal to the minimum. For {'a': 1, 'b': 5, 'c': 3} with min 3, return {'b': 5, 'c': 3}.",
-                hint: "Loop through d.items(). If value >= min_value, add to result dictionary.",
+                title: "Filter Dictionary",
+                description: "Create a function `filter_dict` that returns a new dictionary containing only entries where the value is at least `min_value`.",
+                hint: "If `value >= min_value`, add to result.",
                 starterCode: `def filter_dict(d: dict, min_value: float) -> dict:
-    # Data Filtering: Keep entries above threshold
-    # {'a': 1, 'b': 5} with min 3 -> {'b': 5}
+    # Your code here
     pass`,
                 solutionCode: `def filter_dict(d: dict, min_value: float) -> dict:
     """Filter dictionary by minimum value."""
@@ -2412,12 +2293,11 @@ def get_values(data: dict, keys: list) -> list:
             {
                 id: "089",
                 number: 7,
-                title: "🛡️ Safe Value Accessor",
-                description: "Accessing a missing dictionary key with d[key] raises a KeyError, crashing your program. Defensive programming requires graceful handling of missing keys. Create a function `get_value_safely` that takes a dictionary, a key, and a default value. Return the value if the key exists; otherwise, return the default. This pattern is so common that Python provides d.get(key, default) — but implement it yourself to understand the logic.",
-                hint: "Check if key in d. If yes, return d[key]. Otherwise, return default.",
+                title: "Safe Value Access",
+                description: "Create a function `get_value_safely` that returns the value for `key` in `d`, or `default` if the key is missing.",
+                hint: "If `key` in `d`, return `d[key]`, else return `default`.",
                 starterCode: `def get_value_safely(d: dict, key: str, default):
-    # Defensive Programming: Avoid KeyError crashes
-    # {'a': 1}.get('b', 0) -> 0 (key missing, use default)
+    # Your code here
     pass`,
                 solutionCode: `def get_value_safely(d: dict, key: str, default):
     """Get value with fallback default."""
@@ -2435,12 +2315,11 @@ def get_values(data: dict, keys: list) -> list:
             {
                 id: "090",
                 number: 8,
-                title: "📦 Category Grouper",
-                description: "Data often needs grouping by some attribute — customers by region, products by category, or words by length. Create a function `group_by_length` that takes a list of strings and returns a dictionary where keys are word lengths and values are lists of words with that length. For ['a', 'bb', 'c'], return {1: ['a', 'c'], 2: ['bb']}. This pattern (grouping into lists) requires initializing empty lists for new keys.",
-                hint: "If length not in result, create result[length] = []. Then append word to result[length].",
+                title: "Group by Length",
+                description: "Create a function `group_by_length` that returns a dictionary grouping words by their length (len -> [words]).",
+                hint: "Initialize list if key missing, then append word.",
                 starterCode: `def group_by_length(words: list) -> dict:
-    # Data Grouping: Organize by category
-    # ['a', 'bb', 'c'] -> {1: ['a', 'c'], 2: ['bb']}
+    # Your code here
     pass`,
                 solutionCode: `def group_by_length(words: list) -> dict:
     """Group words by their length."""
@@ -2462,12 +2341,11 @@ def get_values(data: dict, keys: list) -> list:
             {
                 id: "091",
                 number: 9,
-                title: "🏆 Mode Finder",
-                description: "In statistics, the mode is the most frequently occurring value. Finding it requires first counting frequencies, then finding the maximum count. Create a function `most_common` that takes a string and returns the character that appears most often. For 'banana', 'a' appears 3 times (most), so return 'a'. This combines dictionary counting with finding a maximum value.",
-                hint: "First count all characters in a dict. Then loop through dict to find char with highest count.",
+                title: "Most Common Character",
+                description: "Create a function `most_common` that returns the character with the highest frequency in `text`.",
+                hint: "Count chars, then find key with max value.",
                 starterCode: `def most_common(text: str) -> str:
-    # Statistical Analysis: Find the mode (most frequent)
-    # 'banana' -> 'a' (appears 3 times)
+    # Your code here
     pass`,
                 solutionCode: `def most_common(text: str) -> str:
     """Find the most frequently occurring character."""
@@ -2495,12 +2373,11 @@ def get_values(data: dict, keys: list) -> list:
             {
                 id: "092",
                 number: 10,
-                title: "🏆 Final Challenge: Value Aggregator",
-                description: "Dictionaries often store numeric data that needs aggregation — summing sales by region, totaling scores by user, or calculating budget totals. Create a function `sum_values` that takes a dictionary with numeric values and returns the sum of ALL values. Ignore the keys entirely. For {'math': 90, 'science': 85}, return 175. Use .values() to iterate through just the values.",
-                hint: "Initialize total = 0. Loop through d.values(), adding each to total.",
+                title: "Sum Values",
+                description: "Create a function `sum_values` that returns the sum of all values in the dictionary.",
+                hint: "Iterate `d.values()` and sum them.",
                 starterCode: `def sum_values(d: dict) -> float:
-    # Data Aggregation: Total all numeric values
-    # {'a': 10, 'b': 20} -> 30
+    # Your code here
     pass`,
                 solutionCode: `def sum_values(d: dict) -> float:
     """Sum all values in a dictionary."""
@@ -2550,12 +2427,11 @@ def extract_numbers(text: str) -> str:
             {
                 id: "093",
                 number: 1,
-                title: "🔄 Palindrome Detector",
-                description: "Palindromes are sequences that read the same forwards and backwards — they appear in genetics (DNA restriction sites), cryptography, and wordplay. Create a function `is_palindrome` that takes a string and returns `True` if it's a palindrome. The catch: ignore case and spaces. 'Racecar' is a palindrome, as is 'A man a plan a canal Panama'. Use .lower() and .replace(' ', '') to clean, then compare to reversed [::-1].",
-                hint: "Clean string: text.lower().replace(' ', ''). Compare cleaned == cleaned[::-1].",
+                title: "Palindrome Detector",
+                description: "Create a function `is_palindrome` that returns `True` if `text` is a palindrome (reading the same forwards and backwards), ignoring case and spaces.",
+                hint: "Clean string (lower case, remove spaces), then compare with its reverse.",
                 starterCode: `def is_palindrome(text: str) -> bool:
-    # Pattern Recognition: Same forwards and backwards?
-    # 'Racecar' -> True (ignore case)
+    # Your code here
     pass`,
                 solutionCode: `def is_palindrome(text: str) -> bool:
     """Check if text is a palindrome."""
@@ -2572,12 +2448,11 @@ def extract_numbers(text: str) -> str:
             {
                 id: "094",
                 number: 2,
-                title: "🔇 Vowel Eliminator",
-                description: "Vowel removal creates consonant-only representations used in certain encoding schemes and text compression. Some writing systems (like Hebrew) omit vowels entirely. Create a function `remove_vowels` that takes a string and returns it with all vowels (a, e, i, o, u) removed. Handle both uppercase and lowercase vowels. Loop through each character and build a result string containing only non-vowels.",
-                hint: "Define vowels = 'aeiouAEIOU'. For each char, if char not in vowels, add to result.",
+                title: "Remove Vowels",
+                description: "Create a function `remove_vowels` that returns a new string with all vowels (a, e, i, o, u) removed from `text`.",
+                hint: "Iterate chars, append to result if not a vowel.",
                 starterCode: `def remove_vowels(text: str) -> str:
-    # Text Transformation: Strip vowels
-    # 'Hello' -> 'Hll'
+    # Your code here
     pass`,
                 solutionCode: `def remove_vowels(text: str) -> str:
     """Remove all vowels from text."""
@@ -2598,12 +2473,11 @@ def extract_numbers(text: str) -> str:
             {
                 id: "095",
                 number: 3,
-                title: "📝 Title Case Converter",
-                description: "Professional documents require proper capitalization — book titles, headings, and names all follow title case conventions. Create a function `capitalize_words` that takes a sentence and returns it with the first letter of each word capitalized. Split the sentence into words, use .capitalize() on each (which lowercases the rest), then join them back with spaces.",
-                hint: "Split into words. For each word, append word.capitalize() to result list. Join with ' '.join().",
+                title: "Title Case",
+                description: "Create a function `capitalize_words` that returns `sentence` with the first letter of each word capitalized.",
+                hint: "Split words, capitalize each, then join.",
                 starterCode: `def capitalize_words(sentence: str) -> str:
-    # Document Formatting: Title case
-    # 'hello world' -> 'Hello World'
+    # Your code here
     pass`,
                 solutionCode: `def capitalize_words(sentence: str) -> str:
     """Capitalize first letter of each word."""
@@ -2623,12 +2497,11 @@ def extract_numbers(text: str) -> str:
             {
                 id: "096",
                 number: 4,
-                title: "🔢 Numeric Extractor",
-                description: "Data often arrives in mixed formats — phone numbers with dashes, prices with currency symbols, dates with slashes. Extracting just the digits is essential for parsing. Create a function `extract_digits` that takes a string and returns a string containing ONLY the digit characters. For 'Price: $19.99', return '1999'. Use .isdigit() to test each character.",
-                hint: "Loop through chars. If char.isdigit(), add it to result string.",
+                title: "Extract Digits",
+                description: "Create a function `extract_digits` that returns a string containing only the numeric digits from `text`.",
+                hint: "If `char.isdigit()`, append to result.",
                 starterCode: `def extract_digits(text: str) -> str:
-    # Data Parsing: Extract only numbers
-    # 'Price: $19.99' -> '1999'
+    # Your code here
     pass`,
                 solutionCode: `def extract_digits(text: str) -> str:
     """Extract only digits from text."""
@@ -2648,12 +2521,11 @@ def extract_numbers(text: str) -> str:
             {
                 id: "097",
                 number: 5,
-                title: "🔒 Credit Card Masker",
-                description: "Security best practices require masking sensitive data in logs and displays. Credit card numbers show only the last 4 digits; the rest are replaced with asterisks. Create a function `mask_string` that takes a string and returns it with all but the last 4 characters replaced with '*'. If the string has 4 or fewer characters, return all asterisks (full masking for short sensitive data).",
-                hint: "If len(text) <= 4, return '*' * len(text). Otherwise, return '*' * (len-4) + text[-4:].",
+                title: "Mask String",
+                description: "Create a function `mask_string` that masks all but the last 4 characters of `text` with '*', unless length <= 4 (then mask all).",
+                hint: "Use string slicing and multiplication.",
                 starterCode: `def mask_string(text: str) -> str:
-    # Security: Hide sensitive data
-    # '1234567890' -> '******7890'
+    # Your code here
     pass`,
                 solutionCode: `def mask_string(text: str) -> str:
     """Mask all but last 4 characters."""
@@ -2671,12 +2543,11 @@ def extract_numbers(text: str) -> str:
             {
                 id: "098",
                 number: 6,
-                title: "🎲 Anagram Checker",
-                description: "Anagrams are words or phrases that contain exactly the same letters in a different arrangement. 'Listen' and 'Silent' are anagrams; 'rail safety' and 'fairy tales' too! Create a function `is_anagram` that takes two strings and returns `True` if they're anagrams. Ignore case and spaces. After cleaning both strings, sorting their characters should produce identical results.",
-                hint: "Clean both: lowercase and remove spaces. Compare sorted(clean1) == sorted(clean2).",
+                title: "Anagram Checker",
+                description: "Create a function `is_anagram` that returns `True` if `s1` and `s2` are anagrams (contain same letters), ignoring case and spaces.",
+                hint: "Clean strings, then compare sorted characters.",
                 starterCode: `def is_anagram(s1: str, s2: str) -> bool:
-    # Word Game: Same letters, different order?
-    # 'Listen', 'Silent' -> True
+    # Your code here
     pass`,
                 solutionCode: `def is_anagram(s1: str, s2: str) -> bool:
     """Check if two strings are anagrams."""
@@ -2694,12 +2565,11 @@ def extract_numbers(text: str) -> str:
             {
                 id: "099",
                 number: 7,
-                title: "📏 Longest Word Finder",
-                description: "Text complexity metrics often examine word length — academic writing uses longer words than casual speech. Create a function `longest_word` that takes a sentence and returns the longest word. If there's a tie, return the first longest word encountered. Handle the edge case: return empty string for empty input. Track the 'current longest' as you iterate through words.",
-                hint: "Split into words. Track longest = first word. If len(word) > len(longest), update longest.",
+                title: "Longest Word",
+                description: "Create a function `longest_word` that returns the longest word in `sentence`.",
+                hint: "Split sentence. Track longest word found so far.",
                 starterCode: `def longest_word(sentence: str) -> str:
-    # Text Analysis: Find the longest word
-    # 'Python is amazing' -> 'amazing'
+    # Your code here
     pass`,
                 solutionCode: `def longest_word(sentence: str) -> str:
     """Find the longest word in a sentence."""
@@ -2722,12 +2592,11 @@ def extract_numbers(text: str) -> str:
             {
                 id: "100",
                 number: 8,
-                title: "🏆 Final Challenge: Run-Length Encoder",
-                description: "Run-length encoding (RLE) is a simple compression algorithm that replaces consecutive identical characters with the character and its count. 'aabbbcccc' becomes 'a2b3c4'. This is used in image compression and data storage. Create a function `compress_string` that implements RLE. Only return the compressed version if it's actually shorter than the original — otherwise return the original string.",
-                hint: "Track current char and count. When char changes, append char+count to result. At end, if len(result) < len(text), return result.",
+                title: "Run-Length Encoding",
+                description: "Create a function `compress_string` that returns a compressed string using run-length encoding (e.g., 'a2b3'), but only if shorter than original.",
+                hint: "Iterate chars, counting consecutive runs. Append char+count.",
                 starterCode: `def compress_string(text: str) -> str:
-    # Data Compression: Run-length encoding
-    # 'aabbbcccc' -> 'a2b3c4' (if shorter)
+    # Your code here
     pass`,
                 solutionCode: `def compress_string(text: str) -> str:
     """Compress string using run-length encoding."""
@@ -2793,12 +2662,11 @@ def total_price(cart: list) -> float:
             {
                 id: "101",
                 number: 1,
-                title: "📊 Field Extractor",
-                description: "Real-world data often comes as lists of records (dictionaries). Think of database rows, JSON API responses, or CSV data with headers. A common task is extracting all values for a single field. Create a function `get_names` that takes a list of person dictionaries (each containing at least a 'name' key) and returns a list of all names. For example, [{'name': 'Alice'}, {'name': 'Bob'}] returns ['Alice', 'Bob'].",
-                hint: "Create empty list. For each person dict, append person['name'] to your list.",
+                title: "Get Names",
+                description: "Create a function `get_names` that returns a list of 'name' values from a list of dictionaries.",
+                hint: "Loop through people, append `person['name']` to list.",
                 starterCode: `def get_names(people: list) -> list:
-    # Data Extraction: Get all names from records
-    # [{'name': 'Alice'}, {'name': 'Bob'}] -> ['Alice', 'Bob']
+    # Your code here
     pass`,
                 solutionCode: `def get_names(people: list) -> list:
     """Extract names from list of person dicts."""
@@ -2817,12 +2685,11 @@ def total_price(cart: list) -> float:
             {
                 id: "102",
                 number: 2,
-                title: "🔍 Record Filter",
-                description: "Database queries often filter records by field values — 'SELECT * WHERE type = A'. Implement this pattern in Python. Create a function `filter_by_key` that takes a list of dictionaries, a key name, and a value. Return a NEW list containing only dictionaries where that key equals that value. Use .get(key) for safe access in case a dictionary is missing that key.",
-                hint: "For each item, check if item.get(key) == value. If yes, add to result list.",
+                title: "Filter by Key",
+                description: "Create a function `filter_by_key` that returns a new list containing only items where `item[key]` equals `value`.",
+                hint: "Loop items. If `item.get(key) == value`, add to result.",
                 starterCode: `def filter_by_key(items: list, key: str, value) -> list:
-    # Database Query: Filter records by field value
-    # [{'type': 'A'}, {'type': 'B'}] with key='type', value='A' -> [{'type': 'A'}]
+    # Your code here
     pass`,
                 solutionCode: `def filter_by_key(items: list, key: str, value) -> list:
     """Filter list of dicts by key-value match."""
@@ -2842,12 +2709,11 @@ def total_price(cart: list) -> float:
             {
                 id: "103",
                 number: 3,
-                title: "🛍ed Shopping Cart Calculator",
-                description: "E-commerce applications calculate order totals from cart items, each with price and quantity. This is a classic aggregation problem over nested data. Create a function `cart_total` that takes a list of item dictionaries, each with 'price' and 'quantity' keys. Return the total cost (sum of price × quantity for all items). Handle empty carts by returning 0.",
-                hint: "Initialize total = 0. For each item, add item['price'] * item['quantity'] to total.",
+                title: "Cart Total",
+                description: "Create a function `cart_total` that returns the total cost (price * quantity) of all items in `cart`.",
+                hint: "Sum `item['price'] * item['quantity']` for each item.",
                 starterCode: `def cart_total(cart: list) -> float:
-    # E-Commerce: Calculate order total
-    # [{'price': 10, 'quantity': 2}] -> 20
+    # Your code here
     pass`,
                 solutionCode: `def cart_total(cart: list) -> float:
     """Calculate total cost of shopping cart."""
@@ -2866,12 +2732,11 @@ def total_price(cart: list) -> float:
             {
                 id: "104",
                 number: 4,
-                title: "📈 Field Average Calculator",
-                description: "Statistical analysis of records often requires calculating averages for a specific field. Student grades, employee salaries, experiment measurements — all need field-level statistics. Create a function `average_by_key` that takes a list of dictionaries and a key name, returning the average of all values for that key across all records. Return 0 for empty lists to avoid division by zero.",
-                hint: "Sum all item[key] values, divide by count. Check for empty list first!",
+                title: "Average by Key",
+                description: "Create a function `average_by_key` that returns the average value of `key` across all items (return 0 if empty).",
+                hint: "Sum `item[key]` for all items, divide by count.",
                 starterCode: `def average_by_key(items: list, key: str) -> float:
-    # Statistical Analysis: Average a specific field
-    # [{'score': 80}, {'score': 90}], 'score' -> 85.0
+    # Your code here
     pass`,
                 solutionCode: `def average_by_key(items: list, key: str) -> float:
     """Calculate average of a specific key across dicts."""
@@ -2892,12 +2757,11 @@ def total_price(cart: list) -> float:
             {
                 id: "105",
                 number: 5,
-                title: "🔎 Record Lookup",
-                description: "Finding a specific record by its unique identifier is fundamental to any data system. User profiles, product catalogs, and database tables all support lookup by ID. Create a function `find_by_id` that takes a list of dictionaries (each with an 'id' key) and a target ID value. Return the matching dictionary, or None if no match is found. This implements a linear search pattern.",
-                hint: "Loop through items. If item.get('id') == target_id, return that item. After loop, return None.",
+                title: "Find by ID",
+                description: "Create a function `find_by_id` that returns the dictionary with the matching `id`, or `None` if not found.",
+                hint: "Loop items. If `item['id'] == target_id`, return item.",
                 starterCode: `def find_by_id(items: list, target_id: int) -> dict:
-    # Data Lookup: Find record by unique ID
-    # [{'id': 1, 'name': 'A'}, {'id': 2}] with target 2 -> {'id': 2}
+    # Your code here
     pass`,
                 solutionCode: `def find_by_id(items: list, target_id: int) -> dict:
     """Find dict by id value."""
@@ -2916,12 +2780,11 @@ def total_price(cart: list) -> float:
             {
                 id: "106",
                 number: 6,
-                title: "📦 Record Grouper",
-                description: "Grouping data by category is essential for reporting and analysis — sales by region, errors by type, students by grade. Create a function `group_by_key` that takes a list of dictionaries and a key name. Return a NEW dictionary where keys are the unique values of that field, and values are lists of all records with that value. Use .get(key) for safe access.",
-                hint: "For each item, get value = item.get(key). If value not in result, create result[value] = []. Then append item.",
+                title: "Group by Key",
+                description: "Create a function `group_by_key` that returns a dictionary where keys are values of the specified `key` and dictionary values are lists of matching items.",
+                hint: "Initialize list if value not in result, then append item.",
                 starterCode: `def group_by_key(items: list, key: str) -> dict:
-    # Data Aggregation: Group records by field value
-    # [{'type': 'A'}, {'type': 'B'}, {'type': 'A'}] by 'type' -> {'A': [...], 'B': [...]}
+    # Your code here
     pass`,
                 solutionCode: `def group_by_key(items: list, key: str) -> dict:
     """Group items by the value of a specific key."""
@@ -2943,12 +2806,11 @@ def total_price(cart: list) -> float:
             {
                 id: "107",
                 number: 7,
-                title: "🗜️ List Flattener",
-                description: "Data sometimes arrives in nested structures that need to be flattened for processing. Matrix rows, paginated results, or grouped data may need to be merged into a single sequence. Create a function `flatten` that takes a list of lists and returns a single list containing all elements in order. [[1, 2], [3, 4]] becomes [1, 2, 3, 4]. Use nested iteration.",
-                hint: "Create result list. For each sublist in nested, for each item in sublist, append item to result.",
+                title: "Flatten List",
+                description: "Create a function `flatten` that returns a single list containing all elements from the nested list of lists.",
+                hint: "Loop sublists, then loop items in sublist and append to result.",
                 starterCode: `def flatten(nested: list) -> list:
-    # Data Transformation: Merge nested lists
-    # [[1, 2], [3, 4]] -> [1, 2, 3, 4]
+    # Your code here
     pass`,
                 solutionCode: `def flatten(nested: list) -> list:
     """Flatten a list of lists."""
@@ -2968,12 +2830,11 @@ def total_price(cart: list) -> float:
             {
                 id: "108",
                 number: 8,
-                title: "🏆 Final Challenge: Record Sorter",
-                description: "Sorting records by a specific field is essential for rankings, reports, and ordered displays. Top scorers, cheapest products, earliest dates — all require sorting by a key. Create a function `sort_by_key` that takes a list of dictionaries and a key name. Return a NEW list with items sorted by that key's value in ascending order. Implement a simple sorting algorithm (like bubble sort) rather than using built-in sort.",
-                hint: "Copy the list first. Use bubble sort: nested loops comparing items[j][key] with items[j+1][key], swapping if needed.",
+                title: "Sort by Key",
+                description: "Create a function `sort_by_key` that returns a new list of items sorted by `key` (ascending). Implement your own sort.",
+                hint: "Use Bubble Sort. Compare `items[j][key]` and `items[j+1][key]`.",
                 starterCode: `def sort_by_key(items: list, key: str) -> list:
-    # Data Ordering: Sort records by field value
-    # [{'val': 3}, {'val': 1}] by 'val' -> [{'val': 1}, {'val': 3}]
+    # Your code here
     pass`,
                 solutionCode: `def sort_by_key(items: list, key: str) -> list:
     """Sort list of dicts by a specific key."""
@@ -3034,12 +2895,11 @@ def total_price(cart: list) -> float:
             {
                 id: "109",
                 number: 1,
-                title: "🔐 Password Strength Validator",
-                description: "Cybersecurity requires enforcing password complexity rules. Weak passwords lead to breaches. Create a function `validate_password` that takes a password string and returns a dictionary with 'valid' (boolean) and 'errors' (list of strings). Check these rules: minimum 8 characters, contains at least one uppercase letter, one lowercase letter, and one digit. Add descriptive error messages for each failed rule.",
-                hint: "Check len() first. Use loops with .isupper()/.islower()/.isdigit() to detect character types. Collect all errors.",
+                title: "Password Strength",
+                description: "Create a function `validate_password` that returns a dictionary checking if `password` meets strength rules (length >= 8, uppercase, lowercase, digit).",
+                hint: "Check rules individually. Append errors to list if rules fail.",
                 starterCode: `def validate_password(password: str) -> dict:
-    # Security: Validate password strength
-    # Returns {'valid': bool, 'errors': [list of issues]}
+    # Your code here
     pass`,
                 solutionCode: `def validate_password(password: str) -> dict:
     """Validate password strength."""
@@ -3079,12 +2939,11 @@ def total_price(cart: list) -> float:
             {
                 id: "110",
                 number: 2,
-                title: "⏱️ Duration Formatter",
-                description: "Human-readable time displays are essential for UX. '7325 seconds' is meaningless — '2 hours, 2 minutes, 5 seconds' is clear. Create a function `format_duration` that takes a number of seconds and returns a human-readable string. Include hours, minutes, and seconds as appropriate, but omit zero values (don't say '0 hours'). Handle singular/plural ('1 hour' vs '2 hours'). Return '0 seconds' for input 0.",
-                hint: "Calculate hours = seconds // 3600, minutes = (seconds % 3600) // 60, secs = seconds % 60. Build parts list, join with ', '.",
+                title: "Format Duration",
+                description: "Create a function `format_duration` that returns a human-readable string (e.g., '1 hour, 5 minutes') from a number of `seconds`.",
+                hint: "Calculate hours, minutes, seconds. Join non-zero parts with ', '.",
                 starterCode: `def format_duration(seconds: int) -> str:
-    # UX Design: Human-readable time format
-    # 3665 -> '1 hour, 1 minute, 5 seconds'
+    # Your code here
     pass`,
                 solutionCode: `def format_duration(seconds: int) -> str:
     """Format seconds as human-readable duration."""
@@ -3115,12 +2974,11 @@ def total_price(cart: list) -> float:
             {
                 id: "111",
                 number: 3,
-                title: "📊 Grade Statistics Calculator",
-                description: "Educational platforms need to calculate class statistics from student records. This requires multiple aggregations over the same dataset. Create a function `calculate_grade_stats` that takes a list of student dictionaries (each with 'name' and 'score' keys). Return a dictionary with 'average', 'highest', 'lowest', and 'passing' (count of students with score >= 60). Handle empty lists by returning all zeros.",
-                hint: "Extract scores first. Track max, min, sum, and passing count while iterating. Calculate average at end.",
+                title: "Grade Statistics",
+                description: "Create a function `calculate_grade_stats` that returns a dictionary with 'average', 'highest', 'lowest', and 'passing' stats from a list of student records.",
+                hint: "Iterate records to find min, max, sum, and count passing.",
                 starterCode: `def calculate_grade_stats(students: list) -> dict:
-    # Education Analytics: Calculate class statistics
-    # [{'name': 'A', 'score': 80}...] -> {'average': ..., 'highest': ..., ...}
+    # Your code here
     pass`,
                 solutionCode: `def calculate_grade_stats(students: list) -> dict:
     """Calculate statistics from student grades."""
@@ -3160,12 +3018,11 @@ def total_price(cart: list) -> float:
             {
                 id: "112",
                 number: 4,
-                title: "📝 Word Frequency Analyzer",
-                description: "Content analysis identifies important words by frequency. Search engines rank documents, and NLP models understand topics through word counts. Create a function `word_frequency` that takes a text string and returns the top 5 most common words as a list of [word, count] pairs (sorted by count descending). Convert to lowercase first. Implement your own sorting rather than using sorted().",
-                hint: "Count words in a dict. Convert to list of (word, count). Bubble sort by count descending. Return first 5.",
+                title: "Word Frequency",
+                description: "Create a function `word_frequency` that returns a list of the top 5 most common words in `text` as `[word, count]` pairs.",
+                hint: "Count words in dictionary, convert to list, sort descending, return top 5.",
                 starterCode: `def word_frequency(text: str) -> list:
-    # NLP Analysis: Find most common words
-    # 'the cat the dog' -> [('the', 2), ('cat', 1), ('dog', 1)]
+    # Your code here
     pass`,
                 solutionCode: `def word_frequency(text: str) -> list:
     """Find top 5 most common words."""
@@ -3200,12 +3057,11 @@ def total_price(cart: list) -> float:
             {
                 id: "113",
                 number: 5,
-                title: "🧮 Bracket Validator",
-                description: "Code editors and compilers validate that brackets are properly matched and nested. This is a classic stack-based algorithm. Create a function `valid_brackets` that takes a string containing only '()[]{}' characters. Return True if all brackets are properly matched and nested, False otherwise. '([])' is valid. '([)]' is not (mismatched nesting). Use a list as a stack — push opening brackets, pop and check for closing.",
-                hint: "Use list as stack. For opening brackets, push. For closing, check if stack empty or top doesn't match, return False. Pop if match.",
+                title: "Valid Brackets",
+                description: "Create a function `valid_brackets` that returns `True` if the brackets in string `s` are properly matched and nested.",
+                hint: "Use a stack. Push opening brackets, pop matching closing brackets.",
                 starterCode: `def valid_brackets(s: str) -> bool:
-    # Compiler Design: Validate bracket matching
-    # '([])' -> True, '([)]' -> False
+    # Your code here
     pass`,
                 solutionCode: `def valid_brackets(s: str) -> bool:
     """Check if brackets are properly matched."""
@@ -3234,12 +3090,11 @@ def total_price(cart: list) -> float:
             {
                 id: "114",
                 number: 6,
-                title: "🔀 Sorted List Merger",
-                description: "Merging sorted sequences efficiently is the core of merge sort, one of the fastest sorting algorithms. This technique is used in database joins and external sorting. Create a function `merge_sorted` that takes two SORTED lists and returns a single SORTED list containing all elements. Use the two-pointer technique: compare elements at each pointer, take the smaller, advance that pointer. Don't simply concatenate and sort — that defeats the purpose!",
-                hint: "Use two index pointers i, j starting at 0. While both have elements, compare list1[i] vs list2[j], take smaller. Append remaining elements after.",
+                title: "Merge Sorted Lists",
+                description: "Create a function `merge_sorted` that returns a single sorted list by merging two already sorted lists `list1` and `list2`.",
+                hint: "Use pointers. Compare items from both lists, append smaller item to result.",
                 starterCode: `def merge_sorted(list1: list, list2: list) -> list:
-    # Algorithm Design: Efficient merge of sorted data
-    # [1, 3] + [2, 4] -> [1, 2, 3, 4]
+    # Your code here
     pass`,
                 solutionCode: `def merge_sorted(list1: list, list2: list) -> list:
     """Merge two sorted lists into one sorted list."""
@@ -3275,12 +3130,11 @@ def total_price(cart: list) -> float:
             {
                 id: "115",
                 number: 7,
-                title: "🔐 Caesar Cipher Encoder",
-                description: "The Caesar cipher, used by Julius Caesar, is one of the oldest encryption techniques. Each letter shifts by a fixed amount in the alphabet, wrapping around (Z+1 = A). Create a function `caesar_cipher` that takes a string and a shift amount. Shift each letter by that amount, preserving case. Non-letter characters stay unchanged. 'abc' with shift 1 becomes 'bcd'. Use modular arithmetic for wraparound.",
-                hint: "For each char, check isalpha(). Calculate base = ord('a') or ord('A'). Shift: (ord(char) - base + shift) % 26 + base.",
+                title: "Caesar Cipher",
+                description: "Create a function `caesar_cipher` that returns `text` encrypted by shifting each letter by `shift` positions.",
+                hint: "Shift char code: `(ord(c) - base + shift) % 26 + base`.",
                 starterCode: `def caesar_cipher(text: str, shift: int) -> str:
-    # Cryptography: Classic substitution cipher
-    # 'abc' with shift 1 -> 'bcd'
+    # Your code here
     pass`,
                 solutionCode: `def caesar_cipher(text: str, shift: int) -> str:
     """Apply Caesar cipher to text."""
@@ -3306,12 +3160,11 @@ def total_price(cart: list) -> float:
             {
                 id: "116",
                 number: 8,
-                title: "🏆 Final Challenge: Invoice Calculator",
-                description: "Business applications calculate invoices with line items, quantities, prices, and discounts. This final challenge combines everything: nested data, aggregation, optional fields, and arithmetic. Create a function `calculate_invoice` that takes a list of line items, each with 'quantity' and 'unit_price' (and optional 'discount' as a percentage). Return a dictionary with 'subtotal' (before discounts), 'total_discount', and 'grand_total'. Round to 2 decimal places.",
-                hint: "For each item: line_total = qty * price, add to subtotal. If 'discount' key exists, calculate and track discount. Grand_total = subtotal - total_discount.",
+                title: "Calculate Invoice",
+                description: "Create a function `calculate_invoice` that returns a dictionary with 'subtotal', 'total_discount', and 'grand_total' from a list of items.",
+                hint: "Iterate items. Add to subtotal. If discount info present, add to total discount.",
                 starterCode: `def calculate_invoice(items: list) -> dict:
-    # Business Logic: Calculate invoice with discounts
-    # [{'quantity': 2, 'unit_price': 10, 'discount': 10}...]
+    # Your code here
     pass`,
                 solutionCode: `def calculate_invoice(items: list) -> dict:
     """Calculate invoice totals with discounts."""

@@ -6,14 +6,17 @@ interface ActivityBarProps {
     currentChapterId: string;
     onSelectChapter: (id: string) => void;
     unlockedMap: Record<string, boolean>;
+    enforceLocksForStudent?: boolean;
 }
 
 export const ActivityBar: React.FC<ActivityBarProps> = ({
     chapters,
     currentChapterId,
     onSelectChapter,
-    unlockedMap
+    unlockedMap,
+    enforceLocksForStudent = true
 }) => {
+    const [lockedAttempt, setLockedAttempt] = useState<string | null>(null);
     const [showChapterList, setShowChapterList] = useState(false);
 
     const completedCount = Object.values(unlockedMap).filter(Boolean).length;
@@ -35,8 +38,8 @@ export const ActivityBar: React.FC<ActivityBarProps> = ({
                 <button
                     onClick={() => setShowChapterList(!showChapterList)}
                     className={`w-10 h-10 rounded-lg flex items-center justify-center mb-2 transition-all relative ${showChapterList
-                            ? 'bg-blue-600 text-white'
-                            : 'hover:bg-[#3c3c3c] hover:text-white'
+                        ? 'bg-blue-600 text-white'
+                        : 'hover:bg-[#3c3c3c] hover:text-white'
                         }`}
                     title="Chapters"
                 >
@@ -120,24 +123,36 @@ export const ActivityBar: React.FC<ActivityBarProps> = ({
                                 const isUnlocked = unlockedMap[chapter.id];
                                 const isCurrent = currentChapterId === chapter.id;
 
+                                const isBlocked = !isUnlocked && enforceLocksForStudent;
+                                const isAttemptingLocked = lockedAttempt === chapter.id;
+
                                 return (
                                     <button
                                         key={chapter.id}
                                         onClick={() => {
+                                            if (isBlocked) {
+                                                setLockedAttempt(chapter.id);
+                                                setTimeout(() => setLockedAttempt(null), 1500);
+                                                return;
+                                            }
                                             onSelectChapter(chapter.id);
                                             setShowChapterList(false);
                                         }}
                                         className={`w-full text-left p-4 rounded-xl mb-2 transition-all flex items-start gap-3 group ${isCurrent
-                                                ? 'bg-blue-600/20 border border-blue-500/30'
-                                                : 'hover:bg-[#2a2a2a] border border-transparent'
+                                            ? 'bg-blue-600/20 border border-blue-500/30'
+                                            : isAttemptingLocked
+                                                ? 'bg-red-600/20 border border-red-500/50 animate-shake'
+                                                : isBlocked
+                                                    ? 'opacity-60 cursor-not-allowed border border-transparent'
+                                                    : 'hover:bg-[#2a2a2a] border border-transparent'
                                             }`}
                                     >
                                         {/* Chapter Number */}
                                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0 ${isCurrent
-                                                ? 'bg-blue-600 text-white'
-                                                : isUnlocked
-                                                    ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30'
-                                                    : 'bg-[#3c3c3c] text-slate-500'
+                                            ? 'bg-blue-600 text-white'
+                                            : isUnlocked
+                                                ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30'
+                                                : 'bg-[#3c3c3c] text-slate-500'
                                             }`}>
                                             {isUnlocked ? index + 1 : '🔒'}
                                         </div>
@@ -156,6 +171,9 @@ export const ActivityBar: React.FC<ActivityBarProps> = ({
                                         {/* Status */}
                                         {isUnlocked && !isCurrent && (
                                             <span className="text-emerald-500 text-sm">✓</span>
+                                        )}
+                                        {isAttemptingLocked && (
+                                            <span className="text-red-400 text-xs animate-pulse">Locked by teacher</span>
                                         )}
                                     </button>
                                 );
@@ -180,6 +198,14 @@ export const ActivityBar: React.FC<ActivityBarProps> = ({
         }
         .animate-slide-in {
           animation: slide-in 0.2s ease-out;
+        }
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          20%, 60% { transform: translateX(-4px); }
+          40%, 80% { transform: translateX(4px); }
+        }
+        .animate-shake {
+          animation: shake 0.3s ease-out;
         }
       `}</style>
         </>
