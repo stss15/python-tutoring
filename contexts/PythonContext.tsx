@@ -62,6 +62,9 @@ export const PythonProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const setOutputRef = useRef(setOutput);
     setOutputRef.current = setOutput;
 
+    // Ref to accumulate output during code execution (avoids React state timing issues)
+    const pendingOutputRef = useRef<string[]>([]);
+
     useEffect(() => {
         const loadEngine = async () => {
             try {
@@ -83,7 +86,7 @@ export const PythonProvider: React.FC<{ children: React.ReactNode }> = ({ childr
                     indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/'
                 });
 
-                // Setup standard output capture
+                // Setup standard output capture - push to pending ref
                 py.setStdout({
                     batched: (msg) => {
                         if (msg.startsWith('__TEST_RESULTS__:')) {
@@ -95,18 +98,16 @@ export const PythonProvider: React.FC<{ children: React.ReactNode }> = ({ childr
                                 console.error("Failed to parse test results", e);
                             }
                         } else {
-                            // Use ref to always have fresh setOutput
+                            // Push to pending ref - will be flushed after execution
                             const lines = msg.split('\n').filter(line => line.length > 0);
-                            if (lines.length > 0) {
-                                setOutputRef.current(prev => [...prev, ...lines]);
-                            }
+                            pendingOutputRef.current.push(...lines);
                         }
                     }
                 });
 
                 py.setStderr({
                     batched: (msg) => {
-                        setOutputRef.current(prev => [...prev, `Error: ${msg}`]);
+                        pendingOutputRef.current.push(`Error: ${msg}`);
                     }
                 });
 
@@ -131,13 +132,20 @@ export const PythonProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         setIsRunning(true);
         setTestResults(null); // Clear previous test results
         setOutput([]); // Clear previous terminal output
+        pendingOutputRef.current = []; // Clear pending output
 
         try {
-            // Small delay to ensure UI updates show "Running..."
-            await new Promise(r => setTimeout(r, 10));
+            // Small delay to ensure UI clears
+            await new Promise(r => setTimeout(r, 50));
 
             // STEP 1: Run user code first (this shows output in terminal)
             await pyodide.runPythonAsync(code);
+
+            // Flush any pending output to state
+            if (pendingOutputRef.current.length > 0) {
+                setOutput([...pendingOutputRef.current]);
+                pendingOutputRef.current = [];
+            }
 
             // STEP 2: Run test cases separately (completely silently)
             if (testCases && testCases.length > 0) {
